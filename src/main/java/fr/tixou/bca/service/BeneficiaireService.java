@@ -37,12 +37,12 @@ public interface BeneficiaireService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<Beneficiaire> findOne(String id);
+    Optional<Beneficiaire> findOne(Long id);
 
     /**
      * Delete the "id" beneficiaire.
      *
      * @param id the id of the entity.
      */
-    void delete(String id);
+    void delete(Long id);
 }

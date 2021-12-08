@@ -33,11 +33,17 @@
       <thead>
         <tr>
           <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldePch.date">Date</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldePch.isActif">Is Actif</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldePch.isDernier">Is Dernier</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.soldePch.annee">Annee</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.soldePch.mois">Mois</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldePch.consoMontantPchCotisations">Conso Montant Pch Cotisations</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldePch.consoMontantPchSalaire">Conso Montant Pch Salaire</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.soldePch.soldeMontantPch">Solde Montant Pch</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldePch.consoHeurePch">Conso Heure Pch</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.soldePch.soldeHeurePch">Solde Heure Pch</span></th>
-          <th scope="col"><span jhiTranslate="bcaApp.soldePch.beneficiaire">Beneficiaire</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldePch.droitsStrategiePch">Droits Strategie Pch</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -46,13 +52,19 @@
           <td>
             <a [routerLink]="['/solde-pch', soldePch.id, 'view']">{{ soldePch.id }}</a>
           </td>
+          <td>{{ soldePch.date | formatMediumDatetime }}</td>
+          <td>{{ soldePch.isActif }}</td>
+          <td>{{ soldePch.isDernier }}</td>
           <td>{{ soldePch.annee }}</td>
           <td>{{ soldePch.mois }}</td>
+          <td>{{ soldePch.consoMontantPchCotisations }}</td>
+          <td>{{ soldePch.consoMontantPchSalaire }}</td>
           <td>{{ soldePch.soldeMontantPch }}</td>
+          <td>{{ soldePch.consoHeurePch }}</td>
           <td>{{ soldePch.soldeHeurePch }}</td>
           <td>
-            <div *ngIf="soldePch.beneficiaire">
-              <a [routerLink]="['/beneficiaire', soldePch.beneficiaire?.id, 'view']">{{ soldePch.beneficiaire?.id }}</a>
+            <div *ngIf="soldePch.droitsStrategiePch">
+              <a [routerLink]="['/droits-strategie-pch', soldePch.droitsStrategiePch?.id, 'view']">{{ soldePch.droitsStrategiePch?.id }}</a>
             </div>
           </td>
           <td class="text-right">

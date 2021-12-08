@@ -1,23 +1,42 @@
-import { IBeneficiaire } from 'app/entities/beneficiaire/beneficiaire.model';
+import * as dayjs from 'dayjs';
+import { IDroitsStrategieApa } from 'app/entities/droits-strategie-apa/droits-strategie-apa.model';
+import { IPec } from 'app/entities/pec/pec.model';
 
 export interface ISoldeApa {
   id?: number;
-  annee?: number | null;
-  mois?: number | null;
-  soldeMontantApa?: number | null;
-  soldeHeureApa?: number | null;
-  beneficiaire?: IBeneficiaire | null;
+  date?: dayjs.Dayjs;
+  isActif?: boolean;
+  isDernier?: boolean;
+  annee?: number;
+  mois?: number;
+  consoMontantApaCotisations?: number;
+  consoMontantApaSalaire?: number;
+  soldeMontantApa?: number;
+  consoHeureApa?: number;
+  soldeHeureApa?: number;
+  droitsStrategieApa?: IDroitsStrategieApa | null;
+  pec?: IPec | null;
 }
 
 export class SoldeApa implements ISoldeApa {
   constructor(
     public id?: number,
-    public annee?: number | null,
-    public mois?: number | null,
-    public soldeMontantApa?: number | null,
-    public soldeHeureApa?: number | null,
-    public beneficiaire?: IBeneficiaire | null
-  ) {}
+    public date?: dayjs.Dayjs,
+    public isActif?: boolean,
+    public isDernier?: boolean,
+    public annee?: number,
+    public mois?: number,
+    public consoMontantApaCotisations?: number,
+    public consoMontantApaSalaire?: number,
+    public soldeMontantApa?: number,
+    public consoHeureApa?: number,
+    public soldeHeureApa?: number,
+    public droitsStrategieApa?: IDroitsStrategieApa | null,
+    public pec?: IPec | null
+  ) {
+    this.isActif = this.isActif ?? false;
+    this.isDernier = this.isDernier ?? false;
+  }
 }
 
 export function getSoldeApaIdentifier(soldeApa: ISoldeApa): number | undefined {

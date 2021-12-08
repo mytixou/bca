@@ -34,6 +34,7 @@
         <tr>
           <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.aide.nom">Nom</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.aide.priorite">Priorite</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.aide.isActif">Is Actif</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.aide.dateLancement">Date Lancement</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.aide.anneLancement">Anne Lancement</span></th>
@@ -41,6 +42,7 @@
           <th scope="col"><span jhiTranslate="bcaApp.aide.dateArret">Date Arret</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.aide.derniereAnnee">Derniere Annee</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.aide.dernierMois">Dernier Mois</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.aide.aide">Aide</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -50,6 +52,7 @@
             <a [routerLink]="['/aide', aide.id, 'view']">{{ aide.id }}</a>
           </td>
           <td jhiTranslate="{{ 'bcaApp.TypeAide.' + aide.nom }}">{{ aide.nom }}</td>
+          <td>{{ aide.priorite }}</td>
           <td>{{ aide.isActif }}</td>
           <td>{{ aide.dateLancement | formatMediumDate }}</td>
           <td>{{ aide.anneLancement }}</td>
@@ -57,6 +60,11 @@
           <td>{{ aide.dateArret | formatMediumDate }}</td>
           <td>{{ aide.derniereAnnee }}</td>
           <td>{{ aide.dernierMois }}</td>
+          <td>
+            <div *ngIf="aide.aide">
+              <a [routerLink]="['/tiers-financeur', aide.aide?.id, 'view']">{{ aide.aide?.id }}</a>
+            </div>
+          </td>
           <td class="text-right">
             <div class="btn-group">
               <button type="submit" [routerLink]="['/aide', aide.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">

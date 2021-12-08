@@ -1,0 +1,72 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="droitsStrategieApa">
+      <h2 data-cy="droitsStrategieApaDetailsHeading">
+        <span jhiTranslate="bcaApp.droitsStrategieApa.detail.title">Droits Strategie Apa</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ droitsStrategieApa.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitsStrategieApa.isActif">Is Actif</span></dt>
+        <dd>
+          <span>{{ droitsStrategieApa.isActif }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitsStrategieApa.anne">Anne</span></dt>
+        <dd>
+          <span>{{ droitsStrategieApa.anne }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitsStrategieApa.mois">Mois</span></dt>
+        <dd>
+          <span>{{ droitsStrategieApa.mois }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitsStrategieApa.montantPlafond">Montant Plafond</span></dt>
+        <dd>
+          <span>{{ droitsStrategieApa.montantPlafond }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitsStrategieApa.montantPlafondPlus">Montant Plafond Plus</span></dt>
+        <dd>
+          <span>{{ droitsStrategieApa.montantPlafondPlus }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitsStrategieApa.nbHeurePlafond">Nb Heure Plafond</span></dt>
+        <dd>
+          <span>{{ droitsStrategieApa.nbHeurePlafond }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitsStrategieApa.tauxCotisations">Taux Cotisations</span></dt>
+        <dd>
+          <span>{{ droitsStrategieApa.tauxCotisations }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitsStrategieApa.dateOuverture">Date Ouverture</span></dt>
+        <dd>
+          <span>{{ droitsStrategieApa.dateOuverture | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitsStrategieApa.dateFermeture">Date Fermeture</span></dt>
+        <dd>
+          <span>{{ droitsStrategieApa.dateFermeture | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitsStrategieApa.beneficiaire">Beneficiaire</span></dt>
+        <dd>
+          <div *ngIf="droitsStrategieApa.beneficiaire">
+            <a [routerLink]="['/beneficiaire', droitsStrategieApa.beneficiaire?.id, 'view']">{{ droitsStrategieApa.beneficiaire?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/droits-strategie-apa', droitsStrategieApa.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -36,14 +36,10 @@ export class TiersFinanceurUpdatePage {
   dateInscriptionInput = element(by.id('field_dateInscription'));
   anneLancementInput = element(by.id('field_anneLancement'));
   moisLancementInput = element(by.id('field_moisLancement'));
+  recupHeureActifInput = element(by.id('field_recupHeureActif'));
   dateResiliationInput = element(by.id('field_dateResiliation'));
   derniereAnneeInput = element(by.id('field_derniereAnnee'));
   dernierMoisInput = element(by.id('field_dernierMois'));
-
-  strategieSelect = element(by.id('field_strategie'));
-  strategieSelect = element(by.id('field_strategie'));
-  strategieSelect = element(by.id('field_strategie'));
-  strategieSelect = element(by.id('field_strategie'));
 
   async getPageTitle(): Promise<string> {
     return this.pageTitle.getAttribute('jhiTranslate');
@@ -101,6 +97,10 @@ export class TiersFinanceurUpdatePage {
     return await this.moisLancementInput.getAttribute('value');
   }
 
+  getRecupHeureActifInput(): ElementFinder {
+    return this.recupHeureActifInput;
+  }
+
   async setDateResiliationInput(dateResiliation: string): Promise<void> {
     await this.dateResiliationInput.sendKeys(dateResiliation);
   }
@@ -123,70 +123,6 @@ export class TiersFinanceurUpdatePage {
 
   async getDernierMoisInput(): Promise<string> {
     return await this.dernierMoisInput.getAttribute('value');
-  }
-
-  async strategieSelectLastOption(): Promise<void> {
-    await this.strategieSelect.all(by.tagName('option')).last().click();
-  }
-
-  async strategieSelectOption(option: string): Promise<void> {
-    await this.strategieSelect.sendKeys(option);
-  }
-
-  getStrategieSelect(): ElementFinder {
-    return this.strategieSelect;
-  }
-
-  async getStrategieSelectedOption(): Promise<string> {
-    return await this.strategieSelect.element(by.css('option:checked')).getText();
-  }
-
-  async strategieSelectLastOption(): Promise<void> {
-    await this.strategieSelect.all(by.tagName('option')).last().click();
-  }
-
-  async strategieSelectOption(option: string): Promise<void> {
-    await this.strategieSelect.sendKeys(option);
-  }
-
-  getStrategieSelect(): ElementFinder {
-    return this.strategieSelect;
-  }
-
-  async getStrategieSelectedOption(): Promise<string> {
-    return await this.strategieSelect.element(by.css('option:checked')).getText();
-  }
-
-  async strategieSelectLastOption(): Promise<void> {
-    await this.strategieSelect.all(by.tagName('option')).last().click();
-  }
-
-  async strategieSelectOption(option: string): Promise<void> {
-    await this.strategieSelect.sendKeys(option);
-  }
-
-  getStrategieSelect(): ElementFinder {
-    return this.strategieSelect;
-  }
-
-  async getStrategieSelectedOption(): Promise<string> {
-    return await this.strategieSelect.element(by.css('option:checked')).getText();
-  }
-
-  async strategieSelectLastOption(): Promise<void> {
-    await this.strategieSelect.all(by.tagName('option')).last().click();
-  }
-
-  async strategieSelectOption(option: string): Promise<void> {
-    await this.strategieSelect.sendKeys(option);
-  }
-
-  getStrategieSelect(): ElementFinder {
-    return this.strategieSelect;
-  }
-
-  async getStrategieSelectedOption(): Promise<string> {
-    return await this.strategieSelect.element(by.css('option:checked')).getText();
   }
 
   async save(): Promise<void> {

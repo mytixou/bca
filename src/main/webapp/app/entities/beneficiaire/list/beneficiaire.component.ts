@@ -34,7 +34,7 @@ export class BeneficiaireComponent implements OnInit {
     this.loadAll();
   }
 
-  trackId(index: number, item: IBeneficiaire): string {
+  trackId(index: number, item: IBeneficiaire): number {
     return item.id!;
   }
 

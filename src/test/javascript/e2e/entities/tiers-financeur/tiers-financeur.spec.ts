@@ -52,13 +52,10 @@ describe('TiersFinanceur e2e test', () => {
       tiersFinanceurUpdatePage.setDateInscriptionInput('2000-12-31'),
       tiersFinanceurUpdatePage.setAnneLancementInput('5'),
       tiersFinanceurUpdatePage.setMoisLancementInput('5'),
+      tiersFinanceurUpdatePage.getRecupHeureActifInput().click(),
       tiersFinanceurUpdatePage.setDateResiliationInput('2000-12-31'),
       tiersFinanceurUpdatePage.setDerniereAnneeInput('5'),
       tiersFinanceurUpdatePage.setDernierMoisInput('5'),
-      tiersFinanceurUpdatePage.strategieSelectLastOption(),
-      tiersFinanceurUpdatePage.strategieSelectLastOption(),
-      tiersFinanceurUpdatePage.strategieSelectLastOption(),
-      tiersFinanceurUpdatePage.strategieSelectLastOption(),
     ]);
 
     await tiersFinanceurUpdatePage.save();

@@ -18,6 +18,10 @@
         <dd>
           <span jhiTranslate="{{ 'bcaApp.TypeAide.' + aide.nom }}">{{ aide.nom }}</span>
         </dd>
+        <dt><span jhiTranslate="bcaApp.aide.priorite">Priorite</span></dt>
+        <dd>
+          <span>{{ aide.priorite }}</span>
+        </dd>
         <dt><span jhiTranslate="bcaApp.aide.isActif">Is Actif</span></dt>
         <dd>
           <span>{{ aide.isActif }}</span>
@@ -45,6 +49,12 @@
         <dt><span jhiTranslate="bcaApp.aide.dernierMois">Dernier Mois</span></dt>
         <dd>
           <span>{{ aide.dernierMois }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.aide.aide">Aide</span></dt>
+        <dd>
+          <div *ngIf="aide.aide">
+            <a [routerLink]="['/tiers-financeur', aide.aide?.id, 'view']">{{ aide.aide?.id }}</a>
+          </div>
         </dd>
       </dl>
 

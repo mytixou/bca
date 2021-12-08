@@ -36,10 +36,6 @@
           <th scope="col"><span jhiTranslate="bcaApp.natureActivite.code">Code</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.natureActivite.libelle">Libelle</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.natureActivite.description">Description</span></th>
-          <th scope="col"><span jhiTranslate="bcaApp.natureActivite.strategie">Strategie</span></th>
-          <th scope="col"><span jhiTranslate="bcaApp.natureActivite.strategie">Strategie</span></th>
-          <th scope="col"><span jhiTranslate="bcaApp.natureActivite.strategie">Strategie</span></th>
-          <th scope="col"><span jhiTranslate="bcaApp.natureActivite.strategie">Strategie</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -51,26 +47,6 @@
           <td>{{ natureActivite.code }}</td>
           <td>{{ natureActivite.libelle }}</td>
           <td>{{ natureActivite.description }}</td>
-          <td>
-            <div *ngIf="natureActivite.strategie">
-              <a [routerLink]="['/strategie-ci', natureActivite.strategie?.id, 'view']">{{ natureActivite.strategie?.id }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="natureActivite.strategie">
-              <a [routerLink]="['/strategie-apa', natureActivite.strategie?.id, 'view']">{{ natureActivite.strategie?.id }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="natureActivite.strategie">
-              <a [routerLink]="['/strategie-pch', natureActivite.strategie?.id, 'view']">{{ natureActivite.strategie?.id }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="natureActivite.strategie">
-              <a [routerLink]="['/strategie-pch-e', natureActivite.strategie?.id, 'view']">{{ natureActivite.strategie?.id }}</a>
-            </div>
-          </td>
           <td class="text-right">
             <div class="btn-group">
               <button

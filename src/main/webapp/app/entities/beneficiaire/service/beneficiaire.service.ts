@@ -29,18 +29,18 @@ export class BeneficiaireService {
   update(beneficiaire: IBeneficiaire): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(beneficiaire);
     return this.http
-      .put<IBeneficiaire>(`${this.resourceUrl}/${getBeneficiaireIdentifier(beneficiaire) as string}`, copy, { observe: 'response' })
+      .put<IBeneficiaire>(`${this.resourceUrl}/${getBeneficiaireIdentifier(beneficiaire) as number}`, copy, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   partialUpdate(beneficiaire: IBeneficiaire): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(beneficiaire);
     return this.http
-      .patch<IBeneficiaire>(`${this.resourceUrl}/${getBeneficiaireIdentifier(beneficiaire) as string}`, copy, { observe: 'response' })
+      .patch<IBeneficiaire>(`${this.resourceUrl}/${getBeneficiaireIdentifier(beneficiaire) as number}`, copy, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
-  find(id: string): Observable<EntityResponseType> {
+  find(id: number): Observable<EntityResponseType> {
     return this.http
       .get<IBeneficiaire>(`${this.resourceUrl}/${id}`, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
@@ -53,7 +53,7 @@ export class BeneficiaireService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
-  delete(id: string): Observable<HttpResponse<{}>> {
+  delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
@@ -81,6 +81,7 @@ export class BeneficiaireService {
 
   protected convertDateFromClient(beneficiaire: IBeneficiaire): IBeneficiaire {
     return Object.assign({}, beneficiaire, {
+      dateDesactivation: beneficiaire.dateDesactivation?.isValid() ? beneficiaire.dateDesactivation.format(DATE_FORMAT) : undefined,
       dateInscription: beneficiaire.dateInscription?.isValid() ? beneficiaire.dateInscription.format(DATE_FORMAT) : undefined,
       dateResiliation: beneficiaire.dateResiliation?.isValid() ? beneficiaire.dateResiliation.format(DATE_FORMAT) : undefined,
     });
@@ -88,6 +89,7 @@ export class BeneficiaireService {
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
+      res.body.dateDesactivation = res.body.dateDesactivation ? dayjs(res.body.dateDesactivation) : undefined;
       res.body.dateInscription = res.body.dateInscription ? dayjs(res.body.dateInscription) : undefined;
       res.body.dateResiliation = res.body.dateResiliation ? dayjs(res.body.dateResiliation) : undefined;
     }
@@ -97,6 +99,7 @@ export class BeneficiaireService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((beneficiaire: IBeneficiaire) => {
+        beneficiaire.dateDesactivation = beneficiaire.dateDesactivation ? dayjs(beneficiaire.dateDesactivation) : undefined;
         beneficiaire.dateInscription = beneficiaire.dateInscription ? dayjs(beneficiaire.dateInscription) : undefined;
         beneficiaire.dateResiliation = beneficiaire.dateResiliation ? dayjs(beneficiaire.dateResiliation) : undefined;
       });

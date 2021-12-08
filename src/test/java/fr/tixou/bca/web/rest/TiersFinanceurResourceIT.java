@@ -49,6 +49,9 @@ class TiersFinanceurResourceIT {
     private static final Integer DEFAULT_MOIS_LANCEMENT = 1;
     private static final Integer UPDATED_MOIS_LANCEMENT = 2;
 
+    private static final Boolean DEFAULT_RECUP_HEURE_ACTIF = false;
+    private static final Boolean UPDATED_RECUP_HEURE_ACTIF = true;
+
     private static final LocalDate DEFAULT_DATE_RESILIATION = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE_RESILIATION = LocalDate.now(ZoneId.systemDefault());
 
@@ -89,6 +92,7 @@ class TiersFinanceurResourceIT {
             .dateInscription(DEFAULT_DATE_INSCRIPTION)
             .anneLancement(DEFAULT_ANNE_LANCEMENT)
             .moisLancement(DEFAULT_MOIS_LANCEMENT)
+            .recupHeureActif(DEFAULT_RECUP_HEURE_ACTIF)
             .dateResiliation(DEFAULT_DATE_RESILIATION)
             .derniereAnnee(DEFAULT_DERNIERE_ANNEE)
             .dernierMois(DEFAULT_DERNIER_MOIS);
@@ -109,6 +113,7 @@ class TiersFinanceurResourceIT {
             .dateInscription(UPDATED_DATE_INSCRIPTION)
             .anneLancement(UPDATED_ANNE_LANCEMENT)
             .moisLancement(UPDATED_MOIS_LANCEMENT)
+            .recupHeureActif(UPDATED_RECUP_HEURE_ACTIF)
             .dateResiliation(UPDATED_DATE_RESILIATION)
             .derniereAnnee(UPDATED_DERNIERE_ANNEE)
             .dernierMois(UPDATED_DERNIER_MOIS);
@@ -141,6 +146,7 @@ class TiersFinanceurResourceIT {
         assertThat(testTiersFinanceur.getDateInscription()).isEqualTo(DEFAULT_DATE_INSCRIPTION);
         assertThat(testTiersFinanceur.getAnneLancement()).isEqualTo(DEFAULT_ANNE_LANCEMENT);
         assertThat(testTiersFinanceur.getMoisLancement()).isEqualTo(DEFAULT_MOIS_LANCEMENT);
+        assertThat(testTiersFinanceur.getRecupHeureActif()).isEqualTo(DEFAULT_RECUP_HEURE_ACTIF);
         assertThat(testTiersFinanceur.getDateResiliation()).isEqualTo(DEFAULT_DATE_RESILIATION);
         assertThat(testTiersFinanceur.getDerniereAnnee()).isEqualTo(DEFAULT_DERNIERE_ANNEE);
         assertThat(testTiersFinanceur.getDernierMois()).isEqualTo(DEFAULT_DERNIER_MOIS);
@@ -168,6 +174,120 @@ class TiersFinanceurResourceIT {
 
     @Test
     @Transactional
+    void checkNomIsRequired() throws Exception {
+        int databaseSizeBeforeTest = tiersFinanceurRepository.findAll().size();
+        // set the field null
+        tiersFinanceur.setNom(null);
+
+        // Create the TiersFinanceur, which fails.
+
+        restTiersFinanceurMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(tiersFinanceur))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<TiersFinanceur> tiersFinanceurList = tiersFinanceurRepository.findAll();
+        assertThat(tiersFinanceurList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkIsActifIsRequired() throws Exception {
+        int databaseSizeBeforeTest = tiersFinanceurRepository.findAll().size();
+        // set the field null
+        tiersFinanceur.setIsActif(null);
+
+        // Create the TiersFinanceur, which fails.
+
+        restTiersFinanceurMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(tiersFinanceur))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<TiersFinanceur> tiersFinanceurList = tiersFinanceurRepository.findAll();
+        assertThat(tiersFinanceurList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkDateInscriptionIsRequired() throws Exception {
+        int databaseSizeBeforeTest = tiersFinanceurRepository.findAll().size();
+        // set the field null
+        tiersFinanceur.setDateInscription(null);
+
+        // Create the TiersFinanceur, which fails.
+
+        restTiersFinanceurMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(tiersFinanceur))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<TiersFinanceur> tiersFinanceurList = tiersFinanceurRepository.findAll();
+        assertThat(tiersFinanceurList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkAnneLancementIsRequired() throws Exception {
+        int databaseSizeBeforeTest = tiersFinanceurRepository.findAll().size();
+        // set the field null
+        tiersFinanceur.setAnneLancement(null);
+
+        // Create the TiersFinanceur, which fails.
+
+        restTiersFinanceurMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(tiersFinanceur))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<TiersFinanceur> tiersFinanceurList = tiersFinanceurRepository.findAll();
+        assertThat(tiersFinanceurList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkMoisLancementIsRequired() throws Exception {
+        int databaseSizeBeforeTest = tiersFinanceurRepository.findAll().size();
+        // set the field null
+        tiersFinanceur.setMoisLancement(null);
+
+        // Create the TiersFinanceur, which fails.
+
+        restTiersFinanceurMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(tiersFinanceur))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<TiersFinanceur> tiersFinanceurList = tiersFinanceurRepository.findAll();
+        assertThat(tiersFinanceurList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkRecupHeureActifIsRequired() throws Exception {
+        int databaseSizeBeforeTest = tiersFinanceurRepository.findAll().size();
+        // set the field null
+        tiersFinanceur.setRecupHeureActif(null);
+
+        // Create the TiersFinanceur, which fails.
+
+        restTiersFinanceurMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(tiersFinanceur))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<TiersFinanceur> tiersFinanceurList = tiersFinanceurRepository.findAll();
+        assertThat(tiersFinanceurList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllTiersFinanceurs() throws Exception {
         // Initialize the database
         tiersFinanceurRepository.saveAndFlush(tiersFinanceur);
@@ -184,6 +304,7 @@ class TiersFinanceurResourceIT {
             .andExpect(jsonPath("$.[*].dateInscription").value(hasItem(DEFAULT_DATE_INSCRIPTION.toString())))
             .andExpect(jsonPath("$.[*].anneLancement").value(hasItem(DEFAULT_ANNE_LANCEMENT)))
             .andExpect(jsonPath("$.[*].moisLancement").value(hasItem(DEFAULT_MOIS_LANCEMENT)))
+            .andExpect(jsonPath("$.[*].recupHeureActif").value(hasItem(DEFAULT_RECUP_HEURE_ACTIF.booleanValue())))
             .andExpect(jsonPath("$.[*].dateResiliation").value(hasItem(DEFAULT_DATE_RESILIATION.toString())))
             .andExpect(jsonPath("$.[*].derniereAnnee").value(hasItem(DEFAULT_DERNIERE_ANNEE)))
             .andExpect(jsonPath("$.[*].dernierMois").value(hasItem(DEFAULT_DERNIER_MOIS)));
@@ -207,6 +328,7 @@ class TiersFinanceurResourceIT {
             .andExpect(jsonPath("$.dateInscription").value(DEFAULT_DATE_INSCRIPTION.toString()))
             .andExpect(jsonPath("$.anneLancement").value(DEFAULT_ANNE_LANCEMENT))
             .andExpect(jsonPath("$.moisLancement").value(DEFAULT_MOIS_LANCEMENT))
+            .andExpect(jsonPath("$.recupHeureActif").value(DEFAULT_RECUP_HEURE_ACTIF.booleanValue()))
             .andExpect(jsonPath("$.dateResiliation").value(DEFAULT_DATE_RESILIATION.toString()))
             .andExpect(jsonPath("$.derniereAnnee").value(DEFAULT_DERNIERE_ANNEE))
             .andExpect(jsonPath("$.dernierMois").value(DEFAULT_DERNIER_MOIS));
@@ -238,6 +360,7 @@ class TiersFinanceurResourceIT {
             .dateInscription(UPDATED_DATE_INSCRIPTION)
             .anneLancement(UPDATED_ANNE_LANCEMENT)
             .moisLancement(UPDATED_MOIS_LANCEMENT)
+            .recupHeureActif(UPDATED_RECUP_HEURE_ACTIF)
             .dateResiliation(UPDATED_DATE_RESILIATION)
             .derniereAnnee(UPDATED_DERNIERE_ANNEE)
             .dernierMois(UPDATED_DERNIER_MOIS);
@@ -260,6 +383,7 @@ class TiersFinanceurResourceIT {
         assertThat(testTiersFinanceur.getDateInscription()).isEqualTo(UPDATED_DATE_INSCRIPTION);
         assertThat(testTiersFinanceur.getAnneLancement()).isEqualTo(UPDATED_ANNE_LANCEMENT);
         assertThat(testTiersFinanceur.getMoisLancement()).isEqualTo(UPDATED_MOIS_LANCEMENT);
+        assertThat(testTiersFinanceur.getRecupHeureActif()).isEqualTo(UPDATED_RECUP_HEURE_ACTIF);
         assertThat(testTiersFinanceur.getDateResiliation()).isEqualTo(UPDATED_DATE_RESILIATION);
         assertThat(testTiersFinanceur.getDerniereAnnee()).isEqualTo(UPDATED_DERNIERE_ANNEE);
         assertThat(testTiersFinanceur.getDernierMois()).isEqualTo(UPDATED_DERNIER_MOIS);
@@ -338,7 +462,7 @@ class TiersFinanceurResourceIT {
             .isActif(UPDATED_IS_ACTIF)
             .dateInscription(UPDATED_DATE_INSCRIPTION)
             .moisLancement(UPDATED_MOIS_LANCEMENT)
-            .derniereAnnee(UPDATED_DERNIERE_ANNEE);
+            .dateResiliation(UPDATED_DATE_RESILIATION);
 
         restTiersFinanceurMockMvc
             .perform(
@@ -358,8 +482,9 @@ class TiersFinanceurResourceIT {
         assertThat(testTiersFinanceur.getDateInscription()).isEqualTo(UPDATED_DATE_INSCRIPTION);
         assertThat(testTiersFinanceur.getAnneLancement()).isEqualTo(DEFAULT_ANNE_LANCEMENT);
         assertThat(testTiersFinanceur.getMoisLancement()).isEqualTo(UPDATED_MOIS_LANCEMENT);
-        assertThat(testTiersFinanceur.getDateResiliation()).isEqualTo(DEFAULT_DATE_RESILIATION);
-        assertThat(testTiersFinanceur.getDerniereAnnee()).isEqualTo(UPDATED_DERNIERE_ANNEE);
+        assertThat(testTiersFinanceur.getRecupHeureActif()).isEqualTo(DEFAULT_RECUP_HEURE_ACTIF);
+        assertThat(testTiersFinanceur.getDateResiliation()).isEqualTo(UPDATED_DATE_RESILIATION);
+        assertThat(testTiersFinanceur.getDerniereAnnee()).isEqualTo(DEFAULT_DERNIERE_ANNEE);
         assertThat(testTiersFinanceur.getDernierMois()).isEqualTo(DEFAULT_DERNIER_MOIS);
     }
 
@@ -382,6 +507,7 @@ class TiersFinanceurResourceIT {
             .dateInscription(UPDATED_DATE_INSCRIPTION)
             .anneLancement(UPDATED_ANNE_LANCEMENT)
             .moisLancement(UPDATED_MOIS_LANCEMENT)
+            .recupHeureActif(UPDATED_RECUP_HEURE_ACTIF)
             .dateResiliation(UPDATED_DATE_RESILIATION)
             .derniereAnnee(UPDATED_DERNIERE_ANNEE)
             .dernierMois(UPDATED_DERNIER_MOIS);
@@ -404,6 +530,7 @@ class TiersFinanceurResourceIT {
         assertThat(testTiersFinanceur.getDateInscription()).isEqualTo(UPDATED_DATE_INSCRIPTION);
         assertThat(testTiersFinanceur.getAnneLancement()).isEqualTo(UPDATED_ANNE_LANCEMENT);
         assertThat(testTiersFinanceur.getMoisLancement()).isEqualTo(UPDATED_MOIS_LANCEMENT);
+        assertThat(testTiersFinanceur.getRecupHeureActif()).isEqualTo(UPDATED_RECUP_HEURE_ACTIF);
         assertThat(testTiersFinanceur.getDateResiliation()).isEqualTo(UPDATED_DATE_RESILIATION);
         assertThat(testTiersFinanceur.getDerniereAnnee()).isEqualTo(UPDATED_DERNIERE_ANNEE);
         assertThat(testTiersFinanceur.getDernierMois()).isEqualTo(UPDATED_DERNIER_MOIS);

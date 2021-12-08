@@ -71,9 +71,15 @@ class SoldePchGatlingTest extends Simulation {
             .post("/api/solde-pches")
             .headers(headers_http_authenticated)
             .body(StringBody("""{
-                "annee":"0"
+                "date":"2020-01-01T00:00:00.000Z"
+                , "isActif":null
+                , "isDernier":null
+                , "annee":"0"
                 , "mois":"0"
+                , "consoMontantPchCotisations":"0"
+                , "consoMontantPchSalaire":"0"
                 , "soldeMontantPch":"0"
+                , "consoHeurePch":"0"
                 , "soldeHeurePch":"0"
                 }""")).asJson
             .check(status.is(201))

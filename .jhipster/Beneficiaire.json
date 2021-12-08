@@ -3,19 +3,32 @@
   "fields": [
     {
       "fieldName": "id",
-      "fieldType": "String"
+      "fieldType": "Long",
+      "fieldValidateRules": ["unique", "required"]
     },
     {
       "fieldName": "externeId",
-      "fieldType": "String"
+      "fieldType": "UUID",
+      "fieldValidateRules": ["unique", "required"]
     },
     {
       "fieldName": "isActif",
-      "fieldType": "Boolean"
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateDesactivation",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "isInscrit",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "dateInscription",
-      "fieldType": "LocalDate"
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "dateResiliation",
@@ -25,51 +38,9 @@
   "relationships": [
     {
       "relationshipType": "one-to-many",
-      "otherEntityName": "soldeCi",
+      "otherEntityName": "enfant",
       "otherEntityRelationshipName": "beneficiaire",
-      "relationshipName": "soldeCi"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "soldeApa",
-      "otherEntityRelationshipName": "beneficiaire",
-      "relationshipName": "soldeApa"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "soldePch",
-      "otherEntityRelationshipName": "beneficiaire",
-      "relationshipName": "soldePch"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "soldePchE",
-      "otherEntityRelationshipName": "beneficiaire",
-      "relationshipName": "soldePchE"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "consommationCi",
-      "otherEntityRelationshipName": "beneficiaire",
-      "relationshipName": "consommationCi"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "consommationApa",
-      "otherEntityRelationshipName": "beneficiaire",
-      "relationshipName": "consommationApa"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "consommationPch",
-      "otherEntityRelationshipName": "beneficiaire",
-      "relationshipName": "consommationPch"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "consommationPchE",
-      "otherEntityRelationshipName": "beneficiaire",
-      "relationshipName": "consommationPchE"
+      "relationshipName": "enfant"
     }
   ],
   "entityTableName": "beneficiaire",

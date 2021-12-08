@@ -19,15 +19,20 @@
       },
       "id": "ID",
       "isActif": "Is Actif",
+      "dateMensuelleDebutValidite": "Date Mensuelle Debut Validite",
       "anne": "Anne",
-      "montantPlafond": "Montant Plafond",
-      "nbPlafondheure": "Nb Plafondheure",
-      "taux": "Taux",
+      "mois": "Mois",
+      "montantPlafondSalaire": "Montant Plafond Salaire",
+      "montantPlafondCotisations": "Montant Plafond Cotisations",
+      "montantPlafondSalairePlus": "Montant Plafond Salaire Plus",
+      "montantPlafondCotisationsPlus": "Montant Plafond Cotisations Plus",
+      "nbHeureSalairePlafond": "Nb Heure Salaire Plafond",
+      "tauxSalaire": "Taux Salaire",
+      "tauxCotisations": "Taux Cotisations",
+      "aide": "Aide",
       "tiersFinanceur": "Tiers Financeur",
       "natureActivite": "Nature Activite",
-      "natureMontant": "Nature Montant",
-      "consommationApa": "Consommation Apa",
-      "aide": "Aide"
+      "natureMontant": "Nature Montant"
     }
   }
 }

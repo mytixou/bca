@@ -3,7 +3,8 @@
   "fields": [
     {
       "fieldName": "nom",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["unique", "required"]
     },
     {
       "fieldName": "localisation",
@@ -11,19 +12,28 @@
     },
     {
       "fieldName": "isActif",
-      "fieldType": "Boolean"
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "dateInscription",
-      "fieldType": "LocalDate"
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "anneLancement",
-      "fieldType": "Integer"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "moisLancement",
-      "fieldType": "Integer"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "recupHeureActif",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "dateResiliation",
@@ -38,32 +48,7 @@
       "fieldType": "Integer"
     }
   ],
-  "relationships": [
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "strategieCi",
-      "otherEntityRelationshipName": "tiersFinanceur",
-      "relationshipName": "strategie"
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "strategieApa",
-      "otherEntityRelationshipName": "tiersFinanceur",
-      "relationshipName": "strategie"
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "strategiePch",
-      "otherEntityRelationshipName": "tiersFinanceur",
-      "relationshipName": "strategie"
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "strategiePchE",
-      "otherEntityRelationshipName": "tiersFinanceur",
-      "relationshipName": "strategie"
-    }
-  ],
+  "relationships": [],
   "entityTableName": "tiers_financeur",
   "dto": "no",
   "pagination": "no",

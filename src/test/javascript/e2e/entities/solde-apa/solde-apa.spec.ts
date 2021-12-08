@@ -1,4 +1,4 @@
-import { browser, ExpectedConditions as ec, promise } from 'protractor';
+import { browser, ExpectedConditions as ec, protractor, promise } from 'protractor';
 import { NavBarPage, SignInPage } from '../../page-objects/jhi-page-objects';
 
 import { SoldeApaComponentsPage, SoldeApaDeleteDialog, SoldeApaUpdatePage } from './solde-apa.page-object';
@@ -43,11 +43,17 @@ describe('SoldeApa e2e test', () => {
     await soldeApaComponentsPage.clickOnCreateButton();
 
     await promise.all([
+      soldeApaUpdatePage.setDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+      soldeApaUpdatePage.getIsActifInput().click(),
+      soldeApaUpdatePage.getIsDernierInput().click(),
       soldeApaUpdatePage.setAnneeInput('5'),
       soldeApaUpdatePage.setMoisInput('5'),
+      soldeApaUpdatePage.setConsoMontantApaCotisationsInput('5'),
+      soldeApaUpdatePage.setConsoMontantApaSalaireInput('5'),
       soldeApaUpdatePage.setSoldeMontantApaInput('5'),
+      soldeApaUpdatePage.setConsoHeureApaInput('5'),
       soldeApaUpdatePage.setSoldeHeureApaInput('5'),
-      soldeApaUpdatePage.beneficiaireSelectLastOption(),
+      soldeApaUpdatePage.droitsStrategieApaSelectLastOption(),
     ]);
 
     await soldeApaUpdatePage.save();

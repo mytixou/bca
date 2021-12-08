@@ -1,6 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import * as dayjs from 'dayjs';
 
+import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 import { ISoldeApa, SoldeApa } from '../solde-apa.model';
 
 import { SoldeApaService } from './solde-apa.service';
@@ -10,6 +12,7 @@ describe('SoldeApa Service', () => {
   let httpMock: HttpTestingController;
   let elemDefault: ISoldeApa;
   let expectedResult: ISoldeApa | ISoldeApa[] | boolean | null;
+  let currentDate: dayjs.Dayjs;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -18,19 +21,31 @@ describe('SoldeApa Service', () => {
     expectedResult = null;
     service = TestBed.inject(SoldeApaService);
     httpMock = TestBed.inject(HttpTestingController);
+    currentDate = dayjs();
 
     elemDefault = {
       id: 0,
+      date: currentDate,
+      isActif: false,
+      isDernier: false,
       annee: 0,
       mois: 0,
+      consoMontantApaCotisations: 0,
+      consoMontantApaSalaire: 0,
       soldeMontantApa: 0,
+      consoHeureApa: 0,
       soldeHeureApa: 0,
     };
   });
 
   describe('Service methods', () => {
     it('should find an element', () => {
-      const returnedFromService = Object.assign({}, elemDefault);
+      const returnedFromService = Object.assign(
+        {
+          date: currentDate.format(DATE_TIME_FORMAT),
+        },
+        elemDefault
+      );
 
       service.find(123).subscribe(resp => (expectedResult = resp.body));
 
@@ -43,11 +58,17 @@ describe('SoldeApa Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 0,
+          date: currentDate.format(DATE_TIME_FORMAT),
         },
         elemDefault
       );
 
-      const expected = Object.assign({}, returnedFromService);
+      const expected = Object.assign(
+        {
+          date: currentDate,
+        },
+        returnedFromService
+      );
 
       service.create(new SoldeApa()).subscribe(resp => (expectedResult = resp.body));
 
@@ -60,15 +81,26 @@ describe('SoldeApa Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 1,
+          date: currentDate.format(DATE_TIME_FORMAT),
+          isActif: true,
+          isDernier: true,
           annee: 1,
           mois: 1,
+          consoMontantApaCotisations: 1,
+          consoMontantApaSalaire: 1,
           soldeMontantApa: 1,
+          consoHeureApa: 1,
           soldeHeureApa: 1,
         },
         elemDefault
       );
 
-      const expected = Object.assign({}, returnedFromService);
+      const expected = Object.assign(
+        {
+          date: currentDate,
+        },
+        returnedFromService
+      );
 
       service.update(expected).subscribe(resp => (expectedResult = resp.body));
 
@@ -80,16 +112,25 @@ describe('SoldeApa Service', () => {
     it('should partial update a SoldeApa', () => {
       const patchObject = Object.assign(
         {
+          isActif: true,
+          isDernier: true,
+          annee: 1,
           mois: 1,
+          consoMontantApaCotisations: 1,
           soldeMontantApa: 1,
-          soldeHeureApa: 1,
+          consoHeureApa: 1,
         },
         new SoldeApa()
       );
 
       const returnedFromService = Object.assign(patchObject, elemDefault);
 
-      const expected = Object.assign({}, returnedFromService);
+      const expected = Object.assign(
+        {
+          date: currentDate,
+        },
+        returnedFromService
+      );
 
       service.partialUpdate(patchObject).subscribe(resp => (expectedResult = resp.body));
 
@@ -102,15 +143,26 @@ describe('SoldeApa Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 1,
+          date: currentDate.format(DATE_TIME_FORMAT),
+          isActif: true,
+          isDernier: true,
           annee: 1,
           mois: 1,
+          consoMontantApaCotisations: 1,
+          consoMontantApaSalaire: 1,
           soldeMontantApa: 1,
+          consoHeureApa: 1,
           soldeHeureApa: 1,
         },
         elemDefault
       );
 
-      const expected = Object.assign({}, returnedFromService);
+      const expected = Object.assign(
+        {
+          date: currentDate,
+        },
+        returnedFromService
+      );
 
       service.query().subscribe(resp => (expectedResult = resp.body));
 
@@ -157,7 +209,7 @@ describe('SoldeApa Service', () => {
       });
 
       it('should add only unique SoldeApa to an array', () => {
-        const soldeApaArray: ISoldeApa[] = [{ id: 123 }, { id: 456 }, { id: 83369 }];
+        const soldeApaArray: ISoldeApa[] = [{ id: 123 }, { id: 456 }, { id: 39562 }];
         const soldeApaCollection: ISoldeApa[] = [{ id: 123 }];
         expectedResult = service.addSoldeApaToCollectionIfMissing(soldeApaCollection, ...soldeApaArray);
         expect(expectedResult).toHaveLength(3);

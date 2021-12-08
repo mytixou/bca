@@ -15,22 +15,25 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="nom" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_tiers_financeur__nom" />
             </column>
             <column name="localisation" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="is_actif" type="boolean">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="date_inscription" type="date">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="anne_lancement" type="integer">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="mois_lancement" type="integer">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
+            </column>
+            <column name="recup_heure_actif" type="boolean">
+                <constraints nullable="false" />
             </column>
             <column name="date_resiliation" type="date">
                 <constraints nullable="true" />
@@ -39,18 +42,6 @@
                 <constraints nullable="true" />
             </column>
             <column name="dernier_mois" type="integer">
-                <constraints nullable="true" />
-            </column>
-            <column name="strategie_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-            <column name="strategie_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-            <column name="strategie_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-            <column name="strategie_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -80,6 +71,7 @@
             <column name="date_inscription" type="date"/>
             <column name="anne_lancement" type="numeric"/>
             <column name="mois_lancement" type="numeric"/>
+            <column name="recup_heure_actif" type="boolean"/>
             <column name="date_resiliation" type="date"/>
             <column name="derniere_annee" type="numeric"/>
             <column name="dernier_mois" type="numeric"/>

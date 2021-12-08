@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
+import * as dayjs from 'dayjs';
+import { DATE_TIME_FORMAT } from 'app/config/input.constants';
+
 import { ISoldePch, SoldePch } from '../solde-pch.model';
 import { SoldePchService } from '../service/solde-pch.service';
-import { IBeneficiaire } from 'app/entities/beneficiaire/beneficiaire.model';
-import { BeneficiaireService } from 'app/entities/beneficiaire/service/beneficiaire.service';
+import { IDroitsStrategiePch } from 'app/entities/droits-strategie-pch/droits-strategie-pch.model';
+import { DroitsStrategiePchService } from 'app/entities/droits-strategie-pch/service/droits-strategie-pch.service';
 
 @Component({
   selector: 'jhi-solde-pch-update',
@@ -17,26 +20,37 @@ import { BeneficiaireService } from 'app/entities/beneficiaire/service/beneficia
 export class SoldePchUpdateComponent implements OnInit {
   isSaving = false;
 
-  beneficiairesSharedCollection: IBeneficiaire[] = [];
+  droitsStrategiePchesSharedCollection: IDroitsStrategiePch[] = [];
 
   editForm = this.fb.group({
     id: [],
-    annee: [],
-    mois: [],
-    soldeMontantPch: [],
-    soldeHeurePch: [],
-    beneficiaire: [],
+    date: [null, [Validators.required]],
+    isActif: [null, [Validators.required]],
+    isDernier: [null, [Validators.required]],
+    annee: [null, [Validators.required]],
+    mois: [null, [Validators.required]],
+    consoMontantPchCotisations: [null, [Validators.required]],
+    consoMontantPchSalaire: [null, [Validators.required]],
+    soldeMontantPch: [null, [Validators.required]],
+    consoHeurePch: [null, [Validators.required]],
+    soldeHeurePch: [null, [Validators.required]],
+    droitsStrategiePch: [],
   });
 
   constructor(
     protected soldePchService: SoldePchService,
-    protected beneficiaireService: BeneficiaireService,
+    protected droitsStrategiePchService: DroitsStrategiePchService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ soldePch }) => {
+      if (soldePch.id === undefined) {
+        const today = dayjs().startOf('day');
+        soldePch.date = today;
+      }
+
       this.updateForm(soldePch);
 
       this.loadRelationshipsOptions();
@@ -57,7 +71,7 @@ export class SoldePchUpdateComponent implements OnInit {
     }
   }
 
-  trackBeneficiaireById(index: number, item: IBeneficiaire): string {
+  trackDroitsStrategiePchById(index: number, item: IDroitsStrategiePch): number {
     return item.id!;
   }
 
@@ -83,40 +97,55 @@ export class SoldePchUpdateComponent implements OnInit {
   protected updateForm(soldePch: ISoldePch): void {
     this.editForm.patchValue({
       id: soldePch.id,
+      date: soldePch.date ? soldePch.date.format(DATE_TIME_FORMAT) : null,
+      isActif: soldePch.isActif,
+      isDernier: soldePch.isDernier,
       annee: soldePch.annee,
       mois: soldePch.mois,
+      consoMontantPchCotisations: soldePch.consoMontantPchCotisations,
+      consoMontantPchSalaire: soldePch.consoMontantPchSalaire,
       soldeMontantPch: soldePch.soldeMontantPch,
+      consoHeurePch: soldePch.consoHeurePch,
       soldeHeurePch: soldePch.soldeHeurePch,
-      beneficiaire: soldePch.beneficiaire,
+      droitsStrategiePch: soldePch.droitsStrategiePch,
     });
 
-    this.beneficiairesSharedCollection = this.beneficiaireService.addBeneficiaireToCollectionIfMissing(
-      this.beneficiairesSharedCollection,
-      soldePch.beneficiaire
+    this.droitsStrategiePchesSharedCollection = this.droitsStrategiePchService.addDroitsStrategiePchToCollectionIfMissing(
+      this.droitsStrategiePchesSharedCollection,
+      soldePch.droitsStrategiePch
     );
   }
 
   protected loadRelationshipsOptions(): void {
-    this.beneficiaireService
+    this.droitsStrategiePchService
       .query()
-      .pipe(map((res: HttpResponse<IBeneficiaire[]>) => res.body ?? []))
+      .pipe(map((res: HttpResponse<IDroitsStrategiePch[]>) => res.body ?? []))
       .pipe(
-        map((beneficiaires: IBeneficiaire[]) =>
-          this.beneficiaireService.addBeneficiaireToCollectionIfMissing(beneficiaires, this.editForm.get('beneficiaire')!.value)
+        map((droitsStrategiePches: IDroitsStrategiePch[]) =>
+          this.droitsStrategiePchService.addDroitsStrategiePchToCollectionIfMissing(
+            droitsStrategiePches,
+            this.editForm.get('droitsStrategiePch')!.value
+          )
         )
       )
-      .subscribe((beneficiaires: IBeneficiaire[]) => (this.beneficiairesSharedCollection = beneficiaires));
+      .subscribe((droitsStrategiePches: IDroitsStrategiePch[]) => (this.droitsStrategiePchesSharedCollection = droitsStrategiePches));
   }
 
   protected createFromForm(): ISoldePch {
     return {
       ...new SoldePch(),
       id: this.editForm.get(['id'])!.value,
+      date: this.editForm.get(['date'])!.value ? dayjs(this.editForm.get(['date'])!.value, DATE_TIME_FORMAT) : undefined,
+      isActif: this.editForm.get(['isActif'])!.value,
+      isDernier: this.editForm.get(['isDernier'])!.value,
       annee: this.editForm.get(['annee'])!.value,
       mois: this.editForm.get(['mois'])!.value,
+      consoMontantPchCotisations: this.editForm.get(['consoMontantPchCotisations'])!.value,
+      consoMontantPchSalaire: this.editForm.get(['consoMontantPchSalaire'])!.value,
       soldeMontantPch: this.editForm.get(['soldeMontantPch'])!.value,
+      consoHeurePch: this.editForm.get(['consoHeurePch'])!.value,
       soldeHeurePch: this.editForm.get(['soldeHeurePch'])!.value,
-      beneficiaire: this.editForm.get(['beneficiaire'])!.value,
+      droitsStrategiePch: this.editForm.get(['droitsStrategiePch'])!.value,
     };
   }
 }

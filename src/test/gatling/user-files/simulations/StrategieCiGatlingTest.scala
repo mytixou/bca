@@ -72,9 +72,13 @@ class StrategieCiGatlingTest extends Simulation {
             .headers(headers_http_authenticated)
             .body(StringBody("""{
                 "isActif":null
+                , "dateAnnuelleDebutValidite":"2020-01-01T00:00:00.000Z"
                 , "anne":"0"
-                , "montantPlafond":"0"
-                , "taux":"0"
+                , "montantPlafondDefaut":"0"
+                , "montantPlafondHandicape":"0"
+                , "montantPlafondDefautPlus":"0"
+                , "montantPlafondHandicapePlus":"0"
+                , "tauxSalaire":"0"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_strategieCi_url"))).exitHereIfFailed

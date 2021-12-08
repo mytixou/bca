@@ -9,6 +9,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +50,7 @@ public class StrategiePchResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/strategie-pches")
-    public ResponseEntity<StrategiePch> createStrategiePch(@RequestBody StrategiePch strategiePch) throws URISyntaxException {
+    public ResponseEntity<StrategiePch> createStrategiePch(@Valid @RequestBody StrategiePch strategiePch) throws URISyntaxException {
         log.debug("REST request to save StrategiePch : {}", strategiePch);
         if (strategiePch.getId() != null) {
             throw new BadRequestAlertException("A new strategiePch cannot already have an ID", ENTITY_NAME, "idexists");
@@ -73,7 +75,7 @@ public class StrategiePchResource {
     @PutMapping("/strategie-pches/{id}")
     public ResponseEntity<StrategiePch> updateStrategiePch(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody StrategiePch strategiePch
+        @Valid @RequestBody StrategiePch strategiePch
     ) throws URISyntaxException {
         log.debug("REST request to update StrategiePch : {}, {}", id, strategiePch);
         if (strategiePch.getId() == null) {
@@ -108,7 +110,7 @@ public class StrategiePchResource {
     @PatchMapping(value = "/strategie-pches/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<StrategiePch> partialUpdateStrategiePch(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody StrategiePch strategiePch
+        @NotNull @RequestBody StrategiePch strategiePch
     ) throws URISyntaxException {
         log.debug("REST request to partial update StrategiePch partially : {}, {}", id, strategiePch);
         if (strategiePch.getId() == null) {
@@ -133,10 +135,11 @@ public class StrategiePchResource {
     /**
      * {@code GET  /strategie-pches} : get all the strategiePches.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of strategiePches in body.
      */
     @GetMapping("/strategie-pches")
-    public List<StrategiePch> getAllStrategiePches() {
+    public List<StrategiePch> getAllStrategiePches(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all StrategiePches");
         return strategiePchService.findAll();
     }

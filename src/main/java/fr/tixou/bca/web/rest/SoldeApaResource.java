@@ -9,6 +9,9 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +51,7 @@ public class SoldeApaResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/solde-apas")
-    public ResponseEntity<SoldeApa> createSoldeApa(@RequestBody SoldeApa soldeApa) throws URISyntaxException {
+    public ResponseEntity<SoldeApa> createSoldeApa(@Valid @RequestBody SoldeApa soldeApa) throws URISyntaxException {
         log.debug("REST request to save SoldeApa : {}", soldeApa);
         if (soldeApa.getId() != null) {
             throw new BadRequestAlertException("A new soldeApa cannot already have an ID", ENTITY_NAME, "idexists");
@@ -73,7 +76,7 @@ public class SoldeApaResource {
     @PutMapping("/solde-apas/{id}")
     public ResponseEntity<SoldeApa> updateSoldeApa(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody SoldeApa soldeApa
+        @Valid @RequestBody SoldeApa soldeApa
     ) throws URISyntaxException {
         log.debug("REST request to update SoldeApa : {}, {}", id, soldeApa);
         if (soldeApa.getId() == null) {
@@ -108,7 +111,7 @@ public class SoldeApaResource {
     @PatchMapping(value = "/solde-apas/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<SoldeApa> partialUpdateSoldeApa(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody SoldeApa soldeApa
+        @NotNull @RequestBody SoldeApa soldeApa
     ) throws URISyntaxException {
         log.debug("REST request to partial update SoldeApa partially : {}, {}", id, soldeApa);
         if (soldeApa.getId() == null) {
@@ -133,10 +136,15 @@ public class SoldeApaResource {
     /**
      * {@code GET  /solde-apas} : get all the soldeApas.
      *
+     * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of soldeApas in body.
      */
     @GetMapping("/solde-apas")
-    public List<SoldeApa> getAllSoldeApas() {
+    public List<SoldeApa> getAllSoldeApas(@RequestParam(required = false) String filter) {
+        if ("pec-is-null".equals(filter)) {
+            log.debug("REST request to get all SoldeApas where pec is null");
+            return soldeApaService.findAllWherePecIsNull();
+        }
         log.debug("REST request to get all SoldeApas");
         return soldeApaService.findAll();
     }

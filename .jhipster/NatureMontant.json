@@ -3,7 +3,8 @@
   "fields": [
     {
       "fieldName": "code",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["unique", "required"]
     },
     {
       "fieldName": "libelle",
@@ -16,28 +17,32 @@
   ],
   "relationships": [
     {
-      "relationshipType": "many-to-one",
+      "relationshipType": "many-to-many",
       "otherEntityName": "strategieCi",
       "otherEntityRelationshipName": "natureMontant",
-      "relationshipName": "strategie"
+      "relationshipName": "strategieCi",
+      "ownerSide": false
     },
     {
-      "relationshipType": "many-to-one",
+      "relationshipType": "many-to-many",
       "otherEntityName": "strategieApa",
       "otherEntityRelationshipName": "natureMontant",
-      "relationshipName": "strategie"
+      "relationshipName": "strategieApa",
+      "ownerSide": false
     },
     {
-      "relationshipType": "many-to-one",
+      "relationshipType": "many-to-many",
       "otherEntityName": "strategiePch",
       "otherEntityRelationshipName": "natureMontant",
-      "relationshipName": "strategie"
+      "relationshipName": "strategiePch",
+      "ownerSide": false
     },
     {
-      "relationshipType": "many-to-one",
+      "relationshipType": "many-to-many",
       "otherEntityName": "strategiePchE",
       "otherEntityRelationshipName": "natureMontant",
-      "relationshipName": "strategie"
+      "relationshipName": "strategiePchE",
+      "ownerSide": false
     }
   ],
   "entityTableName": "nature_montant",

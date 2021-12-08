@@ -1,4 +1,4 @@
-import { browser, ExpectedConditions as ec, promise } from 'protractor';
+import { browser, ExpectedConditions as ec, protractor, promise } from 'protractor';
 import { NavBarPage, SignInPage } from '../../page-objects/jhi-page-objects';
 
 import { SoldeCiComponentsPage, SoldeCiDeleteDialog, SoldeCiUpdatePage } from './solde-ci.page-object';
@@ -43,10 +43,15 @@ describe('SoldeCi e2e test', () => {
     await soldeCiComponentsPage.clickOnCreateButton();
 
     await promise.all([
+      soldeCiUpdatePage.setDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+      soldeCiUpdatePage.getIsActifInput().click(),
+      soldeCiUpdatePage.getIsDernierInput().click(),
       soldeCiUpdatePage.setAnneeInput('5'),
+      soldeCiUpdatePage.setConsoMontantCiInput('5'),
+      soldeCiUpdatePage.setConsoCiRecInput('5'),
       soldeCiUpdatePage.setSoldeMontantCiInput('5'),
       soldeCiUpdatePage.setSoldeMontantCiRecInput('5'),
-      soldeCiUpdatePage.beneficiaireSelectLastOption(),
+      soldeCiUpdatePage.droitsStrategieCiSelectLastOption(),
     ]);
 
     await soldeCiUpdatePage.save();

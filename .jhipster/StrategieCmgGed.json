@@ -1,0 +1,79 @@
+{
+  "name": "StrategieCmgGed",
+  "fields": [
+    {
+      "fieldName": "anne",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "mois",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nbHeureSeuilPlafond",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "tauxSalaire",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "tauxCotisations",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "isActif",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateCreated",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "isUpdated",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateModified",
+      "fieldType": "Instant"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "trancheAideEnfantGed",
+      "otherEntityRelationshipName": "strategieCmgGed",
+      "relationshipName": "trancheAideEnfantAssmat"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "aide",
+      "otherEntityRelationshipName": "strategieCmgGed",
+      "relationshipName": "aide"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "tiersFinanceur",
+      "otherEntityRelationshipName": "strategieCmgGed",
+      "relationshipName": "tiersFinanceur"
+    }
+  ],
+  "entityTableName": "strategie_cmg_ged",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20211208234604"
+}

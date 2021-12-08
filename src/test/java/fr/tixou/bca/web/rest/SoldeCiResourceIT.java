@@ -10,8 +10,11 @@ import fr.tixou.bca.IntegrationTest;
 import fr.tixou.bca.domain.SoldeCi;
 import fr.tixou.bca.repository.SoldeCiRepository;
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,8 +34,23 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class SoldeCiResourceIT {
 
+    private static final Instant DEFAULT_DATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
+    private static final Boolean DEFAULT_IS_ACTIF = false;
+    private static final Boolean UPDATED_IS_ACTIF = true;
+
+    private static final Boolean DEFAULT_IS_DERNIER = false;
+    private static final Boolean UPDATED_IS_DERNIER = true;
+
     private static final Integer DEFAULT_ANNEE = 1;
     private static final Integer UPDATED_ANNEE = 2;
+
+    private static final BigDecimal DEFAULT_CONSO_MONTANT_CI = new BigDecimal(1);
+    private static final BigDecimal UPDATED_CONSO_MONTANT_CI = new BigDecimal(2);
+
+    private static final BigDecimal DEFAULT_CONSO_CI_REC = new BigDecimal(1);
+    private static final BigDecimal UPDATED_CONSO_CI_REC = new BigDecimal(2);
 
     private static final BigDecimal DEFAULT_SOLDE_MONTANT_CI = new BigDecimal(1);
     private static final BigDecimal UPDATED_SOLDE_MONTANT_CI = new BigDecimal(2);
@@ -65,7 +83,12 @@ class SoldeCiResourceIT {
      */
     public static SoldeCi createEntity(EntityManager em) {
         SoldeCi soldeCi = new SoldeCi()
+            .date(DEFAULT_DATE)
+            .isActif(DEFAULT_IS_ACTIF)
+            .isDernier(DEFAULT_IS_DERNIER)
             .annee(DEFAULT_ANNEE)
+            .consoMontantCi(DEFAULT_CONSO_MONTANT_CI)
+            .consoCiRec(DEFAULT_CONSO_CI_REC)
             .soldeMontantCi(DEFAULT_SOLDE_MONTANT_CI)
             .soldeMontantCiRec(DEFAULT_SOLDE_MONTANT_CI_REC);
         return soldeCi;
@@ -79,7 +102,12 @@ class SoldeCiResourceIT {
      */
     public static SoldeCi createUpdatedEntity(EntityManager em) {
         SoldeCi soldeCi = new SoldeCi()
+            .date(UPDATED_DATE)
+            .isActif(UPDATED_IS_ACTIF)
+            .isDernier(UPDATED_IS_DERNIER)
             .annee(UPDATED_ANNEE)
+            .consoMontantCi(UPDATED_CONSO_MONTANT_CI)
+            .consoCiRec(UPDATED_CONSO_CI_REC)
             .soldeMontantCi(UPDATED_SOLDE_MONTANT_CI)
             .soldeMontantCiRec(UPDATED_SOLDE_MONTANT_CI_REC);
         return soldeCi;
@@ -103,7 +131,12 @@ class SoldeCiResourceIT {
         List<SoldeCi> soldeCiList = soldeCiRepository.findAll();
         assertThat(soldeCiList).hasSize(databaseSizeBeforeCreate + 1);
         SoldeCi testSoldeCi = soldeCiList.get(soldeCiList.size() - 1);
+        assertThat(testSoldeCi.getDate()).isEqualTo(DEFAULT_DATE);
+        assertThat(testSoldeCi.getIsActif()).isEqualTo(DEFAULT_IS_ACTIF);
+        assertThat(testSoldeCi.getIsDernier()).isEqualTo(DEFAULT_IS_DERNIER);
         assertThat(testSoldeCi.getAnnee()).isEqualTo(DEFAULT_ANNEE);
+        assertThat(testSoldeCi.getConsoMontantCi()).isEqualByComparingTo(DEFAULT_CONSO_MONTANT_CI);
+        assertThat(testSoldeCi.getConsoCiRec()).isEqualByComparingTo(DEFAULT_CONSO_CI_REC);
         assertThat(testSoldeCi.getSoldeMontantCi()).isEqualByComparingTo(DEFAULT_SOLDE_MONTANT_CI);
         assertThat(testSoldeCi.getSoldeMontantCiRec()).isEqualByComparingTo(DEFAULT_SOLDE_MONTANT_CI_REC);
     }
@@ -128,6 +161,142 @@ class SoldeCiResourceIT {
 
     @Test
     @Transactional
+    void checkDateIsRequired() throws Exception {
+        int databaseSizeBeforeTest = soldeCiRepository.findAll().size();
+        // set the field null
+        soldeCi.setDate(null);
+
+        // Create the SoldeCi, which fails.
+
+        restSoldeCiMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(soldeCi)))
+            .andExpect(status().isBadRequest());
+
+        List<SoldeCi> soldeCiList = soldeCiRepository.findAll();
+        assertThat(soldeCiList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkIsActifIsRequired() throws Exception {
+        int databaseSizeBeforeTest = soldeCiRepository.findAll().size();
+        // set the field null
+        soldeCi.setIsActif(null);
+
+        // Create the SoldeCi, which fails.
+
+        restSoldeCiMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(soldeCi)))
+            .andExpect(status().isBadRequest());
+
+        List<SoldeCi> soldeCiList = soldeCiRepository.findAll();
+        assertThat(soldeCiList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkIsDernierIsRequired() throws Exception {
+        int databaseSizeBeforeTest = soldeCiRepository.findAll().size();
+        // set the field null
+        soldeCi.setIsDernier(null);
+
+        // Create the SoldeCi, which fails.
+
+        restSoldeCiMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(soldeCi)))
+            .andExpect(status().isBadRequest());
+
+        List<SoldeCi> soldeCiList = soldeCiRepository.findAll();
+        assertThat(soldeCiList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkAnneeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = soldeCiRepository.findAll().size();
+        // set the field null
+        soldeCi.setAnnee(null);
+
+        // Create the SoldeCi, which fails.
+
+        restSoldeCiMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(soldeCi)))
+            .andExpect(status().isBadRequest());
+
+        List<SoldeCi> soldeCiList = soldeCiRepository.findAll();
+        assertThat(soldeCiList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkConsoMontantCiIsRequired() throws Exception {
+        int databaseSizeBeforeTest = soldeCiRepository.findAll().size();
+        // set the field null
+        soldeCi.setConsoMontantCi(null);
+
+        // Create the SoldeCi, which fails.
+
+        restSoldeCiMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(soldeCi)))
+            .andExpect(status().isBadRequest());
+
+        List<SoldeCi> soldeCiList = soldeCiRepository.findAll();
+        assertThat(soldeCiList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkConsoCiRecIsRequired() throws Exception {
+        int databaseSizeBeforeTest = soldeCiRepository.findAll().size();
+        // set the field null
+        soldeCi.setConsoCiRec(null);
+
+        // Create the SoldeCi, which fails.
+
+        restSoldeCiMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(soldeCi)))
+            .andExpect(status().isBadRequest());
+
+        List<SoldeCi> soldeCiList = soldeCiRepository.findAll();
+        assertThat(soldeCiList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkSoldeMontantCiIsRequired() throws Exception {
+        int databaseSizeBeforeTest = soldeCiRepository.findAll().size();
+        // set the field null
+        soldeCi.setSoldeMontantCi(null);
+
+        // Create the SoldeCi, which fails.
+
+        restSoldeCiMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(soldeCi)))
+            .andExpect(status().isBadRequest());
+
+        List<SoldeCi> soldeCiList = soldeCiRepository.findAll();
+        assertThat(soldeCiList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkSoldeMontantCiRecIsRequired() throws Exception {
+        int databaseSizeBeforeTest = soldeCiRepository.findAll().size();
+        // set the field null
+        soldeCi.setSoldeMontantCiRec(null);
+
+        // Create the SoldeCi, which fails.
+
+        restSoldeCiMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(soldeCi)))
+            .andExpect(status().isBadRequest());
+
+        List<SoldeCi> soldeCiList = soldeCiRepository.findAll();
+        assertThat(soldeCiList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllSoldeCis() throws Exception {
         // Initialize the database
         soldeCiRepository.saveAndFlush(soldeCi);
@@ -138,7 +307,12 @@ class SoldeCiResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(soldeCi.getId().intValue())))
+            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
+            .andExpect(jsonPath("$.[*].isActif").value(hasItem(DEFAULT_IS_ACTIF.booleanValue())))
+            .andExpect(jsonPath("$.[*].isDernier").value(hasItem(DEFAULT_IS_DERNIER.booleanValue())))
             .andExpect(jsonPath("$.[*].annee").value(hasItem(DEFAULT_ANNEE)))
+            .andExpect(jsonPath("$.[*].consoMontantCi").value(hasItem(sameNumber(DEFAULT_CONSO_MONTANT_CI))))
+            .andExpect(jsonPath("$.[*].consoCiRec").value(hasItem(sameNumber(DEFAULT_CONSO_CI_REC))))
             .andExpect(jsonPath("$.[*].soldeMontantCi").value(hasItem(sameNumber(DEFAULT_SOLDE_MONTANT_CI))))
             .andExpect(jsonPath("$.[*].soldeMontantCiRec").value(hasItem(sameNumber(DEFAULT_SOLDE_MONTANT_CI_REC))));
     }
@@ -155,7 +329,12 @@ class SoldeCiResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(soldeCi.getId().intValue()))
+            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
+            .andExpect(jsonPath("$.isActif").value(DEFAULT_IS_ACTIF.booleanValue()))
+            .andExpect(jsonPath("$.isDernier").value(DEFAULT_IS_DERNIER.booleanValue()))
             .andExpect(jsonPath("$.annee").value(DEFAULT_ANNEE))
+            .andExpect(jsonPath("$.consoMontantCi").value(sameNumber(DEFAULT_CONSO_MONTANT_CI)))
+            .andExpect(jsonPath("$.consoCiRec").value(sameNumber(DEFAULT_CONSO_CI_REC)))
             .andExpect(jsonPath("$.soldeMontantCi").value(sameNumber(DEFAULT_SOLDE_MONTANT_CI)))
             .andExpect(jsonPath("$.soldeMontantCiRec").value(sameNumber(DEFAULT_SOLDE_MONTANT_CI_REC)));
     }
@@ -179,7 +358,15 @@ class SoldeCiResourceIT {
         SoldeCi updatedSoldeCi = soldeCiRepository.findById(soldeCi.getId()).get();
         // Disconnect from session so that the updates on updatedSoldeCi are not directly saved in db
         em.detach(updatedSoldeCi);
-        updatedSoldeCi.annee(UPDATED_ANNEE).soldeMontantCi(UPDATED_SOLDE_MONTANT_CI).soldeMontantCiRec(UPDATED_SOLDE_MONTANT_CI_REC);
+        updatedSoldeCi
+            .date(UPDATED_DATE)
+            .isActif(UPDATED_IS_ACTIF)
+            .isDernier(UPDATED_IS_DERNIER)
+            .annee(UPDATED_ANNEE)
+            .consoMontantCi(UPDATED_CONSO_MONTANT_CI)
+            .consoCiRec(UPDATED_CONSO_CI_REC)
+            .soldeMontantCi(UPDATED_SOLDE_MONTANT_CI)
+            .soldeMontantCiRec(UPDATED_SOLDE_MONTANT_CI_REC);
 
         restSoldeCiMockMvc
             .perform(
@@ -193,7 +380,12 @@ class SoldeCiResourceIT {
         List<SoldeCi> soldeCiList = soldeCiRepository.findAll();
         assertThat(soldeCiList).hasSize(databaseSizeBeforeUpdate);
         SoldeCi testSoldeCi = soldeCiList.get(soldeCiList.size() - 1);
+        assertThat(testSoldeCi.getDate()).isEqualTo(UPDATED_DATE);
+        assertThat(testSoldeCi.getIsActif()).isEqualTo(UPDATED_IS_ACTIF);
+        assertThat(testSoldeCi.getIsDernier()).isEqualTo(UPDATED_IS_DERNIER);
         assertThat(testSoldeCi.getAnnee()).isEqualTo(UPDATED_ANNEE);
+        assertThat(testSoldeCi.getConsoMontantCi()).isEqualTo(UPDATED_CONSO_MONTANT_CI);
+        assertThat(testSoldeCi.getConsoCiRec()).isEqualTo(UPDATED_CONSO_CI_REC);
         assertThat(testSoldeCi.getSoldeMontantCi()).isEqualTo(UPDATED_SOLDE_MONTANT_CI);
         assertThat(testSoldeCi.getSoldeMontantCiRec()).isEqualTo(UPDATED_SOLDE_MONTANT_CI_REC);
     }
@@ -266,6 +458,8 @@ class SoldeCiResourceIT {
         SoldeCi partialUpdatedSoldeCi = new SoldeCi();
         partialUpdatedSoldeCi.setId(soldeCi.getId());
 
+        partialUpdatedSoldeCi.annee(UPDATED_ANNEE).consoMontantCi(UPDATED_CONSO_MONTANT_CI).consoCiRec(UPDATED_CONSO_CI_REC);
+
         restSoldeCiMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedSoldeCi.getId())
@@ -278,7 +472,12 @@ class SoldeCiResourceIT {
         List<SoldeCi> soldeCiList = soldeCiRepository.findAll();
         assertThat(soldeCiList).hasSize(databaseSizeBeforeUpdate);
         SoldeCi testSoldeCi = soldeCiList.get(soldeCiList.size() - 1);
-        assertThat(testSoldeCi.getAnnee()).isEqualTo(DEFAULT_ANNEE);
+        assertThat(testSoldeCi.getDate()).isEqualTo(DEFAULT_DATE);
+        assertThat(testSoldeCi.getIsActif()).isEqualTo(DEFAULT_IS_ACTIF);
+        assertThat(testSoldeCi.getIsDernier()).isEqualTo(DEFAULT_IS_DERNIER);
+        assertThat(testSoldeCi.getAnnee()).isEqualTo(UPDATED_ANNEE);
+        assertThat(testSoldeCi.getConsoMontantCi()).isEqualByComparingTo(UPDATED_CONSO_MONTANT_CI);
+        assertThat(testSoldeCi.getConsoCiRec()).isEqualByComparingTo(UPDATED_CONSO_CI_REC);
         assertThat(testSoldeCi.getSoldeMontantCi()).isEqualByComparingTo(DEFAULT_SOLDE_MONTANT_CI);
         assertThat(testSoldeCi.getSoldeMontantCiRec()).isEqualByComparingTo(DEFAULT_SOLDE_MONTANT_CI_REC);
     }
@@ -295,7 +494,15 @@ class SoldeCiResourceIT {
         SoldeCi partialUpdatedSoldeCi = new SoldeCi();
         partialUpdatedSoldeCi.setId(soldeCi.getId());
 
-        partialUpdatedSoldeCi.annee(UPDATED_ANNEE).soldeMontantCi(UPDATED_SOLDE_MONTANT_CI).soldeMontantCiRec(UPDATED_SOLDE_MONTANT_CI_REC);
+        partialUpdatedSoldeCi
+            .date(UPDATED_DATE)
+            .isActif(UPDATED_IS_ACTIF)
+            .isDernier(UPDATED_IS_DERNIER)
+            .annee(UPDATED_ANNEE)
+            .consoMontantCi(UPDATED_CONSO_MONTANT_CI)
+            .consoCiRec(UPDATED_CONSO_CI_REC)
+            .soldeMontantCi(UPDATED_SOLDE_MONTANT_CI)
+            .soldeMontantCiRec(UPDATED_SOLDE_MONTANT_CI_REC);
 
         restSoldeCiMockMvc
             .perform(
@@ -309,7 +516,12 @@ class SoldeCiResourceIT {
         List<SoldeCi> soldeCiList = soldeCiRepository.findAll();
         assertThat(soldeCiList).hasSize(databaseSizeBeforeUpdate);
         SoldeCi testSoldeCi = soldeCiList.get(soldeCiList.size() - 1);
+        assertThat(testSoldeCi.getDate()).isEqualTo(UPDATED_DATE);
+        assertThat(testSoldeCi.getIsActif()).isEqualTo(UPDATED_IS_ACTIF);
+        assertThat(testSoldeCi.getIsDernier()).isEqualTo(UPDATED_IS_DERNIER);
         assertThat(testSoldeCi.getAnnee()).isEqualTo(UPDATED_ANNEE);
+        assertThat(testSoldeCi.getConsoMontantCi()).isEqualByComparingTo(UPDATED_CONSO_MONTANT_CI);
+        assertThat(testSoldeCi.getConsoCiRec()).isEqualByComparingTo(UPDATED_CONSO_CI_REC);
         assertThat(testSoldeCi.getSoldeMontantCi()).isEqualByComparingTo(UPDATED_SOLDE_MONTANT_CI);
         assertThat(testSoldeCi.getSoldeMontantCiRec()).isEqualByComparingTo(UPDATED_SOLDE_MONTANT_CI_REC);
     }

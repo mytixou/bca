@@ -2,28 +2,69 @@
   "name": "SoldeApa",
   "fields": [
     {
+      "fieldName": "date",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "isActif",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "isDernier",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
       "fieldName": "annee",
-      "fieldType": "Integer"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "mois",
-      "fieldType": "Integer"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "consoMontantApaCotisations",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "consoMontantApaSalaire",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "soldeMontantApa",
-      "fieldType": "BigDecimal"
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "consoHeureApa",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "soldeHeureApa",
-      "fieldType": "BigDecimal"
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
     }
   ],
   "relationships": [
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "beneficiaire",
+      "otherEntityName": "droitsStrategieApa",
       "otherEntityRelationshipName": "soldeApa",
-      "relationshipName": "beneficiaire"
+      "relationshipName": "droitsStrategieApa"
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "pec",
+      "otherEntityRelationshipName": "soldeApa",
+      "relationshipName": "pec",
+      "ownerSide": false
     }
   ],
   "entityTableName": "solde_apa",

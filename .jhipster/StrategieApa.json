@@ -3,55 +3,86 @@
   "fields": [
     {
       "fieldName": "isActif",
-      "fieldType": "Boolean"
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateMensuelleDebutValidite",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "anne",
-      "fieldType": "Integer"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["unique", "required"]
     },
     {
-      "fieldName": "montantPlafond",
-      "fieldType": "BigDecimal"
+      "fieldName": "mois",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["unique", "required"]
     },
     {
-      "fieldName": "nbPlafondheure",
-      "fieldType": "BigDecimal"
+      "fieldName": "montantPlafondSalaire",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "taux",
-      "fieldType": "BigDecimal"
+      "fieldName": "montantPlafondCotisations",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "montantPlafondSalairePlus",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "montantPlafondCotisationsPlus",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nbHeureSalairePlafond",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "tauxSalaire",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "tauxCotisations",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
     }
   ],
   "relationships": [
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "tiersFinanceur",
-      "otherEntityRelationshipName": "strategie",
-      "relationshipName": "tiersFinanceur"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "natureActivite",
-      "otherEntityRelationshipName": "strategie",
-      "relationshipName": "natureActivite"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "natureMontant",
-      "otherEntityRelationshipName": "strategie",
-      "relationshipName": "natureMontant"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "consommationApa",
-      "otherEntityRelationshipName": "strategieApa",
-      "relationshipName": "consommationApa"
-    },
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "aide",
       "otherEntityRelationshipName": "strategieApa",
       "relationshipName": "aide"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "tiersFinanceur",
+      "otherEntityRelationshipName": "strategieApa",
+      "relationshipName": "tiersFinanceur"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "natureActivite",
+      "otherEntityRelationshipName": "strategieApa",
+      "relationshipName": "natureActivite",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "natureMontant",
+      "otherEntityRelationshipName": "strategieApa",
+      "relationshipName": "natureMontant",
+      "ownerSide": true
     }
   ],
   "entityTableName": "strategie_apa",

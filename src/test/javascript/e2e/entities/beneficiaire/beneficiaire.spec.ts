@@ -46,8 +46,10 @@ describe('Beneficiaire e2e test', () => {
     await beneficiaireComponentsPage.clickOnCreateButton();
 
     await promise.all([
-      beneficiaireUpdatePage.setExterneIdInput('externeId'),
+      beneficiaireUpdatePage.setExterneIdInput('64c99148-3908-465d-8c4a-e510e3ade974'),
       beneficiaireUpdatePage.getIsActifInput().click(),
+      beneficiaireUpdatePage.setDateDesactivationInput('2000-12-31'),
+      beneficiaireUpdatePage.getIsInscritInput().click(),
       beneficiaireUpdatePage.setDateInscriptionInput('2000-12-31'),
       beneficiaireUpdatePage.setDateResiliationInput('2000-12-31'),
     ]);

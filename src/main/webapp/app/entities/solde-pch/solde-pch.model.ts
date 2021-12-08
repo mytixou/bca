@@ -1,23 +1,42 @@
-import { IBeneficiaire } from 'app/entities/beneficiaire/beneficiaire.model';
+import * as dayjs from 'dayjs';
+import { IDroitsStrategiePch } from 'app/entities/droits-strategie-pch/droits-strategie-pch.model';
+import { IPec } from 'app/entities/pec/pec.model';
 
 export interface ISoldePch {
   id?: number;
-  annee?: number | null;
-  mois?: number | null;
-  soldeMontantPch?: number | null;
-  soldeHeurePch?: number | null;
-  beneficiaire?: IBeneficiaire | null;
+  date?: dayjs.Dayjs;
+  isActif?: boolean;
+  isDernier?: boolean;
+  annee?: number;
+  mois?: number;
+  consoMontantPchCotisations?: number;
+  consoMontantPchSalaire?: number;
+  soldeMontantPch?: number;
+  consoHeurePch?: number;
+  soldeHeurePch?: number;
+  droitsStrategiePch?: IDroitsStrategiePch | null;
+  pec?: IPec | null;
 }
 
 export class SoldePch implements ISoldePch {
   constructor(
     public id?: number,
-    public annee?: number | null,
-    public mois?: number | null,
-    public soldeMontantPch?: number | null,
-    public soldeHeurePch?: number | null,
-    public beneficiaire?: IBeneficiaire | null
-  ) {}
+    public date?: dayjs.Dayjs,
+    public isActif?: boolean,
+    public isDernier?: boolean,
+    public annee?: number,
+    public mois?: number,
+    public consoMontantPchCotisations?: number,
+    public consoMontantPchSalaire?: number,
+    public soldeMontantPch?: number,
+    public consoHeurePch?: number,
+    public soldeHeurePch?: number,
+    public droitsStrategiePch?: IDroitsStrategiePch | null,
+    public pec?: IPec | null
+  ) {
+    this.isActif = this.isActif ?? false;
+    this.isDernier = this.isDernier ?? false;
+  }
 }
 
 export function getSoldePchIdentifier(soldePch: ISoldePch): number | undefined {

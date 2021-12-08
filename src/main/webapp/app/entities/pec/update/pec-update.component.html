@@ -1,0 +1,226 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-pec-heading" data-cy="PecCreateUpdateHeading" jhiTranslate="bcaApp.pec.home.createOrEditLabel">Create or edit a Pec</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="bcaApp.pec.id" for="field_id">Id</label>
+          <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          <div *ngIf="editForm.get('id')!.invalid && (editForm.get('id')!.dirty || editForm.get('id')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('id')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.pec.idProduit" for="field_idProduit">Id Produit</label>
+          <input type="text" class="form-control" name="idProduit" id="field_idProduit" data-cy="idProduit" formControlName="idProduit" />
+          <div *ngIf="editForm.get('idProduit')!.invalid && (editForm.get('idProduit')!.dirty || editForm.get('idProduit')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('idProduit')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.pec.produit" for="field_produit">Produit</label>
+          <select class="form-control" name="produit" formControlName="produit" id="field_produit" data-cy="produit">
+            <option [ngValue]="null">{{ 'bcaApp.TypeProduit.null' | translate }}</option>
+            <option *ngFor="let typeProduit of typeProduitValues" [value]="typeProduit">
+              {{ 'bcaApp.TypeProduit.' + typeProduit | translate }}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('produit')!.invalid && (editForm.get('produit')!.dirty || editForm.get('produit')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('produit')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.pec.isPlus" for="field_isPlus">Is Plus</label>
+          <input type="checkbox" class="form-check" name="isPlus" id="field_isPlus" data-cy="isPlus" formControlName="isPlus" />
+          <div *ngIf="editForm.get('isPlus')!.invalid && (editForm.get('isPlus')!.dirty || editForm.get('isPlus')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('isPlus')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.pec.dateCreated" for="field_dateCreated">Date Created</label>
+          <div class="d-flex">
+            <input
+              id="field_dateCreated"
+              data-cy="dateCreated"
+              type="datetime-local"
+              class="form-control"
+              name="dateCreated"
+              formControlName="dateCreated"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div *ngIf="editForm.get('dateCreated')!.invalid && (editForm.get('dateCreated')!.dirty || editForm.get('dateCreated')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('dateCreated')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('dateCreated')?.errors?.ZonedDateTimelocal"
+              jhiTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.pec.isUpdated" for="field_isUpdated">Is Updated</label>
+          <input type="checkbox" class="form-check" name="isUpdated" id="field_isUpdated" data-cy="isUpdated" formControlName="isUpdated" />
+          <div *ngIf="editForm.get('isUpdated')!.invalid && (editForm.get('isUpdated')!.dirty || editForm.get('isUpdated')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('isUpdated')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.pec.dateModified" for="field_dateModified">Date Modified</label>
+          <div class="d-flex">
+            <input
+              id="field_dateModified"
+              data-cy="dateModified"
+              type="datetime-local"
+              class="form-control"
+              name="dateModified"
+              formControlName="dateModified"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.pec.isActif" for="field_isActif">Is Actif</label>
+          <input type="checkbox" class="form-check" name="isActif" id="field_isActif" data-cy="isActif" formControlName="isActif" />
+          <div *ngIf="editForm.get('isActif')!.invalid && (editForm.get('isActif')!.dirty || editForm.get('isActif')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('isActif')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.pec.pecDetails" for="field_pecDetails">Pec Details</label>
+          <textarea
+            class="form-control"
+            name="pecDetails"
+            id="field_pecDetails"
+            data-cy="pecDetails"
+            formControlName="pecDetails"
+          ></textarea>
+          <div *ngIf="editForm.get('pecDetails')!.invalid && (editForm.get('pecDetails')!.dirty || editForm.get('pecDetails')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('pecDetails')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.pec.soldeCi" for="field_soldeCi">Solde Ci</label>
+          <select class="form-control" id="field_soldeCi" data-cy="soldeCi" name="soldeCi" formControlName="soldeCi">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="soldeCiOption.id === editForm.get('soldeCi')!.value?.id ? editForm.get('soldeCi')!.value : soldeCiOption"
+              *ngFor="let soldeCiOption of soldeCisCollection; trackBy: trackSoldeCiById"
+            >
+              {{ soldeCiOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.pec.soldeApa" for="field_soldeApa">Solde Apa</label>
+          <select class="form-control" id="field_soldeApa" data-cy="soldeApa" name="soldeApa" formControlName="soldeApa">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="soldeApaOption.id === editForm.get('soldeApa')!.value?.id ? editForm.get('soldeApa')!.value : soldeApaOption"
+              *ngFor="let soldeApaOption of soldeApasCollection; trackBy: trackSoldeApaById"
+            >
+              {{ soldeApaOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.pec.soldePch" for="field_soldePch">Solde Pch</label>
+          <select class="form-control" id="field_soldePch" data-cy="soldePch" name="soldePch" formControlName="soldePch">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="soldePchOption.id === editForm.get('soldePch')!.value?.id ? editForm.get('soldePch')!.value : soldePchOption"
+              *ngFor="let soldePchOption of soldePchesCollection; trackBy: trackSoldePchById"
+            >
+              {{ soldePchOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.pec.soldePchE" for="field_soldePchE">Solde Pch E</label>
+          <select class="form-control" id="field_soldePchE" data-cy="soldePchE" name="soldePchE" formControlName="soldePchE">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="soldePchEOption.id === editForm.get('soldePchE')!.value?.id ? editForm.get('soldePchE')!.value : soldePchEOption"
+              *ngFor="let soldePchEOption of soldePchESCollection; trackBy: trackSoldePchEById"
+            >
+              {{ soldePchEOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

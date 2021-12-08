@@ -32,6 +32,8 @@ export class BeneficiaireUpdatePage {
   idInput = element(by.id('field_id'));
   externeIdInput = element(by.id('field_externeId'));
   isActifInput = element(by.id('field_isActif'));
+  dateDesactivationInput = element(by.id('field_dateDesactivation'));
+  isInscritInput = element(by.id('field_isInscrit'));
   dateInscriptionInput = element(by.id('field_dateInscription'));
   dateResiliationInput = element(by.id('field_dateResiliation'));
 
@@ -57,6 +59,18 @@ export class BeneficiaireUpdatePage {
 
   getIsActifInput(): ElementFinder {
     return this.isActifInput;
+  }
+
+  async setDateDesactivationInput(dateDesactivation: string): Promise<void> {
+    await this.dateDesactivationInput.sendKeys(dateDesactivation);
+  }
+
+  async getDateDesactivationInput(): Promise<string> {
+    return await this.dateDesactivationInput.getAttribute('value');
+  }
+
+  getIsInscritInput(): ElementFinder {
+    return this.isInscritInput;
   }
 
   async setDateInscriptionInput(dateInscription: string): Promise<void> {

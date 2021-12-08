@@ -5,7 +5,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -19,17 +21,30 @@ public class Beneficiaire implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @NotNull
     @Id
-    @Column(name = "id")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
+    @Column(name = "id", nullable = false, unique = true)
+    private Long id;
 
-    @Column(name = "externe_id")
-    private String externeId;
+    @NotNull
+    @Column(name = "externe_id", nullable = false, unique = true)
+    private UUID externeId;
 
-    @Column(name = "is_actif")
+    @NotNull
+    @Column(name = "is_actif", nullable = false)
     private Boolean isActif;
 
-    @Column(name = "date_inscription")
+    @Column(name = "date_desactivation")
+    private LocalDate dateDesactivation;
+
+    @NotNull
+    @Column(name = "is_inscrit", nullable = false)
+    private Boolean isInscrit;
+
+    @NotNull
+    @Column(name = "date_inscription", nullable = false)
     private LocalDate dateInscription;
 
     @Column(name = "date_resiliation")
@@ -38,68 +53,33 @@ public class Beneficiaire implements Serializable {
     @OneToMany(mappedBy = "beneficiaire")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "beneficiaire" }, allowSetters = true)
-    private Set<SoldeCi> soldeCis = new HashSet<>();
-
-    @OneToMany(mappedBy = "beneficiaire")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "beneficiaire" }, allowSetters = true)
-    private Set<SoldeApa> soldeApas = new HashSet<>();
-
-    @OneToMany(mappedBy = "beneficiaire")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "beneficiaire" }, allowSetters = true)
-    private Set<SoldePch> soldePches = new HashSet<>();
-
-    @OneToMany(mappedBy = "beneficiaire")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "beneficiaire" }, allowSetters = true)
-    private Set<SoldePchE> soldePchES = new HashSet<>();
-
-    @OneToMany(mappedBy = "beneficiaire")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "beneficiaire", "strategieCi" }, allowSetters = true)
-    private Set<ConsommationCi> consommationCis = new HashSet<>();
-
-    @OneToMany(mappedBy = "beneficiaire")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "beneficiaire", "strategieApa" }, allowSetters = true)
-    private Set<ConsommationApa> consommationApas = new HashSet<>();
-
-    @OneToMany(mappedBy = "beneficiaire")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "beneficiaire", "strategiePch" }, allowSetters = true)
-    private Set<ConsommationPch> consommationPches = new HashSet<>();
-
-    @OneToMany(mappedBy = "beneficiaire")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "beneficiaire", "strategiePchE" }, allowSetters = true)
-    private Set<ConsommationPchE> consommationPchES = new HashSet<>();
+    private Set<Enfant> enfants = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
-    public String getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public Beneficiaire id(String id) {
+    public Beneficiaire id(Long id) {
         this.setId(id);
         return this;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getExterneId() {
+    public UUID getExterneId() {
         return this.externeId;
     }
 
-    public Beneficiaire externeId(String externeId) {
+    public Beneficiaire externeId(UUID externeId) {
         this.setExterneId(externeId);
         return this;
     }
 
-    public void setExterneId(String externeId) {
+    public void setExterneId(UUID externeId) {
         this.externeId = externeId;
     }
 
@@ -114,6 +94,32 @@ public class Beneficiaire implements Serializable {
 
     public void setIsActif(Boolean isActif) {
         this.isActif = isActif;
+    }
+
+    public LocalDate getDateDesactivation() {
+        return this.dateDesactivation;
+    }
+
+    public Beneficiaire dateDesactivation(LocalDate dateDesactivation) {
+        this.setDateDesactivation(dateDesactivation);
+        return this;
+    }
+
+    public void setDateDesactivation(LocalDate dateDesactivation) {
+        this.dateDesactivation = dateDesactivation;
+    }
+
+    public Boolean getIsInscrit() {
+        return this.isInscrit;
+    }
+
+    public Beneficiaire isInscrit(Boolean isInscrit) {
+        this.setIsInscrit(isInscrit);
+        return this;
+    }
+
+    public void setIsInscrit(Boolean isInscrit) {
+        this.isInscrit = isInscrit;
     }
 
     public LocalDate getDateInscription() {
@@ -142,251 +148,34 @@ public class Beneficiaire implements Serializable {
         this.dateResiliation = dateResiliation;
     }
 
-    public Set<SoldeCi> getSoldeCis() {
-        return this.soldeCis;
+    public Set<Enfant> getEnfants() {
+        return this.enfants;
     }
 
-    public void setSoldeCis(Set<SoldeCi> soldeCis) {
-        if (this.soldeCis != null) {
-            this.soldeCis.forEach(i -> i.setBeneficiaire(null));
+    public void setEnfants(Set<Enfant> enfants) {
+        if (this.enfants != null) {
+            this.enfants.forEach(i -> i.setBeneficiaire(null));
         }
-        if (soldeCis != null) {
-            soldeCis.forEach(i -> i.setBeneficiaire(this));
+        if (enfants != null) {
+            enfants.forEach(i -> i.setBeneficiaire(this));
         }
-        this.soldeCis = soldeCis;
+        this.enfants = enfants;
     }
 
-    public Beneficiaire soldeCis(Set<SoldeCi> soldeCis) {
-        this.setSoldeCis(soldeCis);
+    public Beneficiaire enfants(Set<Enfant> enfants) {
+        this.setEnfants(enfants);
         return this;
     }
 
-    public Beneficiaire addSoldeCi(SoldeCi soldeCi) {
-        this.soldeCis.add(soldeCi);
-        soldeCi.setBeneficiaire(this);
+    public Beneficiaire addEnfant(Enfant enfant) {
+        this.enfants.add(enfant);
+        enfant.setBeneficiaire(this);
         return this;
     }
 
-    public Beneficiaire removeSoldeCi(SoldeCi soldeCi) {
-        this.soldeCis.remove(soldeCi);
-        soldeCi.setBeneficiaire(null);
-        return this;
-    }
-
-    public Set<SoldeApa> getSoldeApas() {
-        return this.soldeApas;
-    }
-
-    public void setSoldeApas(Set<SoldeApa> soldeApas) {
-        if (this.soldeApas != null) {
-            this.soldeApas.forEach(i -> i.setBeneficiaire(null));
-        }
-        if (soldeApas != null) {
-            soldeApas.forEach(i -> i.setBeneficiaire(this));
-        }
-        this.soldeApas = soldeApas;
-    }
-
-    public Beneficiaire soldeApas(Set<SoldeApa> soldeApas) {
-        this.setSoldeApas(soldeApas);
-        return this;
-    }
-
-    public Beneficiaire addSoldeApa(SoldeApa soldeApa) {
-        this.soldeApas.add(soldeApa);
-        soldeApa.setBeneficiaire(this);
-        return this;
-    }
-
-    public Beneficiaire removeSoldeApa(SoldeApa soldeApa) {
-        this.soldeApas.remove(soldeApa);
-        soldeApa.setBeneficiaire(null);
-        return this;
-    }
-
-    public Set<SoldePch> getSoldePches() {
-        return this.soldePches;
-    }
-
-    public void setSoldePches(Set<SoldePch> soldePches) {
-        if (this.soldePches != null) {
-            this.soldePches.forEach(i -> i.setBeneficiaire(null));
-        }
-        if (soldePches != null) {
-            soldePches.forEach(i -> i.setBeneficiaire(this));
-        }
-        this.soldePches = soldePches;
-    }
-
-    public Beneficiaire soldePches(Set<SoldePch> soldePches) {
-        this.setSoldePches(soldePches);
-        return this;
-    }
-
-    public Beneficiaire addSoldePch(SoldePch soldePch) {
-        this.soldePches.add(soldePch);
-        soldePch.setBeneficiaire(this);
-        return this;
-    }
-
-    public Beneficiaire removeSoldePch(SoldePch soldePch) {
-        this.soldePches.remove(soldePch);
-        soldePch.setBeneficiaire(null);
-        return this;
-    }
-
-    public Set<SoldePchE> getSoldePchES() {
-        return this.soldePchES;
-    }
-
-    public void setSoldePchES(Set<SoldePchE> soldePchES) {
-        if (this.soldePchES != null) {
-            this.soldePchES.forEach(i -> i.setBeneficiaire(null));
-        }
-        if (soldePchES != null) {
-            soldePchES.forEach(i -> i.setBeneficiaire(this));
-        }
-        this.soldePchES = soldePchES;
-    }
-
-    public Beneficiaire soldePchES(Set<SoldePchE> soldePchES) {
-        this.setSoldePchES(soldePchES);
-        return this;
-    }
-
-    public Beneficiaire addSoldePchE(SoldePchE soldePchE) {
-        this.soldePchES.add(soldePchE);
-        soldePchE.setBeneficiaire(this);
-        return this;
-    }
-
-    public Beneficiaire removeSoldePchE(SoldePchE soldePchE) {
-        this.soldePchES.remove(soldePchE);
-        soldePchE.setBeneficiaire(null);
-        return this;
-    }
-
-    public Set<ConsommationCi> getConsommationCis() {
-        return this.consommationCis;
-    }
-
-    public void setConsommationCis(Set<ConsommationCi> consommationCis) {
-        if (this.consommationCis != null) {
-            this.consommationCis.forEach(i -> i.setBeneficiaire(null));
-        }
-        if (consommationCis != null) {
-            consommationCis.forEach(i -> i.setBeneficiaire(this));
-        }
-        this.consommationCis = consommationCis;
-    }
-
-    public Beneficiaire consommationCis(Set<ConsommationCi> consommationCis) {
-        this.setConsommationCis(consommationCis);
-        return this;
-    }
-
-    public Beneficiaire addConsommationCi(ConsommationCi consommationCi) {
-        this.consommationCis.add(consommationCi);
-        consommationCi.setBeneficiaire(this);
-        return this;
-    }
-
-    public Beneficiaire removeConsommationCi(ConsommationCi consommationCi) {
-        this.consommationCis.remove(consommationCi);
-        consommationCi.setBeneficiaire(null);
-        return this;
-    }
-
-    public Set<ConsommationApa> getConsommationApas() {
-        return this.consommationApas;
-    }
-
-    public void setConsommationApas(Set<ConsommationApa> consommationApas) {
-        if (this.consommationApas != null) {
-            this.consommationApas.forEach(i -> i.setBeneficiaire(null));
-        }
-        if (consommationApas != null) {
-            consommationApas.forEach(i -> i.setBeneficiaire(this));
-        }
-        this.consommationApas = consommationApas;
-    }
-
-    public Beneficiaire consommationApas(Set<ConsommationApa> consommationApas) {
-        this.setConsommationApas(consommationApas);
-        return this;
-    }
-
-    public Beneficiaire addConsommationApa(ConsommationApa consommationApa) {
-        this.consommationApas.add(consommationApa);
-        consommationApa.setBeneficiaire(this);
-        return this;
-    }
-
-    public Beneficiaire removeConsommationApa(ConsommationApa consommationApa) {
-        this.consommationApas.remove(consommationApa);
-        consommationApa.setBeneficiaire(null);
-        return this;
-    }
-
-    public Set<ConsommationPch> getConsommationPches() {
-        return this.consommationPches;
-    }
-
-    public void setConsommationPches(Set<ConsommationPch> consommationPches) {
-        if (this.consommationPches != null) {
-            this.consommationPches.forEach(i -> i.setBeneficiaire(null));
-        }
-        if (consommationPches != null) {
-            consommationPches.forEach(i -> i.setBeneficiaire(this));
-        }
-        this.consommationPches = consommationPches;
-    }
-
-    public Beneficiaire consommationPches(Set<ConsommationPch> consommationPches) {
-        this.setConsommationPches(consommationPches);
-        return this;
-    }
-
-    public Beneficiaire addConsommationPch(ConsommationPch consommationPch) {
-        this.consommationPches.add(consommationPch);
-        consommationPch.setBeneficiaire(this);
-        return this;
-    }
-
-    public Beneficiaire removeConsommationPch(ConsommationPch consommationPch) {
-        this.consommationPches.remove(consommationPch);
-        consommationPch.setBeneficiaire(null);
-        return this;
-    }
-
-    public Set<ConsommationPchE> getConsommationPchES() {
-        return this.consommationPchES;
-    }
-
-    public void setConsommationPchES(Set<ConsommationPchE> consommationPchES) {
-        if (this.consommationPchES != null) {
-            this.consommationPchES.forEach(i -> i.setBeneficiaire(null));
-        }
-        if (consommationPchES != null) {
-            consommationPchES.forEach(i -> i.setBeneficiaire(this));
-        }
-        this.consommationPchES = consommationPchES;
-    }
-
-    public Beneficiaire consommationPchES(Set<ConsommationPchE> consommationPchES) {
-        this.setConsommationPchES(consommationPchES);
-        return this;
-    }
-
-    public Beneficiaire addConsommationPchE(ConsommationPchE consommationPchE) {
-        this.consommationPchES.add(consommationPchE);
-        consommationPchE.setBeneficiaire(this);
-        return this;
-    }
-
-    public Beneficiaire removeConsommationPchE(ConsommationPchE consommationPchE) {
-        this.consommationPchES.remove(consommationPchE);
-        consommationPchE.setBeneficiaire(null);
+    public Beneficiaire removeEnfant(Enfant enfant) {
+        this.enfants.remove(enfant);
+        enfant.setBeneficiaire(null);
         return this;
     }
 
@@ -416,6 +205,8 @@ public class Beneficiaire implements Serializable {
             "id=" + getId() +
             ", externeId='" + getExterneId() + "'" +
             ", isActif='" + getIsActif() + "'" +
+            ", dateDesactivation='" + getDateDesactivation() + "'" +
+            ", isInscrit='" + getIsInscrit() + "'" +
             ", dateInscription='" + getDateInscription() + "'" +
             ", dateResiliation='" + getDateResiliation() + "'" +
             "}";

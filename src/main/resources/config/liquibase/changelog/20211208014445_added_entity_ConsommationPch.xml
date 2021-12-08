@@ -23,7 +23,7 @@
             <column name="nb_heures" type="decimal(21,2)">
                 <constraints nullable="true" />
             </column>
-            <column name="beneficiaire_id" type="varchar(255)">
+            <column name="beneficiaire_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <column name="strategie_pch_id" type="bigint">

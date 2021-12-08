@@ -47,11 +47,20 @@ describe('StrategiePch e2e test', () => {
 
     await promise.all([
       strategiePchUpdatePage.getIsActifInput().click(),
+      strategiePchUpdatePage.setDateMensuelleDebutValiditeInput('2000-12-31'),
       strategiePchUpdatePage.setAnneInput('5'),
-      strategiePchUpdatePage.setMontantPlafondInput('5'),
-      strategiePchUpdatePage.setNbPlafondheureInput('5'),
-      strategiePchUpdatePage.setTauxInput('5'),
+      strategiePchUpdatePage.setMoisInput('5'),
+      strategiePchUpdatePage.setMontantPlafondSalaireInput('5'),
+      strategiePchUpdatePage.setMontantPlafondCotisationsInput('5'),
+      strategiePchUpdatePage.setMontantPlafondSalairePlusInput('5'),
+      strategiePchUpdatePage.setMontantPlafondCotisationsPlusInput('5'),
+      strategiePchUpdatePage.setNbHeureSalairePlafondInput('5'),
+      strategiePchUpdatePage.setTauxSalaireInput('5'),
+      strategiePchUpdatePage.setTauxCotisationsInput('5'),
       strategiePchUpdatePage.aideSelectLastOption(),
+      strategiePchUpdatePage.tiersFinanceurSelectLastOption(),
+      // strategiePchUpdatePage.natureActiviteSelectLastOption(),
+      // strategiePchUpdatePage.natureMontantSelectLastOption(),
     ]);
 
     await strategiePchUpdatePage.save();

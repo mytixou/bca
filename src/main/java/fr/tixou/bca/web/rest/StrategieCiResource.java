@@ -9,6 +9,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +50,7 @@ public class StrategieCiResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/strategie-cis")
-    public ResponseEntity<StrategieCi> createStrategieCi(@RequestBody StrategieCi strategieCi) throws URISyntaxException {
+    public ResponseEntity<StrategieCi> createStrategieCi(@Valid @RequestBody StrategieCi strategieCi) throws URISyntaxException {
         log.debug("REST request to save StrategieCi : {}", strategieCi);
         if (strategieCi.getId() != null) {
             throw new BadRequestAlertException("A new strategieCi cannot already have an ID", ENTITY_NAME, "idexists");
@@ -73,7 +75,7 @@ public class StrategieCiResource {
     @PutMapping("/strategie-cis/{id}")
     public ResponseEntity<StrategieCi> updateStrategieCi(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody StrategieCi strategieCi
+        @Valid @RequestBody StrategieCi strategieCi
     ) throws URISyntaxException {
         log.debug("REST request to update StrategieCi : {}, {}", id, strategieCi);
         if (strategieCi.getId() == null) {
@@ -108,7 +110,7 @@ public class StrategieCiResource {
     @PatchMapping(value = "/strategie-cis/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<StrategieCi> partialUpdateStrategieCi(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody StrategieCi strategieCi
+        @NotNull @RequestBody StrategieCi strategieCi
     ) throws URISyntaxException {
         log.debug("REST request to partial update StrategieCi partially : {}, {}", id, strategieCi);
         if (strategieCi.getId() == null) {
@@ -133,10 +135,11 @@ public class StrategieCiResource {
     /**
      * {@code GET  /strategie-cis} : get all the strategieCis.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of strategieCis in body.
      */
     @GetMapping("/strategie-cis")
-    public List<StrategieCi> getAllStrategieCis() {
+    public List<StrategieCi> getAllStrategieCis(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all StrategieCis");
         return strategieCiService.findAll();
     }

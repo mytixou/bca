@@ -18,23 +18,59 @@
         <dd>
           <span>{{ strategieCi.isActif }}</span>
         </dd>
+        <dt><span jhiTranslate="bcaApp.strategieCi.dateAnnuelleDebutValidite">Date Annuelle Debut Validite</span></dt>
+        <dd>
+          <span>{{ strategieCi.dateAnnuelleDebutValidite | formatMediumDate }}</span>
+        </dd>
         <dt><span jhiTranslate="bcaApp.strategieCi.anne">Anne</span></dt>
         <dd>
           <span>{{ strategieCi.anne }}</span>
         </dd>
-        <dt><span jhiTranslate="bcaApp.strategieCi.montantPlafond">Montant Plafond</span></dt>
+        <dt><span jhiTranslate="bcaApp.strategieCi.montantPlafondDefaut">Montant Plafond Defaut</span></dt>
         <dd>
-          <span>{{ strategieCi.montantPlafond }}</span>
+          <span>{{ strategieCi.montantPlafondDefaut }}</span>
         </dd>
-        <dt><span jhiTranslate="bcaApp.strategieCi.taux">Taux</span></dt>
+        <dt><span jhiTranslate="bcaApp.strategieCi.montantPlafondHandicape">Montant Plafond Handicape</span></dt>
         <dd>
-          <span>{{ strategieCi.taux }}</span>
+          <span>{{ strategieCi.montantPlafondHandicape }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieCi.montantPlafondDefautPlus">Montant Plafond Defaut Plus</span></dt>
+        <dd>
+          <span>{{ strategieCi.montantPlafondDefautPlus }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieCi.montantPlafondHandicapePlus">Montant Plafond Handicape Plus</span></dt>
+        <dd>
+          <span>{{ strategieCi.montantPlafondHandicapePlus }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieCi.tauxSalaire">Taux Salaire</span></dt>
+        <dd>
+          <span>{{ strategieCi.tauxSalaire }}</span>
         </dd>
         <dt><span jhiTranslate="bcaApp.strategieCi.aide">Aide</span></dt>
         <dd>
           <div *ngIf="strategieCi.aide">
             <a [routerLink]="['/aide', strategieCi.aide?.id, 'view']">{{ strategieCi.aide?.id }}</a>
           </div>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieCi.tiersFinanceur">Tiers Financeur</span></dt>
+        <dd>
+          <div *ngIf="strategieCi.tiersFinanceur">
+            <a [routerLink]="['/tiers-financeur', strategieCi.tiersFinanceur?.id, 'view']">{{ strategieCi.tiersFinanceur?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieCi.natureActivite">Nature Activite</span></dt>
+        <dd>
+          <span *ngFor="let natureActivite of strategieCi.natureActivites; let last = last">
+            <a [routerLink]="['/nature-activite', natureActivite?.id, 'view']">{{ natureActivite.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieCi.natureMontant">Nature Montant</span></dt>
+        <dd>
+          <span *ngFor="let natureMontant of strategieCi.natureMontants; let last = last">
+            <a [routerLink]="['/nature-montant', natureMontant?.id, 'view']">{{ natureMontant.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
         </dd>
       </dl>
 

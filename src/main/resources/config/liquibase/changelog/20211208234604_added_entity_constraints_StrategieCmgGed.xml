@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <!--
+        Added the constraints for entity StrategieCmgGed.
+    -->
+    <changeSet id="20211208234604-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="aide_id"
+                                 baseTableName="strategie_cmg_ged"
+                                 constraintName="fk_strategie_cmg_ged__aide_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="aide"/>
+
+        <addForeignKeyConstraint baseColumnNames="tiers_financeur_id"
+                                 baseTableName="strategie_cmg_ged"
+                                 constraintName="fk_strategie_cmg_ged__tiers_financeur_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tiers_financeur"/>
+    </changeSet>
+</databaseChangeLog>

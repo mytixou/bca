@@ -32,6 +32,18 @@
     <include file="config/liquibase/changelog/20211208014444_added_entity_ConsommationApa.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20211208014445_added_entity_ConsommationPch.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20211208014446_added_entity_ConsommationPchE.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208234555_added_entity_DroitsStrategieCi.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208234556_added_entity_DroitsStrategieApa.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208234557_added_entity_DroitsStrategiePch.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208234558_added_entity_DroitsStrategiePchE.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208234559_added_entity_Pec.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208234600_added_entity_Produit.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208234601_added_entity_DroitAide.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208234602_added_entity_Enfant.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208234603_added_entity_StrategieCmgAssmat.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208234604_added_entity_StrategieCmgGed.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208234605_added_entity_TrancheAideEnfantAssmat.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208234606_added_entity_TrancheAideEnfantGed.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20211208014431_added_entity_constraints_SoldeCi.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20211208014432_added_entity_constraints_SoldeApa.xml" relativeToChangelogFile="false"/>
@@ -48,6 +60,18 @@
     <include file="config/liquibase/changelog/20211208014444_added_entity_constraints_ConsommationApa.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20211208014445_added_entity_constraints_ConsommationPch.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20211208014446_added_entity_constraints_ConsommationPchE.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014436_added_entity_constraints_Aide.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208234555_added_entity_constraints_DroitsStrategieCi.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208234556_added_entity_constraints_DroitsStrategieApa.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208234557_added_entity_constraints_DroitsStrategiePch.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208234558_added_entity_constraints_DroitsStrategiePchE.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208234559_added_entity_constraints_Pec.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208234601_added_entity_constraints_DroitAide.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208234602_added_entity_constraints_Enfant.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208234603_added_entity_constraints_StrategieCmgAssmat.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208234604_added_entity_constraints_StrategieCmgGed.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208234605_added_entity_constraints_TrancheAideEnfantAssmat.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208234606_added_entity_constraints_TrancheAideEnfantGed.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

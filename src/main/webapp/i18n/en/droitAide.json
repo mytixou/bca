@@ -1,0 +1,29 @@
+{
+  "bcaApp": {
+    "droitAide": {
+      "home": {
+        "title": "Droit Aides",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Droit Aide",
+        "createOrEditLabel": "Create or edit a Droit Aide",
+        "notFound": "No Droit Aides found"
+      },
+      "created": "A new Droit Aide is created with identifier {{ param }}",
+      "updated": "A Droit Aide is updated with identifier {{ param }}",
+      "deleted": "A Droit Aide is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Droit Aide {{ id }}?"
+      },
+      "detail": {
+        "title": "Droit Aide"
+      },
+      "id": "ID",
+      "isActif": "Is Actif",
+      "anne": "Anne",
+      "dateOuverture": "Date Ouverture",
+      "dateFermeture": "Date Fermeture",
+      "produit": "Produit",
+      "produit": "Produit"
+    }
+  }
+}

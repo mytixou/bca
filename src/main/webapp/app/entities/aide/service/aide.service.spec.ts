@@ -27,6 +27,7 @@ describe('Aide Service', () => {
     elemDefault = {
       id: 0,
       nom: TypeAide.CI,
+      priorite: 0,
       isActif: false,
       dateLancement: currentDate,
       anneLancement: 0,
@@ -84,6 +85,7 @@ describe('Aide Service', () => {
         {
           id: 1,
           nom: 'BBBBBB',
+          priorite: 1,
           isActif: true,
           dateLancement: currentDate.format(DATE_FORMAT),
           anneLancement: 1,
@@ -113,10 +115,11 @@ describe('Aide Service', () => {
     it('should partial update a Aide', () => {
       const patchObject = Object.assign(
         {
-          isActif: true,
+          priorite: 1,
+          dateLancement: currentDate.format(DATE_FORMAT),
           anneLancement: 1,
           moisLancement: 1,
-          dateArret: currentDate.format(DATE_FORMAT),
+          dernierMois: 1,
         },
         new Aide()
       );
@@ -143,6 +146,7 @@ describe('Aide Service', () => {
         {
           id: 1,
           nom: 'BBBBBB',
+          priorite: 1,
           isActif: true,
           dateLancement: currentDate.format(DATE_FORMAT),
           anneLancement: 1,
@@ -207,7 +211,7 @@ describe('Aide Service', () => {
       });
 
       it('should add only unique Aide to an array', () => {
-        const aideArray: IAide[] = [{ id: 123 }, { id: 456 }, { id: 62349 }];
+        const aideArray: IAide[] = [{ id: 123 }, { id: 456 }, { id: 15364 }];
         const aideCollection: IAide[] = [{ id: 123 }];
         expectedResult = service.addAideToCollectionIfMissing(aideCollection, ...aideArray);
         expect(expectedResult).toHaveLength(3);

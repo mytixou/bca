@@ -1,6 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import * as dayjs from 'dayjs';
 
+import { DATE_FORMAT } from 'app/config/input.constants';
 import { IStrategiePch, StrategiePch } from '../strategie-pch.model';
 
 import { StrategiePchService } from './strategie-pch.service';
@@ -10,6 +12,7 @@ describe('StrategiePch Service', () => {
   let httpMock: HttpTestingController;
   let elemDefault: IStrategiePch;
   let expectedResult: IStrategiePch | IStrategiePch[] | boolean | null;
+  let currentDate: dayjs.Dayjs;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -18,20 +21,32 @@ describe('StrategiePch Service', () => {
     expectedResult = null;
     service = TestBed.inject(StrategiePchService);
     httpMock = TestBed.inject(HttpTestingController);
+    currentDate = dayjs();
 
     elemDefault = {
       id: 0,
       isActif: false,
+      dateMensuelleDebutValidite: currentDate,
       anne: 0,
-      montantPlafond: 0,
-      nbPlafondheure: 0,
-      taux: 0,
+      mois: 0,
+      montantPlafondSalaire: 0,
+      montantPlafondCotisations: 0,
+      montantPlafondSalairePlus: 0,
+      montantPlafondCotisationsPlus: 0,
+      nbHeureSalairePlafond: 0,
+      tauxSalaire: 0,
+      tauxCotisations: 0,
     };
   });
 
   describe('Service methods', () => {
     it('should find an element', () => {
-      const returnedFromService = Object.assign({}, elemDefault);
+      const returnedFromService = Object.assign(
+        {
+          dateMensuelleDebutValidite: currentDate.format(DATE_FORMAT),
+        },
+        elemDefault
+      );
 
       service.find(123).subscribe(resp => (expectedResult = resp.body));
 
@@ -44,11 +59,17 @@ describe('StrategiePch Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 0,
+          dateMensuelleDebutValidite: currentDate.format(DATE_FORMAT),
         },
         elemDefault
       );
 
-      const expected = Object.assign({}, returnedFromService);
+      const expected = Object.assign(
+        {
+          dateMensuelleDebutValidite: currentDate,
+        },
+        returnedFromService
+      );
 
       service.create(new StrategiePch()).subscribe(resp => (expectedResult = resp.body));
 
@@ -62,15 +83,26 @@ describe('StrategiePch Service', () => {
         {
           id: 1,
           isActif: true,
+          dateMensuelleDebutValidite: currentDate.format(DATE_FORMAT),
           anne: 1,
-          montantPlafond: 1,
-          nbPlafondheure: 1,
-          taux: 1,
+          mois: 1,
+          montantPlafondSalaire: 1,
+          montantPlafondCotisations: 1,
+          montantPlafondSalairePlus: 1,
+          montantPlafondCotisationsPlus: 1,
+          nbHeureSalairePlafond: 1,
+          tauxSalaire: 1,
+          tauxCotisations: 1,
         },
         elemDefault
       );
 
-      const expected = Object.assign({}, returnedFromService);
+      const expected = Object.assign(
+        {
+          dateMensuelleDebutValidite: currentDate,
+        },
+        returnedFromService
+      );
 
       service.update(expected).subscribe(resp => (expectedResult = resp.body));
 
@@ -83,16 +115,25 @@ describe('StrategiePch Service', () => {
       const patchObject = Object.assign(
         {
           isActif: true,
+          dateMensuelleDebutValidite: currentDate.format(DATE_FORMAT),
           anne: 1,
-          montantPlafond: 1,
-          nbPlafondheure: 1,
+          mois: 1,
+          montantPlafondCotisations: 1,
+          montantPlafondSalairePlus: 1,
+          montantPlafondCotisationsPlus: 1,
+          tauxCotisations: 1,
         },
         new StrategiePch()
       );
 
       const returnedFromService = Object.assign(patchObject, elemDefault);
 
-      const expected = Object.assign({}, returnedFromService);
+      const expected = Object.assign(
+        {
+          dateMensuelleDebutValidite: currentDate,
+        },
+        returnedFromService
+      );
 
       service.partialUpdate(patchObject).subscribe(resp => (expectedResult = resp.body));
 
@@ -106,15 +147,26 @@ describe('StrategiePch Service', () => {
         {
           id: 1,
           isActif: true,
+          dateMensuelleDebutValidite: currentDate.format(DATE_FORMAT),
           anne: 1,
-          montantPlafond: 1,
-          nbPlafondheure: 1,
-          taux: 1,
+          mois: 1,
+          montantPlafondSalaire: 1,
+          montantPlafondCotisations: 1,
+          montantPlafondSalairePlus: 1,
+          montantPlafondCotisationsPlus: 1,
+          nbHeureSalairePlafond: 1,
+          tauxSalaire: 1,
+          tauxCotisations: 1,
         },
         elemDefault
       );
 
-      const expected = Object.assign({}, returnedFromService);
+      const expected = Object.assign(
+        {
+          dateMensuelleDebutValidite: currentDate,
+        },
+        returnedFromService
+      );
 
       service.query().subscribe(resp => (expectedResult = resp.body));
 
@@ -161,7 +213,7 @@ describe('StrategiePch Service', () => {
       });
 
       it('should add only unique StrategiePch to an array', () => {
-        const strategiePchArray: IStrategiePch[] = [{ id: 123 }, { id: 456 }, { id: 80282 }];
+        const strategiePchArray: IStrategiePch[] = [{ id: 123 }, { id: 456 }, { id: 94687 }];
         const strategiePchCollection: IStrategiePch[] = [{ id: 123 }];
         expectedResult = service.addStrategiePchToCollectionIfMissing(strategiePchCollection, ...strategiePchArray);
         expect(expectedResult).toHaveLength(3);

@@ -1,0 +1,35 @@
+{
+  "bcaApp": {
+    "strategieCmgGed": {
+      "home": {
+        "title": "Strategie Cmg Geds",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Strategie Cmg Ged",
+        "createOrEditLabel": "Create or edit a Strategie Cmg Ged",
+        "notFound": "No Strategie Cmg Geds found"
+      },
+      "created": "A new Strategie Cmg Ged is created with identifier {{ param }}",
+      "updated": "A Strategie Cmg Ged is updated with identifier {{ param }}",
+      "deleted": "A Strategie Cmg Ged is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Strategie Cmg Ged {{ id }}?"
+      },
+      "detail": {
+        "title": "Strategie Cmg Ged"
+      },
+      "id": "ID",
+      "anne": "Anne",
+      "mois": "Mois",
+      "nbHeureSeuilPlafond": "Nb Heure Seuil Plafond",
+      "tauxSalaire": "Taux Salaire",
+      "tauxCotisations": "Taux Cotisations",
+      "isActif": "Is Actif",
+      "dateCreated": "Date Created",
+      "isUpdated": "Is Updated",
+      "dateModified": "Date Modified",
+      "trancheAideEnfantAssmat": "Tranche Aide Enfant Assmat",
+      "aide": "Aide",
+      "tiersFinanceur": "Tiers Financeur"
+    }
+  }
+}

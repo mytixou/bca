@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,17 +43,35 @@ public class StrategiePchEServiceImpl implements StrategiePchEService {
                 if (strategiePchE.getIsActif() != null) {
                     existingStrategiePchE.setIsActif(strategiePchE.getIsActif());
                 }
+                if (strategiePchE.getDateMensuelleDebutValidite() != null) {
+                    existingStrategiePchE.setDateMensuelleDebutValidite(strategiePchE.getDateMensuelleDebutValidite());
+                }
                 if (strategiePchE.getAnne() != null) {
                     existingStrategiePchE.setAnne(strategiePchE.getAnne());
                 }
-                if (strategiePchE.getMontantPlafond() != null) {
-                    existingStrategiePchE.setMontantPlafond(strategiePchE.getMontantPlafond());
+                if (strategiePchE.getMois() != null) {
+                    existingStrategiePchE.setMois(strategiePchE.getMois());
                 }
-                if (strategiePchE.getNbPlafondheure() != null) {
-                    existingStrategiePchE.setNbPlafondheure(strategiePchE.getNbPlafondheure());
+                if (strategiePchE.getMontantPlafondSalaire() != null) {
+                    existingStrategiePchE.setMontantPlafondSalaire(strategiePchE.getMontantPlafondSalaire());
                 }
-                if (strategiePchE.getTaux() != null) {
-                    existingStrategiePchE.setTaux(strategiePchE.getTaux());
+                if (strategiePchE.getMontantPlafondCotisations() != null) {
+                    existingStrategiePchE.setMontantPlafondCotisations(strategiePchE.getMontantPlafondCotisations());
+                }
+                if (strategiePchE.getMontantPlafondSalairePlus() != null) {
+                    existingStrategiePchE.setMontantPlafondSalairePlus(strategiePchE.getMontantPlafondSalairePlus());
+                }
+                if (strategiePchE.getMontantPlafondCotisationsPlus() != null) {
+                    existingStrategiePchE.setMontantPlafondCotisationsPlus(strategiePchE.getMontantPlafondCotisationsPlus());
+                }
+                if (strategiePchE.getNbHeureSalairePlafond() != null) {
+                    existingStrategiePchE.setNbHeureSalairePlafond(strategiePchE.getNbHeureSalairePlafond());
+                }
+                if (strategiePchE.getTauxSalaire() != null) {
+                    existingStrategiePchE.setTauxSalaire(strategiePchE.getTauxSalaire());
+                }
+                if (strategiePchE.getTauxCotisations() != null) {
+                    existingStrategiePchE.setTauxCotisations(strategiePchE.getTauxCotisations());
                 }
 
                 return existingStrategiePchE;
@@ -63,14 +83,18 @@ public class StrategiePchEServiceImpl implements StrategiePchEService {
     @Transactional(readOnly = true)
     public List<StrategiePchE> findAll() {
         log.debug("Request to get all StrategiePchES");
-        return strategiePchERepository.findAll();
+        return strategiePchERepository.findAllWithEagerRelationships();
+    }
+
+    public Page<StrategiePchE> findAllWithEagerRelationships(Pageable pageable) {
+        return strategiePchERepository.findAllWithEagerRelationships(pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Optional<StrategiePchE> findOne(Long id) {
         log.debug("Request to get StrategiePchE : {}", id);
-        return strategiePchERepository.findById(id);
+        return strategiePchERepository.findOneWithEagerRelationships(id);
     }
 
     @Override

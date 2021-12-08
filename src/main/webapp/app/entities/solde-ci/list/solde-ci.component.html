@@ -33,10 +33,15 @@
       <thead>
         <tr>
           <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldeCi.date">Date</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldeCi.isActif">Is Actif</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldeCi.isDernier">Is Dernier</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.soldeCi.annee">Annee</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldeCi.consoMontantCi">Conso Montant Ci</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldeCi.consoCiRec">Conso Ci Rec</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.soldeCi.soldeMontantCi">Solde Montant Ci</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.soldeCi.soldeMontantCiRec">Solde Montant Ci Rec</span></th>
-          <th scope="col"><span jhiTranslate="bcaApp.soldeCi.beneficiaire">Beneficiaire</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldeCi.droitsStrategieCi">Droits Strategie Ci</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -45,12 +50,17 @@
           <td>
             <a [routerLink]="['/solde-ci', soldeCi.id, 'view']">{{ soldeCi.id }}</a>
           </td>
+          <td>{{ soldeCi.date | formatMediumDatetime }}</td>
+          <td>{{ soldeCi.isActif }}</td>
+          <td>{{ soldeCi.isDernier }}</td>
           <td>{{ soldeCi.annee }}</td>
+          <td>{{ soldeCi.consoMontantCi }}</td>
+          <td>{{ soldeCi.consoCiRec }}</td>
           <td>{{ soldeCi.soldeMontantCi }}</td>
           <td>{{ soldeCi.soldeMontantCiRec }}</td>
           <td>
-            <div *ngIf="soldeCi.beneficiaire">
-              <a [routerLink]="['/beneficiaire', soldeCi.beneficiaire?.id, 'view']">{{ soldeCi.beneficiaire?.id }}</a>
+            <div *ngIf="soldeCi.droitsStrategieCi">
+              <a [routerLink]="['/droits-strategie-ci', soldeCi.droitsStrategieCi?.id, 'view']">{{ soldeCi.droitsStrategieCi?.id }}</a>
             </div>
           </td>
           <td class="text-right">

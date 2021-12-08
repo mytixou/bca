@@ -31,6 +31,7 @@ export class AideUpdatePage {
 
   idInput = element(by.id('field_id'));
   nomSelect = element(by.id('field_nom'));
+  prioriteInput = element(by.id('field_priorite'));
   isActifInput = element(by.id('field_isActif'));
   dateLancementInput = element(by.id('field_dateLancement'));
   anneLancementInput = element(by.id('field_anneLancement'));
@@ -38,6 +39,8 @@ export class AideUpdatePage {
   dateArretInput = element(by.id('field_dateArret'));
   derniereAnneeInput = element(by.id('field_derniereAnnee'));
   dernierMoisInput = element(by.id('field_dernierMois'));
+
+  aideSelect = element(by.id('field_aide'));
 
   async getPageTitle(): Promise<string> {
     return this.pageTitle.getAttribute('jhiTranslate');
@@ -61,6 +64,14 @@ export class AideUpdatePage {
 
   async nomSelectLastOption(): Promise<void> {
     await this.nomSelect.all(by.tagName('option')).last().click();
+  }
+
+  async setPrioriteInput(priorite: string): Promise<void> {
+    await this.prioriteInput.sendKeys(priorite);
+  }
+
+  async getPrioriteInput(): Promise<string> {
+    return await this.prioriteInput.getAttribute('value');
   }
 
   getIsActifInput(): ElementFinder {
@@ -113,6 +124,22 @@ export class AideUpdatePage {
 
   async getDernierMoisInput(): Promise<string> {
     return await this.dernierMoisInput.getAttribute('value');
+  }
+
+  async aideSelectLastOption(): Promise<void> {
+    await this.aideSelect.all(by.tagName('option')).last().click();
+  }
+
+  async aideSelectOption(option: string): Promise<void> {
+    await this.aideSelect.sendKeys(option);
+  }
+
+  getAideSelect(): ElementFinder {
+    return this.aideSelect;
+  }
+
+  async getAideSelectedOption(): Promise<string> {
+    return await this.aideSelect.element(by.css('option:checked')).getText();
   }
 
   async save(): Promise<void> {

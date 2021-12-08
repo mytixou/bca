@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity Pec.
+    -->
+    <changeSet id="20211208234559-1" author="jhipster">
+        <createTable tableName="pec">
+            <column name="id" type="${uuidType}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="id_produit" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="produit" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="is_plus" type="boolean">
+                <constraints nullable="false" />
+            </column>
+            <column name="date_created" type="${datetimeType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="is_updated" type="boolean">
+                <constraints nullable="false" />
+            </column>
+            <column name="date_modified" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_actif" type="boolean">
+                <constraints nullable="false" />
+            </column>
+            <column name="pec_details" type="${clobType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="solde_ci_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_pec__solde_ci_id" />
+            </column>
+            <column name="solde_apa_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_pec__solde_apa_id" />
+            </column>
+            <column name="solde_pch_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_pec__solde_pch_id" />
+            </column>
+            <column name="solde_pche_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_pec__solde_pche_id" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+        <dropDefaultValue tableName="pec" columnName="date_created" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="pec" columnName="date_modified" columnDataType="${datetimeType}"/>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+
+    <!--
+        Load sample data generated with Faker.js
+        - This data can be easily edited using a CSV editor (or even MS Excel) and
+          is located in the 'src/main/resources/config/liquibase/fake-data' directory
+        - By default this data is applied when running with the JHipster 'dev' profile.
+          This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
+          Spring Boot configuration key.
+    -->
+    <changeSet id="20211208234559-1-data" author="jhipster" context="faker">
+        <loadData
+                  file="config/liquibase/fake-data/pec.csv"
+                  separator=";"
+                  tableName="pec"
+                  usePreparedStatements="true">
+            <column name="id" type="${uuidType}"/>
+            <column name="id_produit" type="string"/>
+            <column name="produit" type="string"/>
+            <column name="is_plus" type="boolean"/>
+            <column name="date_created" type="date"/>
+            <column name="is_updated" type="boolean"/>
+            <column name="date_modified" type="date"/>
+            <column name="is_actif" type="boolean"/>
+            <column name="pec_details" type="clob"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

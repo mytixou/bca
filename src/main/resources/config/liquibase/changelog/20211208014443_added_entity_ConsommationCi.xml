@@ -23,7 +23,7 @@
             <column name="montant_recuperable" type="decimal(21,2)">
                 <constraints nullable="true" />
             </column>
-            <column name="beneficiaire_id" type="varchar(255)">
+            <column name="beneficiaire_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <column name="strategie_ci_id" type="bigint">

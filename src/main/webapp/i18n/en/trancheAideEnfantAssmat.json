@@ -1,0 +1,32 @@
+{
+  "bcaApp": {
+    "trancheAideEnfantAssmat": {
+      "home": {
+        "title": "Tranche Aide Enfant Assmats",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Tranche Aide Enfant Assmat",
+        "createOrEditLabel": "Create or edit a Tranche Aide Enfant Assmat",
+        "notFound": "No Tranche Aide Enfant Assmats found"
+      },
+      "created": "A new Tranche Aide Enfant Assmat is created with identifier {{ param }}",
+      "updated": "A Tranche Aide Enfant Assmat is updated with identifier {{ param }}",
+      "deleted": "A Tranche Aide Enfant Assmat is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Tranche Aide Enfant Assmat {{ id }}?"
+      },
+      "detail": {
+        "title": "Tranche Aide Enfant Assmat"
+      },
+      "id": "ID",
+      "anne": "Anne",
+      "mois": "Mois",
+      "ageEnfantRevoluSurPeriode": "Age Enfant Revolu Sur Periode",
+      "montantPlafondSalaire": "Montant Plafond Salaire",
+      "isActif": "Is Actif",
+      "dateCreated": "Date Created",
+      "isUpdated": "Is Updated",
+      "dateModified": "Date Modified",
+      "strategieCmgAssmat": "Strategie Cmg Assmat"
+    }
+  }
+}

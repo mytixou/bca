@@ -1,0 +1,11 @@
+id;id_produit;produit;is_plus;date_created;is_updated;date_modified;is_actif;pec_details
+7ecfda3b-9a18-41f0-a9ff-e42d39c8ec52;recontextualize Incredible;CESUP;false;2021-12-08T15:16:51;true;2021-12-08T09:12:49;false;../fake-data/blob/hipster.txt
+18c8cdc6-d55a-4058-840a-780bb44dc68f;parsing Gloves Accounts;PAJEP;true;2021-12-08T07:51:18;false;2021-12-08T21:34:16;false;../fake-data/blob/hipster.txt
+87e83a1d-cae6-41e4-ba42-bb25986a09ee;withdrawal;PAJEP;true;2021-12-08T10:38:06;true;2021-12-08T03:13:51;true;../fake-data/blob/hipster.txt
+626818ba-d816-4abb-9948-7803b1fd76d4;base;PAJE;false;2021-12-08T13:47:47;true;2021-12-08T22:13:24;true;../fake-data/blob/hipster.txt
+e3962813-949f-40f6-97b6-01c8fc79f92a;Object-based leverage bi-directional;PAJEP;false;2021-12-08T17:34:44;true;2021-12-08T20:20:52;false;../fake-data/blob/hipster.txt
+9d622d08-41a3-4651-b695-c7c39140a3f5;Creative Generic;PAJEP;false;2021-12-08T05:19:30;true;2021-12-08T23:36:29;true;../fake-data/blob/hipster.txt
+7b236335-05b5-4f68-8c7f-9f13db4cd40e;copying;PAJE;false;2021-12-08T21:45:24;true;2021-12-08T23:27:27;false;../fake-data/blob/hipster.txt
+72e83241-5cb6-4c63-8ec2-6d0eb3531ef9;Pants Chair;CESUP;false;2021-12-08T03:27:51;false;2021-12-08T11:57:30;true;../fake-data/blob/hipster.txt
+1885decd-50e7-4963-a3ec-503f08b26df7;Chair;CESU;false;2021-12-08T05:45:25;false;2021-12-08T00:56:27;false;../fake-data/blob/hipster.txt
+3c6c7353-baa1-4eb2-906d-315729c99ee5;Israeli;PAJEP;false;2021-12-08T15:12:19;true;2021-12-08T02:06:42;true;../fake-data/blob/hipster.txt

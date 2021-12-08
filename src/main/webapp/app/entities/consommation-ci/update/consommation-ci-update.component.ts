@@ -69,7 +69,7 @@ export class ConsommationCiUpdateComponent implements OnInit {
     }
   }
 
-  trackBeneficiaireById(index: number, item: IBeneficiaire): string {
+  trackBeneficiaireById(index: number, item: IBeneficiaire): number {
     return item.id!;
   }
 

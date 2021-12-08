@@ -1,36 +1,46 @@
+import * as dayjs from 'dayjs';
+import { IAide } from 'app/entities/aide/aide.model';
 import { ITiersFinanceur } from 'app/entities/tiers-financeur/tiers-financeur.model';
 import { INatureActivite } from 'app/entities/nature-activite/nature-activite.model';
 import { INatureMontant } from 'app/entities/nature-montant/nature-montant.model';
-import { IConsommationPchE } from 'app/entities/consommation-pch-e/consommation-pch-e.model';
-import { IAide } from 'app/entities/aide/aide.model';
 
 export interface IStrategiePchE {
   id?: number;
-  isActif?: boolean | null;
-  anne?: number | null;
-  montantPlafond?: number | null;
-  nbPlafondheure?: number | null;
-  taux?: number | null;
-  tiersFinanceurs?: ITiersFinanceur[] | null;
+  isActif?: boolean;
+  dateMensuelleDebutValidite?: dayjs.Dayjs;
+  anne?: number;
+  mois?: number;
+  montantPlafondSalaire?: number;
+  montantPlafondCotisations?: number;
+  montantPlafondSalairePlus?: number;
+  montantPlafondCotisationsPlus?: number;
+  nbHeureSalairePlafond?: number;
+  tauxSalaire?: number;
+  tauxCotisations?: number;
+  aide?: IAide | null;
+  tiersFinanceur?: ITiersFinanceur | null;
   natureActivites?: INatureActivite[] | null;
   natureMontants?: INatureMontant[] | null;
-  consommationPchES?: IConsommationPchE[] | null;
-  aide?: IAide | null;
 }
 
 export class StrategiePchE implements IStrategiePchE {
   constructor(
     public id?: number,
-    public isActif?: boolean | null,
-    public anne?: number | null,
-    public montantPlafond?: number | null,
-    public nbPlafondheure?: number | null,
-    public taux?: number | null,
-    public tiersFinanceurs?: ITiersFinanceur[] | null,
+    public isActif?: boolean,
+    public dateMensuelleDebutValidite?: dayjs.Dayjs,
+    public anne?: number,
+    public mois?: number,
+    public montantPlafondSalaire?: number,
+    public montantPlafondCotisations?: number,
+    public montantPlafondSalairePlus?: number,
+    public montantPlafondCotisationsPlus?: number,
+    public nbHeureSalairePlafond?: number,
+    public tauxSalaire?: number,
+    public tauxCotisations?: number,
+    public aide?: IAide | null,
+    public tiersFinanceur?: ITiersFinanceur | null,
     public natureActivites?: INatureActivite[] | null,
-    public natureMontants?: INatureMontant[] | null,
-    public consommationPchES?: IConsommationPchE[] | null,
-    public aide?: IAide | null
+    public natureMontants?: INatureMontant[] | null
   ) {
     this.isActif = this.isActif ?? false;
   }

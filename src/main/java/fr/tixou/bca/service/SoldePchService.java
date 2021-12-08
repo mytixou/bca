@@ -30,6 +30,12 @@ public interface SoldePchService {
      * @return the list of entities.
      */
     List<SoldePch> findAll();
+    /**
+     * Get all the SoldePch where Pec is {@code null}.
+     *
+     * @return the {@link List} of entities.
+     */
+    List<SoldePch> findAllWherePecIsNull();
 
     /**
      * Get the "id" soldePch.

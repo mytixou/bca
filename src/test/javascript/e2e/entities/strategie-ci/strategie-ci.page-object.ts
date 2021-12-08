@@ -31,11 +31,18 @@ export class StrategieCiUpdatePage {
 
   idInput = element(by.id('field_id'));
   isActifInput = element(by.id('field_isActif'));
+  dateAnnuelleDebutValiditeInput = element(by.id('field_dateAnnuelleDebutValidite'));
   anneInput = element(by.id('field_anne'));
-  montantPlafondInput = element(by.id('field_montantPlafond'));
-  tauxInput = element(by.id('field_taux'));
+  montantPlafondDefautInput = element(by.id('field_montantPlafondDefaut'));
+  montantPlafondHandicapeInput = element(by.id('field_montantPlafondHandicape'));
+  montantPlafondDefautPlusInput = element(by.id('field_montantPlafondDefautPlus'));
+  montantPlafondHandicapePlusInput = element(by.id('field_montantPlafondHandicapePlus'));
+  tauxSalaireInput = element(by.id('field_tauxSalaire'));
 
   aideSelect = element(by.id('field_aide'));
+  tiersFinanceurSelect = element(by.id('field_tiersFinanceur'));
+  natureActiviteSelect = element(by.id('field_natureActivite'));
+  natureMontantSelect = element(by.id('field_natureMontant'));
 
   async getPageTitle(): Promise<string> {
     return this.pageTitle.getAttribute('jhiTranslate');
@@ -53,6 +60,14 @@ export class StrategieCiUpdatePage {
     return this.isActifInput;
   }
 
+  async setDateAnnuelleDebutValiditeInput(dateAnnuelleDebutValidite: string): Promise<void> {
+    await this.dateAnnuelleDebutValiditeInput.sendKeys(dateAnnuelleDebutValidite);
+  }
+
+  async getDateAnnuelleDebutValiditeInput(): Promise<string> {
+    return await this.dateAnnuelleDebutValiditeInput.getAttribute('value');
+  }
+
   async setAnneInput(anne: string): Promise<void> {
     await this.anneInput.sendKeys(anne);
   }
@@ -61,20 +76,44 @@ export class StrategieCiUpdatePage {
     return await this.anneInput.getAttribute('value');
   }
 
-  async setMontantPlafondInput(montantPlafond: string): Promise<void> {
-    await this.montantPlafondInput.sendKeys(montantPlafond);
+  async setMontantPlafondDefautInput(montantPlafondDefaut: string): Promise<void> {
+    await this.montantPlafondDefautInput.sendKeys(montantPlafondDefaut);
   }
 
-  async getMontantPlafondInput(): Promise<string> {
-    return await this.montantPlafondInput.getAttribute('value');
+  async getMontantPlafondDefautInput(): Promise<string> {
+    return await this.montantPlafondDefautInput.getAttribute('value');
   }
 
-  async setTauxInput(taux: string): Promise<void> {
-    await this.tauxInput.sendKeys(taux);
+  async setMontantPlafondHandicapeInput(montantPlafondHandicape: string): Promise<void> {
+    await this.montantPlafondHandicapeInput.sendKeys(montantPlafondHandicape);
   }
 
-  async getTauxInput(): Promise<string> {
-    return await this.tauxInput.getAttribute('value');
+  async getMontantPlafondHandicapeInput(): Promise<string> {
+    return await this.montantPlafondHandicapeInput.getAttribute('value');
+  }
+
+  async setMontantPlafondDefautPlusInput(montantPlafondDefautPlus: string): Promise<void> {
+    await this.montantPlafondDefautPlusInput.sendKeys(montantPlafondDefautPlus);
+  }
+
+  async getMontantPlafondDefautPlusInput(): Promise<string> {
+    return await this.montantPlafondDefautPlusInput.getAttribute('value');
+  }
+
+  async setMontantPlafondHandicapePlusInput(montantPlafondHandicapePlus: string): Promise<void> {
+    await this.montantPlafondHandicapePlusInput.sendKeys(montantPlafondHandicapePlus);
+  }
+
+  async getMontantPlafondHandicapePlusInput(): Promise<string> {
+    return await this.montantPlafondHandicapePlusInput.getAttribute('value');
+  }
+
+  async setTauxSalaireInput(tauxSalaire: string): Promise<void> {
+    await this.tauxSalaireInput.sendKeys(tauxSalaire);
+  }
+
+  async getTauxSalaireInput(): Promise<string> {
+    return await this.tauxSalaireInput.getAttribute('value');
   }
 
   async aideSelectLastOption(): Promise<void> {
@@ -91,6 +130,54 @@ export class StrategieCiUpdatePage {
 
   async getAideSelectedOption(): Promise<string> {
     return await this.aideSelect.element(by.css('option:checked')).getText();
+  }
+
+  async tiersFinanceurSelectLastOption(): Promise<void> {
+    await this.tiersFinanceurSelect.all(by.tagName('option')).last().click();
+  }
+
+  async tiersFinanceurSelectOption(option: string): Promise<void> {
+    await this.tiersFinanceurSelect.sendKeys(option);
+  }
+
+  getTiersFinanceurSelect(): ElementFinder {
+    return this.tiersFinanceurSelect;
+  }
+
+  async getTiersFinanceurSelectedOption(): Promise<string> {
+    return await this.tiersFinanceurSelect.element(by.css('option:checked')).getText();
+  }
+
+  async natureActiviteSelectLastOption(): Promise<void> {
+    await this.natureActiviteSelect.all(by.tagName('option')).last().click();
+  }
+
+  async natureActiviteSelectOption(option: string): Promise<void> {
+    await this.natureActiviteSelect.sendKeys(option);
+  }
+
+  getNatureActiviteSelect(): ElementFinder {
+    return this.natureActiviteSelect;
+  }
+
+  async getNatureActiviteSelectedOption(): Promise<string> {
+    return await this.natureActiviteSelect.element(by.css('option:checked')).getText();
+  }
+
+  async natureMontantSelectLastOption(): Promise<void> {
+    await this.natureMontantSelect.all(by.tagName('option')).last().click();
+  }
+
+  async natureMontantSelectOption(option: string): Promise<void> {
+    await this.natureMontantSelect.sendKeys(option);
+  }
+
+  getNatureMontantSelect(): ElementFinder {
+    return this.natureMontantSelect;
+  }
+
+  async getNatureMontantSelectedOption(): Promise<string> {
+    return await this.natureMontantSelect.element(by.css('option:checked')).getText();
   }
 
   async save(): Promise<void> {

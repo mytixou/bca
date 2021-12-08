@@ -72,10 +72,16 @@ class StrategiePchGatlingTest extends Simulation {
             .headers(headers_http_authenticated)
             .body(StringBody("""{
                 "isActif":null
+                , "dateMensuelleDebutValidite":"2020-01-01T00:00:00.000Z"
                 , "anne":"0"
-                , "montantPlafond":"0"
-                , "nbPlafondheure":"0"
-                , "taux":"0"
+                , "mois":"0"
+                , "montantPlafondSalaire":"0"
+                , "montantPlafondCotisations":"0"
+                , "montantPlafondSalairePlus":"0"
+                , "montantPlafondCotisationsPlus":"0"
+                , "nbHeureSalairePlafond":"0"
+                , "tauxSalaire":"0"
+                , "tauxCotisations":"0"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_strategiePch_url"))).exitHereIfFailed

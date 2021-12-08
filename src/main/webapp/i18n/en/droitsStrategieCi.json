@@ -1,0 +1,33 @@
+{
+  "bcaApp": {
+    "droitsStrategieCi": {
+      "home": {
+        "title": "Droits Strategie Cis",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Droits Strategie Ci",
+        "createOrEditLabel": "Create or edit a Droits Strategie Ci",
+        "notFound": "No Droits Strategie Cis found"
+      },
+      "created": "A new Droits Strategie Ci is created with identifier {{ param }}",
+      "updated": "A Droits Strategie Ci is updated with identifier {{ param }}",
+      "deleted": "A Droits Strategie Ci is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Droits Strategie Ci {{ id }}?"
+      },
+      "detail": {
+        "title": "Droits Strategie Ci"
+      },
+      "id": "ID",
+      "isActif": "Is Actif",
+      "anne": "Anne",
+      "montantPlafondDefaut": "Montant Plafond Defaut",
+      "montantPlafondHandicape": "Montant Plafond Handicape",
+      "montantPlafondDefautPlus": "Montant Plafond Defaut Plus",
+      "montantPlafondHandicapePlus": "Montant Plafond Handicape Plus",
+      "tauxSalaire": "Taux Salaire",
+      "dateOuverture": "Date Ouverture",
+      "dateFermeture": "Date Fermeture",
+      "beneficiaire": "Beneficiaire"
+    }
+  }
+}

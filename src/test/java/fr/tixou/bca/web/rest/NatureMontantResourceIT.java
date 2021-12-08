@@ -120,6 +120,23 @@ class NatureMontantResourceIT {
 
     @Test
     @Transactional
+    void checkCodeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = natureMontantRepository.findAll().size();
+        // set the field null
+        natureMontant.setCode(null);
+
+        // Create the NatureMontant, which fails.
+
+        restNatureMontantMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(natureMontant)))
+            .andExpect(status().isBadRequest());
+
+        List<NatureMontant> natureMontantList = natureMontantRepository.findAll();
+        assertThat(natureMontantList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllNatureMontants() throws Exception {
         // Initialize the database
         natureMontantRepository.saveAndFlush(natureMontant);

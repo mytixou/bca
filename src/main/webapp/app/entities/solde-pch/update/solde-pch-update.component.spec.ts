@@ -9,8 +9,8 @@ import { of, Subject } from 'rxjs';
 
 import { SoldePchService } from '../service/solde-pch.service';
 import { ISoldePch, SoldePch } from '../solde-pch.model';
-import { IBeneficiaire } from 'app/entities/beneficiaire/beneficiaire.model';
-import { BeneficiaireService } from 'app/entities/beneficiaire/service/beneficiaire.service';
+import { IDroitsStrategiePch } from 'app/entities/droits-strategie-pch/droits-strategie-pch.model';
+import { DroitsStrategiePchService } from 'app/entities/droits-strategie-pch/service/droits-strategie-pch.service';
 
 import { SoldePchUpdateComponent } from './solde-pch-update.component';
 
@@ -19,7 +19,7 @@ describe('SoldePch Management Update Component', () => {
   let fixture: ComponentFixture<SoldePchUpdateComponent>;
   let activatedRoute: ActivatedRoute;
   let soldePchService: SoldePchService;
-  let beneficiaireService: BeneficiaireService;
+  let droitsStrategiePchService: DroitsStrategiePchService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -33,44 +33,44 @@ describe('SoldePch Management Update Component', () => {
     fixture = TestBed.createComponent(SoldePchUpdateComponent);
     activatedRoute = TestBed.inject(ActivatedRoute);
     soldePchService = TestBed.inject(SoldePchService);
-    beneficiaireService = TestBed.inject(BeneficiaireService);
+    droitsStrategiePchService = TestBed.inject(DroitsStrategiePchService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should call Beneficiaire query and add missing value', () => {
+    it('Should call DroitsStrategiePch query and add missing value', () => {
       const soldePch: ISoldePch = { id: 456 };
-      const beneficiaire: IBeneficiaire = { id: '32be0e0e-b5f7-4851-a324-48a1fab4e81a' };
-      soldePch.beneficiaire = beneficiaire;
+      const droitsStrategiePch: IDroitsStrategiePch = { id: 62781 };
+      soldePch.droitsStrategiePch = droitsStrategiePch;
 
-      const beneficiaireCollection: IBeneficiaire[] = [{ id: '559c37b5-9301-4ee1-9d84-fb98267eb8d5' }];
-      jest.spyOn(beneficiaireService, 'query').mockReturnValue(of(new HttpResponse({ body: beneficiaireCollection })));
-      const additionalBeneficiaires = [beneficiaire];
-      const expectedCollection: IBeneficiaire[] = [...additionalBeneficiaires, ...beneficiaireCollection];
-      jest.spyOn(beneficiaireService, 'addBeneficiaireToCollectionIfMissing').mockReturnValue(expectedCollection);
+      const droitsStrategiePchCollection: IDroitsStrategiePch[] = [{ id: 34349 }];
+      jest.spyOn(droitsStrategiePchService, 'query').mockReturnValue(of(new HttpResponse({ body: droitsStrategiePchCollection })));
+      const additionalDroitsStrategiePches = [droitsStrategiePch];
+      const expectedCollection: IDroitsStrategiePch[] = [...additionalDroitsStrategiePches, ...droitsStrategiePchCollection];
+      jest.spyOn(droitsStrategiePchService, 'addDroitsStrategiePchToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ soldePch });
       comp.ngOnInit();
 
-      expect(beneficiaireService.query).toHaveBeenCalled();
-      expect(beneficiaireService.addBeneficiaireToCollectionIfMissing).toHaveBeenCalledWith(
-        beneficiaireCollection,
-        ...additionalBeneficiaires
+      expect(droitsStrategiePchService.query).toHaveBeenCalled();
+      expect(droitsStrategiePchService.addDroitsStrategiePchToCollectionIfMissing).toHaveBeenCalledWith(
+        droitsStrategiePchCollection,
+        ...additionalDroitsStrategiePches
       );
-      expect(comp.beneficiairesSharedCollection).toEqual(expectedCollection);
+      expect(comp.droitsStrategiePchesSharedCollection).toEqual(expectedCollection);
     });
 
     it('Should update editForm', () => {
       const soldePch: ISoldePch = { id: 456 };
-      const beneficiaire: IBeneficiaire = { id: '8cdce26a-e6a8-41ca-a685-f54fb1c24ffc' };
-      soldePch.beneficiaire = beneficiaire;
+      const droitsStrategiePch: IDroitsStrategiePch = { id: 13547 };
+      soldePch.droitsStrategiePch = droitsStrategiePch;
 
       activatedRoute.data = of({ soldePch });
       comp.ngOnInit();
 
       expect(comp.editForm.value).toEqual(expect.objectContaining(soldePch));
-      expect(comp.beneficiairesSharedCollection).toContain(beneficiaire);
+      expect(comp.droitsStrategiePchesSharedCollection).toContain(droitsStrategiePch);
     });
   });
 
@@ -139,10 +139,10 @@ describe('SoldePch Management Update Component', () => {
   });
 
   describe('Tracking relationships identifiers', () => {
-    describe('trackBeneficiaireById', () => {
-      it('Should return tracked Beneficiaire primary key', () => {
-        const entity = { id: 'ABC' };
-        const trackResult = comp.trackBeneficiaireById(0, entity);
+    describe('trackDroitsStrategiePchById', () => {
+      it('Should return tracked DroitsStrategiePch primary key', () => {
+        const entity = { id: 123 };
+        const trackResult = comp.trackDroitsStrategiePchById(0, entity);
         expect(trackResult).toEqual(entity.id);
       });
     });

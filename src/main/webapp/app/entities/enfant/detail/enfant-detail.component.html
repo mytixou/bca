@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="enfant">
+      <h2 data-cy="enfantDetailsHeading"><span jhiTranslate="bcaApp.enfant.detail.title">Enfant</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ enfant.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.enfant.isActif">Is Actif</span></dt>
+        <dd>
+          <span>{{ enfant.isActif }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.enfant.dateNaissance">Date Naissance</span></dt>
+        <dd>
+          <span>{{ enfant.dateNaissance | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.enfant.dateInscription">Date Inscription</span></dt>
+        <dd>
+          <span>{{ enfant.dateInscription | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.enfant.dateResiliation">Date Resiliation</span></dt>
+        <dd>
+          <span>{{ enfant.dateResiliation | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.enfant.beneficiaire">Beneficiaire</span></dt>
+        <dd>
+          <div *ngIf="enfant.beneficiaire">
+            <a [routerLink]="['/beneficiaire', enfant.beneficiaire?.id, 'view']">{{ enfant.beneficiaire?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/enfant', enfant.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

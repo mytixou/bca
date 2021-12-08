@@ -71,9 +71,15 @@ class SoldeApaGatlingTest extends Simulation {
             .post("/api/solde-apas")
             .headers(headers_http_authenticated)
             .body(StringBody("""{
-                "annee":"0"
+                "date":"2020-01-01T00:00:00.000Z"
+                , "isActif":null
+                , "isDernier":null
+                , "annee":"0"
                 , "mois":"0"
+                , "consoMontantApaCotisations":"0"
+                , "consoMontantApaSalaire":"0"
                 , "soldeMontantApa":"0"
+                , "consoHeureApa":"0"
                 , "soldeHeureApa":"0"
                 }""")).asJson
             .check(status.is(201))

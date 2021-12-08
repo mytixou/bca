@@ -31,12 +31,21 @@ export class StrategiePchUpdatePage {
 
   idInput = element(by.id('field_id'));
   isActifInput = element(by.id('field_isActif'));
+  dateMensuelleDebutValiditeInput = element(by.id('field_dateMensuelleDebutValidite'));
   anneInput = element(by.id('field_anne'));
-  montantPlafondInput = element(by.id('field_montantPlafond'));
-  nbPlafondheureInput = element(by.id('field_nbPlafondheure'));
-  tauxInput = element(by.id('field_taux'));
+  moisInput = element(by.id('field_mois'));
+  montantPlafondSalaireInput = element(by.id('field_montantPlafondSalaire'));
+  montantPlafondCotisationsInput = element(by.id('field_montantPlafondCotisations'));
+  montantPlafondSalairePlusInput = element(by.id('field_montantPlafondSalairePlus'));
+  montantPlafondCotisationsPlusInput = element(by.id('field_montantPlafondCotisationsPlus'));
+  nbHeureSalairePlafondInput = element(by.id('field_nbHeureSalairePlafond'));
+  tauxSalaireInput = element(by.id('field_tauxSalaire'));
+  tauxCotisationsInput = element(by.id('field_tauxCotisations'));
 
   aideSelect = element(by.id('field_aide'));
+  tiersFinanceurSelect = element(by.id('field_tiersFinanceur'));
+  natureActiviteSelect = element(by.id('field_natureActivite'));
+  natureMontantSelect = element(by.id('field_natureMontant'));
 
   async getPageTitle(): Promise<string> {
     return this.pageTitle.getAttribute('jhiTranslate');
@@ -54,6 +63,14 @@ export class StrategiePchUpdatePage {
     return this.isActifInput;
   }
 
+  async setDateMensuelleDebutValiditeInput(dateMensuelleDebutValidite: string): Promise<void> {
+    await this.dateMensuelleDebutValiditeInput.sendKeys(dateMensuelleDebutValidite);
+  }
+
+  async getDateMensuelleDebutValiditeInput(): Promise<string> {
+    return await this.dateMensuelleDebutValiditeInput.getAttribute('value');
+  }
+
   async setAnneInput(anne: string): Promise<void> {
     await this.anneInput.sendKeys(anne);
   }
@@ -62,28 +79,68 @@ export class StrategiePchUpdatePage {
     return await this.anneInput.getAttribute('value');
   }
 
-  async setMontantPlafondInput(montantPlafond: string): Promise<void> {
-    await this.montantPlafondInput.sendKeys(montantPlafond);
+  async setMoisInput(mois: string): Promise<void> {
+    await this.moisInput.sendKeys(mois);
   }
 
-  async getMontantPlafondInput(): Promise<string> {
-    return await this.montantPlafondInput.getAttribute('value');
+  async getMoisInput(): Promise<string> {
+    return await this.moisInput.getAttribute('value');
   }
 
-  async setNbPlafondheureInput(nbPlafondheure: string): Promise<void> {
-    await this.nbPlafondheureInput.sendKeys(nbPlafondheure);
+  async setMontantPlafondSalaireInput(montantPlafondSalaire: string): Promise<void> {
+    await this.montantPlafondSalaireInput.sendKeys(montantPlafondSalaire);
   }
 
-  async getNbPlafondheureInput(): Promise<string> {
-    return await this.nbPlafondheureInput.getAttribute('value');
+  async getMontantPlafondSalaireInput(): Promise<string> {
+    return await this.montantPlafondSalaireInput.getAttribute('value');
   }
 
-  async setTauxInput(taux: string): Promise<void> {
-    await this.tauxInput.sendKeys(taux);
+  async setMontantPlafondCotisationsInput(montantPlafondCotisations: string): Promise<void> {
+    await this.montantPlafondCotisationsInput.sendKeys(montantPlafondCotisations);
   }
 
-  async getTauxInput(): Promise<string> {
-    return await this.tauxInput.getAttribute('value');
+  async getMontantPlafondCotisationsInput(): Promise<string> {
+    return await this.montantPlafondCotisationsInput.getAttribute('value');
+  }
+
+  async setMontantPlafondSalairePlusInput(montantPlafondSalairePlus: string): Promise<void> {
+    await this.montantPlafondSalairePlusInput.sendKeys(montantPlafondSalairePlus);
+  }
+
+  async getMontantPlafondSalairePlusInput(): Promise<string> {
+    return await this.montantPlafondSalairePlusInput.getAttribute('value');
+  }
+
+  async setMontantPlafondCotisationsPlusInput(montantPlafondCotisationsPlus: string): Promise<void> {
+    await this.montantPlafondCotisationsPlusInput.sendKeys(montantPlafondCotisationsPlus);
+  }
+
+  async getMontantPlafondCotisationsPlusInput(): Promise<string> {
+    return await this.montantPlafondCotisationsPlusInput.getAttribute('value');
+  }
+
+  async setNbHeureSalairePlafondInput(nbHeureSalairePlafond: string): Promise<void> {
+    await this.nbHeureSalairePlafondInput.sendKeys(nbHeureSalairePlafond);
+  }
+
+  async getNbHeureSalairePlafondInput(): Promise<string> {
+    return await this.nbHeureSalairePlafondInput.getAttribute('value');
+  }
+
+  async setTauxSalaireInput(tauxSalaire: string): Promise<void> {
+    await this.tauxSalaireInput.sendKeys(tauxSalaire);
+  }
+
+  async getTauxSalaireInput(): Promise<string> {
+    return await this.tauxSalaireInput.getAttribute('value');
+  }
+
+  async setTauxCotisationsInput(tauxCotisations: string): Promise<void> {
+    await this.tauxCotisationsInput.sendKeys(tauxCotisations);
+  }
+
+  async getTauxCotisationsInput(): Promise<string> {
+    return await this.tauxCotisationsInput.getAttribute('value');
   }
 
   async aideSelectLastOption(): Promise<void> {
@@ -100,6 +157,54 @@ export class StrategiePchUpdatePage {
 
   async getAideSelectedOption(): Promise<string> {
     return await this.aideSelect.element(by.css('option:checked')).getText();
+  }
+
+  async tiersFinanceurSelectLastOption(): Promise<void> {
+    await this.tiersFinanceurSelect.all(by.tagName('option')).last().click();
+  }
+
+  async tiersFinanceurSelectOption(option: string): Promise<void> {
+    await this.tiersFinanceurSelect.sendKeys(option);
+  }
+
+  getTiersFinanceurSelect(): ElementFinder {
+    return this.tiersFinanceurSelect;
+  }
+
+  async getTiersFinanceurSelectedOption(): Promise<string> {
+    return await this.tiersFinanceurSelect.element(by.css('option:checked')).getText();
+  }
+
+  async natureActiviteSelectLastOption(): Promise<void> {
+    await this.natureActiviteSelect.all(by.tagName('option')).last().click();
+  }
+
+  async natureActiviteSelectOption(option: string): Promise<void> {
+    await this.natureActiviteSelect.sendKeys(option);
+  }
+
+  getNatureActiviteSelect(): ElementFinder {
+    return this.natureActiviteSelect;
+  }
+
+  async getNatureActiviteSelectedOption(): Promise<string> {
+    return await this.natureActiviteSelect.element(by.css('option:checked')).getText();
+  }
+
+  async natureMontantSelectLastOption(): Promise<void> {
+    await this.natureMontantSelect.all(by.tagName('option')).last().click();
+  }
+
+  async natureMontantSelectOption(option: string): Promise<void> {
+    await this.natureMontantSelect.sendKeys(option);
+  }
+
+  getNatureMontantSelect(): ElementFinder {
+    return this.natureMontantSelect;
+  }
+
+  async getNatureMontantSelectedOption(): Promise<string> {
+    return await this.natureMontantSelect.element(by.css('option:checked')).getText();
   }
 
   async save(): Promise<void> {

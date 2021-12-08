@@ -9,6 +9,9 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +51,7 @@ public class SoldePchResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/solde-pches")
-    public ResponseEntity<SoldePch> createSoldePch(@RequestBody SoldePch soldePch) throws URISyntaxException {
+    public ResponseEntity<SoldePch> createSoldePch(@Valid @RequestBody SoldePch soldePch) throws URISyntaxException {
         log.debug("REST request to save SoldePch : {}", soldePch);
         if (soldePch.getId() != null) {
             throw new BadRequestAlertException("A new soldePch cannot already have an ID", ENTITY_NAME, "idexists");
@@ -73,7 +76,7 @@ public class SoldePchResource {
     @PutMapping("/solde-pches/{id}")
     public ResponseEntity<SoldePch> updateSoldePch(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody SoldePch soldePch
+        @Valid @RequestBody SoldePch soldePch
     ) throws URISyntaxException {
         log.debug("REST request to update SoldePch : {}, {}", id, soldePch);
         if (soldePch.getId() == null) {
@@ -108,7 +111,7 @@ public class SoldePchResource {
     @PatchMapping(value = "/solde-pches/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<SoldePch> partialUpdateSoldePch(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody SoldePch soldePch
+        @NotNull @RequestBody SoldePch soldePch
     ) throws URISyntaxException {
         log.debug("REST request to partial update SoldePch partially : {}, {}", id, soldePch);
         if (soldePch.getId() == null) {
@@ -133,10 +136,15 @@ public class SoldePchResource {
     /**
      * {@code GET  /solde-pches} : get all the soldePches.
      *
+     * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of soldePches in body.
      */
     @GetMapping("/solde-pches")
-    public List<SoldePch> getAllSoldePches() {
+    public List<SoldePch> getAllSoldePches(@RequestParam(required = false) String filter) {
+        if ("pec-is-null".equals(filter)) {
+            log.debug("REST request to get all SoldePchs where pec is null");
+            return soldePchService.findAllWherePecIsNull();
+        }
         log.debug("REST request to get all SoldePches");
         return soldePchService.findAll();
     }

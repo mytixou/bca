@@ -8,27 +8,82 @@
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        <div class="form-group">
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
           <label class="form-control-label" jhiTranslate="bcaApp.beneficiaire.id" for="field_id">Id</label>
-          <input
-            type="text"
-            class="form-control"
-            name="id"
-            id="field_id"
-            data-cy="id"
-            formControlName="id"
-            [readonly]="editForm.get('id')!.value != null"
-          />
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          <div *ngIf="editForm.get('id')!.invalid && (editForm.get('id')!.dirty || editForm.get('id')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('id')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('id')?.errors?.number" jhiTranslate="entity.validation.number">
+              This field should be a number.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
           <label class="form-control-label" jhiTranslate="bcaApp.beneficiaire.externeId" for="field_externeId">Externe Id</label>
           <input type="text" class="form-control" name="externeId" id="field_externeId" data-cy="externeId" formControlName="externeId" />
+          <div *ngIf="editForm.get('externeId')!.invalid && (editForm.get('externeId')!.dirty || editForm.get('externeId')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('externeId')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
           <label class="form-control-label" jhiTranslate="bcaApp.beneficiaire.isActif" for="field_isActif">Is Actif</label>
           <input type="checkbox" class="form-check" name="isActif" id="field_isActif" data-cy="isActif" formControlName="isActif" />
+          <div *ngIf="editForm.get('isActif')!.invalid && (editForm.get('isActif')!.dirty || editForm.get('isActif')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('isActif')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.beneficiaire.dateDesactivation" for="field_dateDesactivation"
+            >Date Desactivation</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateDesactivation"
+              data-cy="dateDesactivation"
+              type="text"
+              class="form-control"
+              name="dateDesactivation"
+              ngbDatepicker
+              #dateDesactivationDp="ngbDatepicker"
+              formControlName="dateDesactivation"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="dateDesactivationDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.beneficiaire.isInscrit" for="field_isInscrit">Is Inscrit</label>
+          <input type="checkbox" class="form-check" name="isInscrit" id="field_isInscrit" data-cy="isInscrit" formControlName="isInscrit" />
+          <div *ngIf="editForm.get('isInscrit')!.invalid && (editForm.get('isInscrit')!.dirty || editForm.get('isInscrit')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('isInscrit')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
@@ -51,6 +106,20 @@
                 <fa-icon icon="calendar-alt"></fa-icon>
               </button>
             </span>
+          </div>
+          <div
+            *ngIf="
+              editForm.get('dateInscription')!.invalid &&
+              (editForm.get('dateInscription')!.dirty || editForm.get('dateInscription')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('dateInscription')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
           </div>
         </div>
 

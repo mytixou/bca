@@ -30,11 +30,16 @@ export class SoldeCiUpdatePage {
   cancelButton = element(by.id('cancel-save'));
 
   idInput = element(by.id('field_id'));
+  dateInput = element(by.id('field_date'));
+  isActifInput = element(by.id('field_isActif'));
+  isDernierInput = element(by.id('field_isDernier'));
   anneeInput = element(by.id('field_annee'));
+  consoMontantCiInput = element(by.id('field_consoMontantCi'));
+  consoCiRecInput = element(by.id('field_consoCiRec'));
   soldeMontantCiInput = element(by.id('field_soldeMontantCi'));
   soldeMontantCiRecInput = element(by.id('field_soldeMontantCiRec'));
 
-  beneficiaireSelect = element(by.id('field_beneficiaire'));
+  droitsStrategieCiSelect = element(by.id('field_droitsStrategieCi'));
 
   async getPageTitle(): Promise<string> {
     return this.pageTitle.getAttribute('jhiTranslate');
@@ -48,12 +53,44 @@ export class SoldeCiUpdatePage {
     return await this.idInput.getAttribute('value');
   }
 
+  async setDateInput(date: string): Promise<void> {
+    await this.dateInput.sendKeys(date);
+  }
+
+  async getDateInput(): Promise<string> {
+    return await this.dateInput.getAttribute('value');
+  }
+
+  getIsActifInput(): ElementFinder {
+    return this.isActifInput;
+  }
+
+  getIsDernierInput(): ElementFinder {
+    return this.isDernierInput;
+  }
+
   async setAnneeInput(annee: string): Promise<void> {
     await this.anneeInput.sendKeys(annee);
   }
 
   async getAnneeInput(): Promise<string> {
     return await this.anneeInput.getAttribute('value');
+  }
+
+  async setConsoMontantCiInput(consoMontantCi: string): Promise<void> {
+    await this.consoMontantCiInput.sendKeys(consoMontantCi);
+  }
+
+  async getConsoMontantCiInput(): Promise<string> {
+    return await this.consoMontantCiInput.getAttribute('value');
+  }
+
+  async setConsoCiRecInput(consoCiRec: string): Promise<void> {
+    await this.consoCiRecInput.sendKeys(consoCiRec);
+  }
+
+  async getConsoCiRecInput(): Promise<string> {
+    return await this.consoCiRecInput.getAttribute('value');
   }
 
   async setSoldeMontantCiInput(soldeMontantCi: string): Promise<void> {
@@ -72,20 +109,20 @@ export class SoldeCiUpdatePage {
     return await this.soldeMontantCiRecInput.getAttribute('value');
   }
 
-  async beneficiaireSelectLastOption(): Promise<void> {
-    await this.beneficiaireSelect.all(by.tagName('option')).last().click();
+  async droitsStrategieCiSelectLastOption(): Promise<void> {
+    await this.droitsStrategieCiSelect.all(by.tagName('option')).last().click();
   }
 
-  async beneficiaireSelectOption(option: string): Promise<void> {
-    await this.beneficiaireSelect.sendKeys(option);
+  async droitsStrategieCiSelectOption(option: string): Promise<void> {
+    await this.droitsStrategieCiSelect.sendKeys(option);
   }
 
-  getBeneficiaireSelect(): ElementFinder {
-    return this.beneficiaireSelect;
+  getDroitsStrategieCiSelect(): ElementFinder {
+    return this.droitsStrategieCiSelect;
   }
 
-  async getBeneficiaireSelectedOption(): Promise<string> {
-    return await this.beneficiaireSelect.element(by.css('option:checked')).getText();
+  async getDroitsStrategieCiSelectedOption(): Promise<string> {
+    return await this.droitsStrategieCiSelect.element(by.css('option:checked')).getText();
   }
 
   async save(): Promise<void> {

@@ -45,10 +45,10 @@ describe('ConsommationApa Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Beneficiaire query and add missing value', () => {
       const consommationApa: IConsommationApa = { id: 456 };
-      const beneficiaire: IBeneficiaire = { id: 'c28e51ac-0e9d-4b43-90c5-731997ca486c' };
+      const beneficiaire: IBeneficiaire = { id: 78952 };
       consommationApa.beneficiaire = beneficiaire;
 
-      const beneficiaireCollection: IBeneficiaire[] = [{ id: '54153aa0-3fe9-451d-ad20-6d0f4e960613' }];
+      const beneficiaireCollection: IBeneficiaire[] = [{ id: 13157 }];
       jest.spyOn(beneficiaireService, 'query').mockReturnValue(of(new HttpResponse({ body: beneficiaireCollection })));
       const additionalBeneficiaires = [beneficiaire];
       const expectedCollection: IBeneficiaire[] = [...additionalBeneficiaires, ...beneficiaireCollection];
@@ -89,7 +89,7 @@ describe('ConsommationApa Management Update Component', () => {
 
     it('Should update editForm', () => {
       const consommationApa: IConsommationApa = { id: 456 };
-      const beneficiaire: IBeneficiaire = { id: 'f58d055f-6479-490c-8ce3-4f3a4f67ca2c' };
+      const beneficiaire: IBeneficiaire = { id: 56082 };
       consommationApa.beneficiaire = beneficiaire;
       const strategieApa: IStrategieApa = { id: 48658 };
       consommationApa.strategieApa = strategieApa;
@@ -170,7 +170,7 @@ describe('ConsommationApa Management Update Component', () => {
   describe('Tracking relationships identifiers', () => {
     describe('trackBeneficiaireById', () => {
       it('Should return tracked Beneficiaire primary key', () => {
-        const entity = { id: 'ABC' };
+        const entity = { id: 123 };
         const trackResult = comp.trackBeneficiaireById(0, entity);
         expect(trackResult).toEqual(entity.id);
       });

@@ -1,0 +1,72 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="droitsStrategieCi">
+      <h2 data-cy="droitsStrategieCiDetailsHeading">
+        <span jhiTranslate="bcaApp.droitsStrategieCi.detail.title">Droits Strategie Ci</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ droitsStrategieCi.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitsStrategieCi.isActif">Is Actif</span></dt>
+        <dd>
+          <span>{{ droitsStrategieCi.isActif }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitsStrategieCi.anne">Anne</span></dt>
+        <dd>
+          <span>{{ droitsStrategieCi.anne }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitsStrategieCi.montantPlafondDefaut">Montant Plafond Defaut</span></dt>
+        <dd>
+          <span>{{ droitsStrategieCi.montantPlafondDefaut }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitsStrategieCi.montantPlafondHandicape">Montant Plafond Handicape</span></dt>
+        <dd>
+          <span>{{ droitsStrategieCi.montantPlafondHandicape }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitsStrategieCi.montantPlafondDefautPlus">Montant Plafond Defaut Plus</span></dt>
+        <dd>
+          <span>{{ droitsStrategieCi.montantPlafondDefautPlus }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitsStrategieCi.montantPlafondHandicapePlus">Montant Plafond Handicape Plus</span></dt>
+        <dd>
+          <span>{{ droitsStrategieCi.montantPlafondHandicapePlus }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitsStrategieCi.tauxSalaire">Taux Salaire</span></dt>
+        <dd>
+          <span>{{ droitsStrategieCi.tauxSalaire }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitsStrategieCi.dateOuverture">Date Ouverture</span></dt>
+        <dd>
+          <span>{{ droitsStrategieCi.dateOuverture | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitsStrategieCi.dateFermeture">Date Fermeture</span></dt>
+        <dd>
+          <span>{{ droitsStrategieCi.dateFermeture | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitsStrategieCi.beneficiaire">Beneficiaire</span></dt>
+        <dd>
+          <div *ngIf="droitsStrategieCi.beneficiaire">
+            <a [routerLink]="['/beneficiaire', droitsStrategieCi.beneficiaire?.id, 'view']">{{ droitsStrategieCi.beneficiaire?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/droits-strategie-ci', droitsStrategieCi.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

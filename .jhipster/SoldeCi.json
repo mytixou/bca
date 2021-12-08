@@ -2,24 +2,59 @@
   "name": "SoldeCi",
   "fields": [
     {
+      "fieldName": "date",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "isActif",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "isDernier",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
       "fieldName": "annee",
-      "fieldType": "Integer"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["unique", "required"]
+    },
+    {
+      "fieldName": "consoMontantCi",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "consoCiRec",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "soldeMontantCi",
-      "fieldType": "BigDecimal"
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "soldeMontantCiRec",
-      "fieldType": "BigDecimal"
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
     }
   ],
   "relationships": [
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "beneficiaire",
+      "otherEntityName": "droitsStrategieCi",
       "otherEntityRelationshipName": "soldeCi",
-      "relationshipName": "beneficiaire"
+      "relationshipName": "droitsStrategieCi"
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "pec",
+      "otherEntityRelationshipName": "soldeCi",
+      "relationshipName": "pec",
+      "ownerSide": false
     }
   ],
   "entityTableName": "solde_ci",

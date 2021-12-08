@@ -30,12 +30,18 @@ export class SoldeApaUpdatePage {
   cancelButton = element(by.id('cancel-save'));
 
   idInput = element(by.id('field_id'));
+  dateInput = element(by.id('field_date'));
+  isActifInput = element(by.id('field_isActif'));
+  isDernierInput = element(by.id('field_isDernier'));
   anneeInput = element(by.id('field_annee'));
   moisInput = element(by.id('field_mois'));
+  consoMontantApaCotisationsInput = element(by.id('field_consoMontantApaCotisations'));
+  consoMontantApaSalaireInput = element(by.id('field_consoMontantApaSalaire'));
   soldeMontantApaInput = element(by.id('field_soldeMontantApa'));
+  consoHeureApaInput = element(by.id('field_consoHeureApa'));
   soldeHeureApaInput = element(by.id('field_soldeHeureApa'));
 
-  beneficiaireSelect = element(by.id('field_beneficiaire'));
+  droitsStrategieApaSelect = element(by.id('field_droitsStrategieApa'));
 
   async getPageTitle(): Promise<string> {
     return this.pageTitle.getAttribute('jhiTranslate');
@@ -47,6 +53,22 @@ export class SoldeApaUpdatePage {
 
   async getIdInput(): Promise<string> {
     return await this.idInput.getAttribute('value');
+  }
+
+  async setDateInput(date: string): Promise<void> {
+    await this.dateInput.sendKeys(date);
+  }
+
+  async getDateInput(): Promise<string> {
+    return await this.dateInput.getAttribute('value');
+  }
+
+  getIsActifInput(): ElementFinder {
+    return this.isActifInput;
+  }
+
+  getIsDernierInput(): ElementFinder {
+    return this.isDernierInput;
   }
 
   async setAnneeInput(annee: string): Promise<void> {
@@ -65,12 +87,36 @@ export class SoldeApaUpdatePage {
     return await this.moisInput.getAttribute('value');
   }
 
+  async setConsoMontantApaCotisationsInput(consoMontantApaCotisations: string): Promise<void> {
+    await this.consoMontantApaCotisationsInput.sendKeys(consoMontantApaCotisations);
+  }
+
+  async getConsoMontantApaCotisationsInput(): Promise<string> {
+    return await this.consoMontantApaCotisationsInput.getAttribute('value');
+  }
+
+  async setConsoMontantApaSalaireInput(consoMontantApaSalaire: string): Promise<void> {
+    await this.consoMontantApaSalaireInput.sendKeys(consoMontantApaSalaire);
+  }
+
+  async getConsoMontantApaSalaireInput(): Promise<string> {
+    return await this.consoMontantApaSalaireInput.getAttribute('value');
+  }
+
   async setSoldeMontantApaInput(soldeMontantApa: string): Promise<void> {
     await this.soldeMontantApaInput.sendKeys(soldeMontantApa);
   }
 
   async getSoldeMontantApaInput(): Promise<string> {
     return await this.soldeMontantApaInput.getAttribute('value');
+  }
+
+  async setConsoHeureApaInput(consoHeureApa: string): Promise<void> {
+    await this.consoHeureApaInput.sendKeys(consoHeureApa);
+  }
+
+  async getConsoHeureApaInput(): Promise<string> {
+    return await this.consoHeureApaInput.getAttribute('value');
   }
 
   async setSoldeHeureApaInput(soldeHeureApa: string): Promise<void> {
@@ -81,20 +127,20 @@ export class SoldeApaUpdatePage {
     return await this.soldeHeureApaInput.getAttribute('value');
   }
 
-  async beneficiaireSelectLastOption(): Promise<void> {
-    await this.beneficiaireSelect.all(by.tagName('option')).last().click();
+  async droitsStrategieApaSelectLastOption(): Promise<void> {
+    await this.droitsStrategieApaSelect.all(by.tagName('option')).last().click();
   }
 
-  async beneficiaireSelectOption(option: string): Promise<void> {
-    await this.beneficiaireSelect.sendKeys(option);
+  async droitsStrategieApaSelectOption(option: string): Promise<void> {
+    await this.droitsStrategieApaSelect.sendKeys(option);
   }
 
-  getBeneficiaireSelect(): ElementFinder {
-    return this.beneficiaireSelect;
+  getDroitsStrategieApaSelect(): ElementFinder {
+    return this.droitsStrategieApaSelect;
   }
 
-  async getBeneficiaireSelectedOption(): Promise<string> {
-    return await this.beneficiaireSelect.element(by.css('option:checked')).getText();
+  async getDroitsStrategieApaSelectedOption(): Promise<string> {
+    return await this.droitsStrategieApaSelect.element(by.css('option:checked')).getText();
   }
 
   async save(): Promise<void> {

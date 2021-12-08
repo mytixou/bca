@@ -1,0 +1,100 @@
+<div>
+  <h2 id="page-heading" data-cy="DroitsStrategiePchHeading">
+    <span jhiTranslate="bcaApp.droitsStrategiePch.home.title">Droits Strategie Pches</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="bcaApp.droitsStrategiePch.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-droits-strategie-pch"
+        [routerLink]="['/droits-strategie-pch/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="bcaApp.droitsStrategiePch.home.createLabel"> Create a new Droits Strategie Pch </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="droitsStrategiePches?.length === 0">
+    <span jhiTranslate="bcaApp.droitsStrategiePch.home.notFound">No droitsStrategiePches found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="droitsStrategiePches && droitsStrategiePches.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.droitsStrategiePch.isActif">Is Actif</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.droitsStrategiePch.anne">Anne</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.droitsStrategiePch.mois">Mois</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.droitsStrategiePch.montantPlafond">Montant Plafond</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.droitsStrategiePch.montantPlafondPlus">Montant Plafond Plus</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.droitsStrategiePch.nbHeurePlafond">Nb Heure Plafond</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.droitsStrategiePch.tauxCotisations">Taux Cotisations</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.droitsStrategiePch.dateOuverture">Date Ouverture</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.droitsStrategiePch.dateFermeture">Date Fermeture</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.droitsStrategiePch.beneficiaire">Beneficiaire</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let droitsStrategiePch of droitsStrategiePches; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/droits-strategie-pch', droitsStrategiePch.id, 'view']">{{ droitsStrategiePch.id }}</a>
+          </td>
+          <td>{{ droitsStrategiePch.isActif }}</td>
+          <td>{{ droitsStrategiePch.anne }}</td>
+          <td>{{ droitsStrategiePch.mois }}</td>
+          <td>{{ droitsStrategiePch.montantPlafond }}</td>
+          <td>{{ droitsStrategiePch.montantPlafondPlus }}</td>
+          <td>{{ droitsStrategiePch.nbHeurePlafond }}</td>
+          <td>{{ droitsStrategiePch.tauxCotisations }}</td>
+          <td>{{ droitsStrategiePch.dateOuverture | formatMediumDate }}</td>
+          <td>{{ droitsStrategiePch.dateFermeture | formatMediumDate }}</td>
+          <td>
+            <div *ngIf="droitsStrategiePch.beneficiaire">
+              <a [routerLink]="['/beneficiaire', droitsStrategiePch.beneficiaire?.id, 'view']">{{ droitsStrategiePch.beneficiaire?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/droits-strategie-pch', droitsStrategiePch.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/droits-strategie-pch', droitsStrategiePch.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(droitsStrategiePch)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -60,9 +60,21 @@
       "ConsommationCi",
       "ConsommationApa",
       "ConsommationPch",
-      "ConsommationPchE"
+      "ConsommationPchE",
+      "DroitsStrategieCi",
+      "DroitsStrategieApa",
+      "DroitsStrategiePch",
+      "DroitsStrategiePchE",
+      "Pec",
+      "Produit",
+      "DroitAide",
+      "Enfant",
+      "StrategieCmgAssmat",
+      "StrategieCmgGed",
+      "TrancheAideEnfantAssmat",
+      "TrancheAideEnfantGed"
     ],
-    "lastLiquibaseTimestamp": 1638927886000
+    "lastLiquibaseTimestamp": 1639007166000
   },
   "git-provider": "GitHub",
   "git-company": "mytixou",

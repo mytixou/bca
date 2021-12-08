@@ -14,9 +14,29 @@
         <dd>
           <span>{{ soldeCi.id }}</span>
         </dd>
+        <dt><span jhiTranslate="bcaApp.soldeCi.date">Date</span></dt>
+        <dd>
+          <span>{{ soldeCi.date | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.soldeCi.isActif">Is Actif</span></dt>
+        <dd>
+          <span>{{ soldeCi.isActif }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.soldeCi.isDernier">Is Dernier</span></dt>
+        <dd>
+          <span>{{ soldeCi.isDernier }}</span>
+        </dd>
         <dt><span jhiTranslate="bcaApp.soldeCi.annee">Annee</span></dt>
         <dd>
           <span>{{ soldeCi.annee }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.soldeCi.consoMontantCi">Conso Montant Ci</span></dt>
+        <dd>
+          <span>{{ soldeCi.consoMontantCi }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.soldeCi.consoCiRec">Conso Ci Rec</span></dt>
+        <dd>
+          <span>{{ soldeCi.consoCiRec }}</span>
         </dd>
         <dt><span jhiTranslate="bcaApp.soldeCi.soldeMontantCi">Solde Montant Ci</span></dt>
         <dd>
@@ -26,10 +46,10 @@
         <dd>
           <span>{{ soldeCi.soldeMontantCiRec }}</span>
         </dd>
-        <dt><span jhiTranslate="bcaApp.soldeCi.beneficiaire">Beneficiaire</span></dt>
+        <dt><span jhiTranslate="bcaApp.soldeCi.droitsStrategieCi">Droits Strategie Ci</span></dt>
         <dd>
-          <div *ngIf="soldeCi.beneficiaire">
-            <a [routerLink]="['/beneficiaire', soldeCi.beneficiaire?.id, 'view']">{{ soldeCi.beneficiaire?.id }}</a>
+          <div *ngIf="soldeCi.droitsStrategieCi">
+            <a [routerLink]="['/droits-strategie-ci', soldeCi.droitsStrategieCi?.id, 'view']">{{ soldeCi.droitsStrategieCi?.id }}</a>
           </div>
         </dd>
       </dl>

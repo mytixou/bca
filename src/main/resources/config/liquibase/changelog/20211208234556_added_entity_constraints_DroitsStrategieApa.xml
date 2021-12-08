@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <!--
+        Added the constraints for entity DroitsStrategieApa.
+    -->
+    <changeSet id="20211208234556-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="beneficiaire_id"
+                                 baseTableName="droits_strategie_apa"
+                                 constraintName="fk_droits_strategie_apa__beneficiaire_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="beneficiaire"/>
+    </changeSet>
+</databaseChangeLog>

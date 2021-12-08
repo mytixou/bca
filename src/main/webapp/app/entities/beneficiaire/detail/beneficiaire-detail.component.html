@@ -22,6 +22,14 @@
         <dd>
           <span>{{ beneficiaire.isActif }}</span>
         </dd>
+        <dt><span jhiTranslate="bcaApp.beneficiaire.dateDesactivation">Date Desactivation</span></dt>
+        <dd>
+          <span>{{ beneficiaire.dateDesactivation | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.beneficiaire.isInscrit">Is Inscrit</span></dt>
+        <dd>
+          <span>{{ beneficiaire.isInscrit }}</span>
+        </dd>
         <dt><span jhiTranslate="bcaApp.beneficiaire.dateInscription">Date Inscription</span></dt>
         <dd>
           <span>{{ beneficiaire.dateInscription | formatMediumDate }}</span>

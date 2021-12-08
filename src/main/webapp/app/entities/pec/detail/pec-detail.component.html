@@ -1,0 +1,84 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="pec">
+      <h2 data-cy="pecDetailsHeading"><span jhiTranslate="bcaApp.pec.detail.title">Pec</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="bcaApp.pec.id">Id</span></dt>
+        <dd>
+          <span>{{ pec.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.pec.idProduit">Id Produit</span></dt>
+        <dd>
+          <span>{{ pec.idProduit }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.pec.produit">Produit</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'bcaApp.TypeProduit.' + pec.produit }}">{{ pec.produit }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.pec.isPlus">Is Plus</span></dt>
+        <dd>
+          <span>{{ pec.isPlus }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.pec.dateCreated">Date Created</span></dt>
+        <dd>
+          <span>{{ pec.dateCreated | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.pec.isUpdated">Is Updated</span></dt>
+        <dd>
+          <span>{{ pec.isUpdated }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.pec.dateModified">Date Modified</span></dt>
+        <dd>
+          <span>{{ pec.dateModified | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.pec.isActif">Is Actif</span></dt>
+        <dd>
+          <span>{{ pec.isActif }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.pec.pecDetails">Pec Details</span></dt>
+        <dd>
+          <span>{{ pec.pecDetails }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.pec.soldeCi">Solde Ci</span></dt>
+        <dd>
+          <div *ngIf="pec.soldeCi">
+            <a [routerLink]="['/solde-ci', pec.soldeCi?.id, 'view']">{{ pec.soldeCi?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.pec.soldeApa">Solde Apa</span></dt>
+        <dd>
+          <div *ngIf="pec.soldeApa">
+            <a [routerLink]="['/solde-apa', pec.soldeApa?.id, 'view']">{{ pec.soldeApa?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.pec.soldePch">Solde Pch</span></dt>
+        <dd>
+          <div *ngIf="pec.soldePch">
+            <a [routerLink]="['/solde-pch', pec.soldePch?.id, 'view']">{{ pec.soldePch?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.pec.soldePchE">Solde Pch E</span></dt>
+        <dd>
+          <div *ngIf="pec.soldePchE">
+            <a [routerLink]="['/solde-pch-e', pec.soldePchE?.id, 'view']">{{ pec.soldePchE?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/pec', pec.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

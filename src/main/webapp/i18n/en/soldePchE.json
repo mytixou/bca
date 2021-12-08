@@ -18,11 +18,18 @@
         "title": "Solde Pch E"
       },
       "id": "ID",
+      "date": "Date",
+      "isActif": "Is Actif",
+      "isDernier": "Is Dernier",
       "annee": "Annee",
       "mois": "Mois",
+      "consoMontantPchECotisations": "Conso Montant Pch E Cotisations",
+      "consoMontantPchESalaire": "Conso Montant Pch E Salaire",
       "soldeMontantPchE": "Solde Montant Pch E",
+      "consoHeurePchE": "Conso Heure Pch E",
       "soldeHeurePchE": "Solde Heure Pch E",
-      "beneficiaire": "Beneficiaire"
+      "droitsStrategiePchE": "Droits Strategie Pch E",
+      "pec": "Pec"
     }
   }
 }

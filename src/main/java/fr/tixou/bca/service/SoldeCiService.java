@@ -30,6 +30,12 @@ public interface SoldeCiService {
      * @return the list of entities.
      */
     List<SoldeCi> findAll();
+    /**
+     * Get all the SoldeCi where Pec is {@code null}.
+     *
+     * @return the {@link List} of entities.
+     */
+    List<SoldeCi> findAllWherePecIsNull();
 
     /**
      * Get the "id" soldeCi.

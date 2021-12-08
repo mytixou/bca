@@ -9,8 +9,8 @@ import { of, Subject } from 'rxjs';
 
 import { SoldeApaService } from '../service/solde-apa.service';
 import { ISoldeApa, SoldeApa } from '../solde-apa.model';
-import { IBeneficiaire } from 'app/entities/beneficiaire/beneficiaire.model';
-import { BeneficiaireService } from 'app/entities/beneficiaire/service/beneficiaire.service';
+import { IDroitsStrategieApa } from 'app/entities/droits-strategie-apa/droits-strategie-apa.model';
+import { DroitsStrategieApaService } from 'app/entities/droits-strategie-apa/service/droits-strategie-apa.service';
 
 import { SoldeApaUpdateComponent } from './solde-apa-update.component';
 
@@ -19,7 +19,7 @@ describe('SoldeApa Management Update Component', () => {
   let fixture: ComponentFixture<SoldeApaUpdateComponent>;
   let activatedRoute: ActivatedRoute;
   let soldeApaService: SoldeApaService;
-  let beneficiaireService: BeneficiaireService;
+  let droitsStrategieApaService: DroitsStrategieApaService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -33,44 +33,44 @@ describe('SoldeApa Management Update Component', () => {
     fixture = TestBed.createComponent(SoldeApaUpdateComponent);
     activatedRoute = TestBed.inject(ActivatedRoute);
     soldeApaService = TestBed.inject(SoldeApaService);
-    beneficiaireService = TestBed.inject(BeneficiaireService);
+    droitsStrategieApaService = TestBed.inject(DroitsStrategieApaService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should call Beneficiaire query and add missing value', () => {
+    it('Should call DroitsStrategieApa query and add missing value', () => {
       const soldeApa: ISoldeApa = { id: 456 };
-      const beneficiaire: IBeneficiaire = { id: '5bd9d09c-c7d4-43f4-8900-b777d53af91f' };
-      soldeApa.beneficiaire = beneficiaire;
+      const droitsStrategieApa: IDroitsStrategieApa = { id: 56637 };
+      soldeApa.droitsStrategieApa = droitsStrategieApa;
 
-      const beneficiaireCollection: IBeneficiaire[] = [{ id: 'd9ff16bc-dfe8-4909-8c5b-70404300f0e3' }];
-      jest.spyOn(beneficiaireService, 'query').mockReturnValue(of(new HttpResponse({ body: beneficiaireCollection })));
-      const additionalBeneficiaires = [beneficiaire];
-      const expectedCollection: IBeneficiaire[] = [...additionalBeneficiaires, ...beneficiaireCollection];
-      jest.spyOn(beneficiaireService, 'addBeneficiaireToCollectionIfMissing').mockReturnValue(expectedCollection);
+      const droitsStrategieApaCollection: IDroitsStrategieApa[] = [{ id: 80169 }];
+      jest.spyOn(droitsStrategieApaService, 'query').mockReturnValue(of(new HttpResponse({ body: droitsStrategieApaCollection })));
+      const additionalDroitsStrategieApas = [droitsStrategieApa];
+      const expectedCollection: IDroitsStrategieApa[] = [...additionalDroitsStrategieApas, ...droitsStrategieApaCollection];
+      jest.spyOn(droitsStrategieApaService, 'addDroitsStrategieApaToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ soldeApa });
       comp.ngOnInit();
 
-      expect(beneficiaireService.query).toHaveBeenCalled();
-      expect(beneficiaireService.addBeneficiaireToCollectionIfMissing).toHaveBeenCalledWith(
-        beneficiaireCollection,
-        ...additionalBeneficiaires
+      expect(droitsStrategieApaService.query).toHaveBeenCalled();
+      expect(droitsStrategieApaService.addDroitsStrategieApaToCollectionIfMissing).toHaveBeenCalledWith(
+        droitsStrategieApaCollection,
+        ...additionalDroitsStrategieApas
       );
-      expect(comp.beneficiairesSharedCollection).toEqual(expectedCollection);
+      expect(comp.droitsStrategieApasSharedCollection).toEqual(expectedCollection);
     });
 
     it('Should update editForm', () => {
       const soldeApa: ISoldeApa = { id: 456 };
-      const beneficiaire: IBeneficiaire = { id: 'ca01e1fa-0f65-4295-913f-d86e04fe2a78' };
-      soldeApa.beneficiaire = beneficiaire;
+      const droitsStrategieApa: IDroitsStrategieApa = { id: 74534 };
+      soldeApa.droitsStrategieApa = droitsStrategieApa;
 
       activatedRoute.data = of({ soldeApa });
       comp.ngOnInit();
 
       expect(comp.editForm.value).toEqual(expect.objectContaining(soldeApa));
-      expect(comp.beneficiairesSharedCollection).toContain(beneficiaire);
+      expect(comp.droitsStrategieApasSharedCollection).toContain(droitsStrategieApa);
     });
   });
 
@@ -139,10 +139,10 @@ describe('SoldeApa Management Update Component', () => {
   });
 
   describe('Tracking relationships identifiers', () => {
-    describe('trackBeneficiaireById', () => {
-      it('Should return tracked Beneficiaire primary key', () => {
-        const entity = { id: 'ABC' };
-        const trackResult = comp.trackBeneficiaireById(0, entity);
+    describe('trackDroitsStrategieApaById', () => {
+      it('Should return tracked DroitsStrategieApa primary key', () => {
+        const entity = { id: 123 };
+        const trackResult = comp.trackDroitsStrategieApaById(0, entity);
         expect(trackResult).toEqual(entity.id);
       });
     });

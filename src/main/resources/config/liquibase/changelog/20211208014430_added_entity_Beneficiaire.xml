@@ -11,17 +11,23 @@
     -->
     <changeSet id="20211208014430-1" author="jhipster">
         <createTable tableName="beneficiaire">
-            <column name="id" type="varchar(255)">
+            <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="externe_id" type="varchar(255)">
-                <constraints nullable="true" />
+            <column name="externe_id" type="${uuidType}">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_beneficiaire__externe_id" />
             </column>
             <column name="is_actif" type="boolean">
+                <constraints nullable="false" />
+            </column>
+            <column name="date_desactivation" type="date">
                 <constraints nullable="true" />
             </column>
+            <column name="is_inscrit" type="boolean">
+                <constraints nullable="false" />
+            </column>
             <column name="date_inscription" type="date">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="date_resiliation" type="date">
                 <constraints nullable="true" />
@@ -46,9 +52,11 @@
                   separator=";"
                   tableName="beneficiaire"
                   usePreparedStatements="true">
-            <column name="id" type="string"/>
-            <column name="externe_id" type="string"/>
+            <column name="id" type="numeric"/>
+            <column name="externe_id" type="${uuidType}"/>
             <column name="is_actif" type="boolean"/>
+            <column name="date_desactivation" type="date"/>
+            <column name="is_inscrit" type="boolean"/>
             <column name="date_inscription" type="date"/>
             <column name="date_resiliation" type="date"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->

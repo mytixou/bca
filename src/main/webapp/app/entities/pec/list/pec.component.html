@@ -1,0 +1,106 @@
+<div>
+  <h2 id="page-heading" data-cy="PecHeading">
+    <span jhiTranslate="bcaApp.pec.home.title">Pecs</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="bcaApp.pec.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-pec"
+        [routerLink]="['/pec/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="bcaApp.pec.home.createLabel"> Create a new Pec </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="pecs?.length === 0">
+    <span jhiTranslate="bcaApp.pec.home.notFound">No pecs found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="pecs && pecs.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="bcaApp.pec.id">Id</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.pec.idProduit">Id Produit</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.pec.produit">Produit</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.pec.isPlus">Is Plus</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.pec.dateCreated">Date Created</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.pec.isUpdated">Is Updated</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.pec.dateModified">Date Modified</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.pec.isActif">Is Actif</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.pec.pecDetails">Pec Details</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.pec.soldeCi">Solde Ci</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.pec.soldeApa">Solde Apa</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.pec.soldePch">Solde Pch</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.pec.soldePchE">Solde Pch E</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pec of pecs; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/pec', pec.id, 'view']">{{ pec.id }}</a>
+          </td>
+          <td>{{ pec.idProduit }}</td>
+          <td jhiTranslate="{{ 'bcaApp.TypeProduit.' + pec.produit }}">{{ pec.produit }}</td>
+          <td>{{ pec.isPlus }}</td>
+          <td>{{ pec.dateCreated | formatMediumDatetime }}</td>
+          <td>{{ pec.isUpdated }}</td>
+          <td>{{ pec.dateModified | formatMediumDatetime }}</td>
+          <td>{{ pec.isActif }}</td>
+          <td>{{ pec.pecDetails }}</td>
+          <td>
+            <div *ngIf="pec.soldeCi">
+              <a [routerLink]="['/solde-ci', pec.soldeCi?.id, 'view']">{{ pec.soldeCi?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="pec.soldeApa">
+              <a [routerLink]="['/solde-apa', pec.soldeApa?.id, 'view']">{{ pec.soldeApa?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="pec.soldePch">
+              <a [routerLink]="['/solde-pch', pec.soldePch?.id, 'view']">{{ pec.soldePch?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="pec.soldePchE">
+              <a [routerLink]="['/solde-pch-e', pec.soldePchE?.id, 'view']">{{ pec.soldePchE?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/pec', pec.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/pec', pec.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(pec)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

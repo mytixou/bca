@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <!--
+        Added the constraints for entity Pec.
+    -->
+    <changeSet id="20211208234559-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="solde_ci_id"
+                                 baseTableName="pec"
+                                 constraintName="fk_pec__solde_ci_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="solde_ci"/>
+
+        <addForeignKeyConstraint baseColumnNames="solde_apa_id"
+                                 baseTableName="pec"
+                                 constraintName="fk_pec__solde_apa_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="solde_apa"/>
+
+        <addForeignKeyConstraint baseColumnNames="solde_pch_id"
+                                 baseTableName="pec"
+                                 constraintName="fk_pec__solde_pch_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="solde_pch"/>
+
+        <addForeignKeyConstraint baseColumnNames="solde_pche_id"
+                                 baseTableName="pec"
+                                 constraintName="fk_pec__solde_pche_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="solde_pch_e"/>
+    </changeSet>
+</databaseChangeLog>

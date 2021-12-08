@@ -77,6 +77,7 @@ class TiersFinanceurGatlingTest extends Simulation {
                 , "dateInscription":"2020-01-01T00:00:00.000Z"
                 , "anneLancement":"0"
                 , "moisLancement":"0"
+                , "recupHeureActif":null
                 , "dateResiliation":"2020-01-01T00:00:00.000Z"
                 , "derniereAnnee":"0"
                 , "dernierMois":"0"

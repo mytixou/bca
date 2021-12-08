@@ -8,4 +8,5 @@ public enum TypeAide {
     APA,
     PCH,
     PCHE,
+    PAJE,
 }

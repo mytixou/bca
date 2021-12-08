@@ -71,7 +71,12 @@ class SoldeCiGatlingTest extends Simulation {
             .post("/api/solde-cis")
             .headers(headers_http_authenticated)
             .body(StringBody("""{
-                "annee":"0"
+                "date":"2020-01-01T00:00:00.000Z"
+                , "isActif":null
+                , "isDernier":null
+                , "annee":"0"
+                , "consoMontantCi":"0"
+                , "consoCiRec":"0"
                 , "soldeMontantCi":"0"
                 , "soldeMontantCiRec":"0"
                 }""")).asJson

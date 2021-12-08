@@ -1,11 +1,11 @@
-id;externe_id;is_actif;date_inscription;date_resiliation
-f58a5a69-3616-43bc-bfc6-4eb9262bede1;Paradigm Lira Directives;true;2021-12-07;2021-12-07
-af606d93-e0ec-46be-b8b4-b87ae5016b8f;e-commerce;true;2021-12-07;2021-12-07
-a8f64ab5-b28b-48cb-8582-972e92489e17;Grocery deposit;true;2021-12-07;2021-12-07
-b94d7598-1245-444e-9cf7-56830d6adad7;methodologies repurpose Tasty;true;2021-12-07;2021-12-07
-54101bf9-adef-4299-b09e-daa6a377ee47;Tasty Markets;false;2021-12-07;2021-12-07
-7f90e67d-bf9e-47a6-854b-fd88daef48cc;Borders Lodge;true;2021-12-07;2021-12-07
-ed70b80f-426a-409a-ba1d-a0002642075f;Montana;true;2021-12-07;2021-12-07
-5e2c8cd2-7ebe-4c31-901d-f13df6def745;e-commerce Bedfordshire;false;2021-12-07;2021-12-07
-7144cd8f-36f8-4911-81ce-7920ec1f935e;hacking overriding Cotton;true;2021-12-07;2021-12-07
-3312e001-f48c-4a33-b710-032ee50617a7;Awesome;false;2021-12-07;2021-12-08
+id;externe_id;is_actif;date_desactivation;is_inscrit;date_inscription;date_resiliation
+1;f58a5a69-3616-43bc-bfc6-4eb9262bede1;true;2021-12-07;false;2021-12-07;2021-12-07
+2;cce23e3e-af60-46d9-be0e-c6beb8b4b87a;true;2021-12-07;false;2021-12-07;2021-12-07
+3;b8f4695b-ffa8-4f64-ab5b-28b8cb458297;false;2021-12-07;true;2021-12-07;2021-12-07
+4;89e17a06-ba09-4f67-b94d-7598124544e1;true;2021-12-07;false;2021-12-07;2021-12-07
+5;830d6ada-d7b6-4f66-bd1f-6ce354101bf9;true;2021-12-07;true;2021-12-07;2021-12-07
+6;99309eda-a6a3-477e-a47a-1f7f6c6a27f9;false;2021-12-07;false;2021-12-07;2021-12-07
+7;bf9e7a64-54bf-4d88-9aef-48cc68a77759;false;2021-12-07;true;2021-12-07;2021-12-07
+8;0b80f426-a09a-47a1-9a00-02642075f298;true;2021-12-07;true;2021-12-07;2021-12-07
+9;e2c8cd27-ebec-4315-81df-13df6def7455;false;2021-12-07;false;2021-12-07;2021-12-07
+10;61687144-cd8f-436f-8911-c1ce7920ec1f;true;2021-12-07;false;2021-12-07;2021-12-07

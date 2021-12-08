@@ -41,6 +41,9 @@ public class AideServiceImpl implements AideService {
                 if (aide.getNom() != null) {
                     existingAide.setNom(aide.getNom());
                 }
+                if (aide.getPriorite() != null) {
+                    existingAide.setPriorite(aide.getPriorite());
+                }
                 if (aide.getIsActif() != null) {
                     existingAide.setIsActif(aide.getIsActif());
                 }

@@ -1,0 +1,70 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="trancheAideEnfantGed">
+      <h2 data-cy="trancheAideEnfantGedDetailsHeading">
+        <span jhiTranslate="bcaApp.trancheAideEnfantGed.detail.title">Tranche Aide Enfant Ged</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ trancheAideEnfantGed.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.trancheAideEnfantGed.anne">Anne</span></dt>
+        <dd>
+          <span>{{ trancheAideEnfantGed.anne }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.trancheAideEnfantGed.mois">Mois</span></dt>
+        <dd>
+          <span>{{ trancheAideEnfantGed.mois }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.trancheAideEnfantGed.ageEnfantRevoluSurPeriode">Age Enfant Revolu Sur Periode</span></dt>
+        <dd>
+          <span>{{ trancheAideEnfantGed.ageEnfantRevoluSurPeriode }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.trancheAideEnfantGed.montantPlafondSalaire">Montant Plafond Salaire</span></dt>
+        <dd>
+          <span>{{ trancheAideEnfantGed.montantPlafondSalaire }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.trancheAideEnfantGed.isActif">Is Actif</span></dt>
+        <dd>
+          <span>{{ trancheAideEnfantGed.isActif }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.trancheAideEnfantGed.dateCreated">Date Created</span></dt>
+        <dd>
+          <span>{{ trancheAideEnfantGed.dateCreated | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.trancheAideEnfantGed.isUpdated">Is Updated</span></dt>
+        <dd>
+          <span>{{ trancheAideEnfantGed.isUpdated }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.trancheAideEnfantGed.dateModified">Date Modified</span></dt>
+        <dd>
+          <span>{{ trancheAideEnfantGed.dateModified | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.trancheAideEnfantGed.strategieCmgGed">Strategie Cmg Ged</span></dt>
+        <dd>
+          <div *ngIf="trancheAideEnfantGed.strategieCmgGed">
+            <a [routerLink]="['/strategie-cmg-ged', trancheAideEnfantGed.strategieCmgGed?.id, 'view']">{{
+              trancheAideEnfantGed.strategieCmgGed?.id
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/tranche-aide-enfant-ged', trancheAideEnfantGed.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

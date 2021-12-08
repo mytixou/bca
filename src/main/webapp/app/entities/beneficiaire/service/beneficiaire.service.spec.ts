@@ -24,9 +24,11 @@ describe('Beneficiaire Service', () => {
     currentDate = dayjs();
 
     elemDefault = {
-      id: 'AAAAAAA',
+      id: 0,
       externeId: 'AAAAAAA',
       isActif: false,
+      dateDesactivation: currentDate,
+      isInscrit: false,
       dateInscription: currentDate,
       dateResiliation: currentDate,
     };
@@ -36,13 +38,14 @@ describe('Beneficiaire Service', () => {
     it('should find an element', () => {
       const returnedFromService = Object.assign(
         {
+          dateDesactivation: currentDate.format(DATE_FORMAT),
           dateInscription: currentDate.format(DATE_FORMAT),
           dateResiliation: currentDate.format(DATE_FORMAT),
         },
         elemDefault
       );
 
-      service.find('ABC').subscribe(resp => (expectedResult = resp.body));
+      service.find(123).subscribe(resp => (expectedResult = resp.body));
 
       const req = httpMock.expectOne({ method: 'GET' });
       req.flush(returnedFromService);
@@ -52,7 +55,8 @@ describe('Beneficiaire Service', () => {
     it('should create a Beneficiaire', () => {
       const returnedFromService = Object.assign(
         {
-          id: 'ID',
+          id: 0,
+          dateDesactivation: currentDate.format(DATE_FORMAT),
           dateInscription: currentDate.format(DATE_FORMAT),
           dateResiliation: currentDate.format(DATE_FORMAT),
         },
@@ -61,6 +65,7 @@ describe('Beneficiaire Service', () => {
 
       const expected = Object.assign(
         {
+          dateDesactivation: currentDate,
           dateInscription: currentDate,
           dateResiliation: currentDate,
         },
@@ -77,9 +82,11 @@ describe('Beneficiaire Service', () => {
     it('should update a Beneficiaire', () => {
       const returnedFromService = Object.assign(
         {
-          id: 'BBBBBB',
+          id: 1,
           externeId: 'BBBBBB',
           isActif: true,
+          dateDesactivation: currentDate.format(DATE_FORMAT),
+          isInscrit: true,
           dateInscription: currentDate.format(DATE_FORMAT),
           dateResiliation: currentDate.format(DATE_FORMAT),
         },
@@ -88,6 +95,7 @@ describe('Beneficiaire Service', () => {
 
       const expected = Object.assign(
         {
+          dateDesactivation: currentDate,
           dateInscription: currentDate,
           dateResiliation: currentDate,
         },
@@ -102,12 +110,18 @@ describe('Beneficiaire Service', () => {
     });
 
     it('should partial update a Beneficiaire', () => {
-      const patchObject = Object.assign({}, new Beneficiaire());
+      const patchObject = Object.assign(
+        {
+          dateInscription: currentDate.format(DATE_FORMAT),
+        },
+        new Beneficiaire()
+      );
 
       const returnedFromService = Object.assign(patchObject, elemDefault);
 
       const expected = Object.assign(
         {
+          dateDesactivation: currentDate,
           dateInscription: currentDate,
           dateResiliation: currentDate,
         },
@@ -124,9 +138,11 @@ describe('Beneficiaire Service', () => {
     it('should return a list of Beneficiaire', () => {
       const returnedFromService = Object.assign(
         {
-          id: 'BBBBBB',
+          id: 1,
           externeId: 'BBBBBB',
           isActif: true,
+          dateDesactivation: currentDate.format(DATE_FORMAT),
+          isInscrit: true,
           dateInscription: currentDate.format(DATE_FORMAT),
           dateResiliation: currentDate.format(DATE_FORMAT),
         },
@@ -135,6 +151,7 @@ describe('Beneficiaire Service', () => {
 
       const expected = Object.assign(
         {
+          dateDesactivation: currentDate,
           dateInscription: currentDate,
           dateResiliation: currentDate,
         },
@@ -150,7 +167,7 @@ describe('Beneficiaire Service', () => {
     });
 
     it('should delete a Beneficiaire', () => {
-      service.delete('ABC').subscribe(resp => (expectedResult = resp.ok));
+      service.delete(123).subscribe(resp => (expectedResult = resp.ok));
 
       const req = httpMock.expectOne({ method: 'DELETE' });
       req.flush({ status: 200 });
@@ -159,42 +176,42 @@ describe('Beneficiaire Service', () => {
 
     describe('addBeneficiaireToCollectionIfMissing', () => {
       it('should add a Beneficiaire to an empty array', () => {
-        const beneficiaire: IBeneficiaire = { id: 'ABC' };
+        const beneficiaire: IBeneficiaire = { id: 123 };
         expectedResult = service.addBeneficiaireToCollectionIfMissing([], beneficiaire);
         expect(expectedResult).toHaveLength(1);
         expect(expectedResult).toContain(beneficiaire);
       });
 
       it('should not add a Beneficiaire to an array that contains it', () => {
-        const beneficiaire: IBeneficiaire = { id: 'ABC' };
+        const beneficiaire: IBeneficiaire = { id: 123 };
         const beneficiaireCollection: IBeneficiaire[] = [
           {
             ...beneficiaire,
           },
-          { id: 'CBA' },
+          { id: 456 },
         ];
         expectedResult = service.addBeneficiaireToCollectionIfMissing(beneficiaireCollection, beneficiaire);
         expect(expectedResult).toHaveLength(2);
       });
 
       it("should add a Beneficiaire to an array that doesn't contain it", () => {
-        const beneficiaire: IBeneficiaire = { id: 'ABC' };
-        const beneficiaireCollection: IBeneficiaire[] = [{ id: 'CBA' }];
+        const beneficiaire: IBeneficiaire = { id: 123 };
+        const beneficiaireCollection: IBeneficiaire[] = [{ id: 456 }];
         expectedResult = service.addBeneficiaireToCollectionIfMissing(beneficiaireCollection, beneficiaire);
         expect(expectedResult).toHaveLength(2);
         expect(expectedResult).toContain(beneficiaire);
       });
 
       it('should add only unique Beneficiaire to an array', () => {
-        const beneficiaireArray: IBeneficiaire[] = [{ id: 'ABC' }, { id: 'CBA' }, { id: 'd1b2aba8-35fa-4be0-829e-5818d6bcbed7' }];
-        const beneficiaireCollection: IBeneficiaire[] = [{ id: 'ABC' }];
+        const beneficiaireArray: IBeneficiaire[] = [{ id: 123 }, { id: 456 }, { id: 69547 }];
+        const beneficiaireCollection: IBeneficiaire[] = [{ id: 123 }];
         expectedResult = service.addBeneficiaireToCollectionIfMissing(beneficiaireCollection, ...beneficiaireArray);
         expect(expectedResult).toHaveLength(3);
       });
 
       it('should accept varargs', () => {
-        const beneficiaire: IBeneficiaire = { id: 'ABC' };
-        const beneficiaire2: IBeneficiaire = { id: 'CBA' };
+        const beneficiaire: IBeneficiaire = { id: 123 };
+        const beneficiaire2: IBeneficiaire = { id: 456 };
         expectedResult = service.addBeneficiaireToCollectionIfMissing([], beneficiaire, beneficiaire2);
         expect(expectedResult).toHaveLength(2);
         expect(expectedResult).toContain(beneficiaire);
@@ -202,14 +219,14 @@ describe('Beneficiaire Service', () => {
       });
 
       it('should accept null and undefined values', () => {
-        const beneficiaire: IBeneficiaire = { id: 'ABC' };
+        const beneficiaire: IBeneficiaire = { id: 123 };
         expectedResult = service.addBeneficiaireToCollectionIfMissing([], null, beneficiaire, undefined);
         expect(expectedResult).toHaveLength(1);
         expect(expectedResult).toContain(beneficiaire);
       });
 
       it('should return initial array if no Beneficiaire is added', () => {
-        const beneficiaireCollection: IBeneficiaire[] = [{ id: 'ABC' }];
+        const beneficiaireCollection: IBeneficiaire[] = [{ id: 123 }];
         expectedResult = service.addBeneficiaireToCollectionIfMissing(beneficiaireCollection, undefined, null);
         expect(expectedResult).toEqual(beneficiaireCollection);
       });

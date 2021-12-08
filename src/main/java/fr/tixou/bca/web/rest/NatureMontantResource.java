@@ -9,6 +9,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +50,7 @@ public class NatureMontantResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/nature-montants")
-    public ResponseEntity<NatureMontant> createNatureMontant(@RequestBody NatureMontant natureMontant) throws URISyntaxException {
+    public ResponseEntity<NatureMontant> createNatureMontant(@Valid @RequestBody NatureMontant natureMontant) throws URISyntaxException {
         log.debug("REST request to save NatureMontant : {}", natureMontant);
         if (natureMontant.getId() != null) {
             throw new BadRequestAlertException("A new natureMontant cannot already have an ID", ENTITY_NAME, "idexists");
@@ -73,7 +75,7 @@ public class NatureMontantResource {
     @PutMapping("/nature-montants/{id}")
     public ResponseEntity<NatureMontant> updateNatureMontant(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody NatureMontant natureMontant
+        @Valid @RequestBody NatureMontant natureMontant
     ) throws URISyntaxException {
         log.debug("REST request to update NatureMontant : {}, {}", id, natureMontant);
         if (natureMontant.getId() == null) {
@@ -108,7 +110,7 @@ public class NatureMontantResource {
     @PatchMapping(value = "/nature-montants/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<NatureMontant> partialUpdateNatureMontant(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody NatureMontant natureMontant
+        @NotNull @RequestBody NatureMontant natureMontant
     ) throws URISyntaxException {
         log.debug("REST request to partial update NatureMontant partially : {}, {}", id, natureMontant);
         if (natureMontant.getId() == null) {

@@ -8,10 +8,10 @@
     -->
     <changeSet id="20211208014431-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="beneficiaire_id"
+        <addForeignKeyConstraint baseColumnNames="droits_strategie_ci_id"
                                  baseTableName="solde_ci"
-                                 constraintName="fk_solde_ci__beneficiaire_id"
+                                 constraintName="fk_solde_ci__droits_strategie_ci_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="beneficiaire"/>
+                                 referencedTableName="droits_strategie_ci"/>
     </changeSet>
 </databaseChangeLog>

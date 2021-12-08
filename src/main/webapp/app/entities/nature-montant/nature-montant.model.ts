@@ -5,25 +5,25 @@ import { IStrategiePchE } from 'app/entities/strategie-pch-e/strategie-pch-e.mod
 
 export interface INatureMontant {
   id?: number;
-  code?: string | null;
+  code?: string;
   libelle?: string | null;
   description?: string | null;
-  strategie?: IStrategieCi | null;
-  strategie?: IStrategieApa | null;
-  strategie?: IStrategiePch | null;
-  strategie?: IStrategiePchE | null;
+  strategieCis?: IStrategieCi[] | null;
+  strategieApas?: IStrategieApa[] | null;
+  strategiePches?: IStrategiePch[] | null;
+  strategiePchES?: IStrategiePchE[] | null;
 }
 
 export class NatureMontant implements INatureMontant {
   constructor(
     public id?: number,
-    public code?: string | null,
+    public code?: string,
     public libelle?: string | null,
     public description?: string | null,
-    public strategie?: IStrategieCi | null,
-    public strategie?: IStrategieApa | null,
-    public strategie?: IStrategiePch | null,
-    public strategie?: IStrategiePchE | null
+    public strategieCis?: IStrategieCi[] | null,
+    public strategieApas?: IStrategieApa[] | null,
+    public strategiePches?: IStrategiePch[] | null,
+    public strategiePchES?: IStrategiePchE[] | null
   ) {}
 }
 

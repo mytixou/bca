@@ -47,11 +47,20 @@ describe('StrategieApa e2e test', () => {
 
     await promise.all([
       strategieApaUpdatePage.getIsActifInput().click(),
+      strategieApaUpdatePage.setDateMensuelleDebutValiditeInput('2000-12-31'),
       strategieApaUpdatePage.setAnneInput('5'),
-      strategieApaUpdatePage.setMontantPlafondInput('5'),
-      strategieApaUpdatePage.setNbPlafondheureInput('5'),
-      strategieApaUpdatePage.setTauxInput('5'),
+      strategieApaUpdatePage.setMoisInput('5'),
+      strategieApaUpdatePage.setMontantPlafondSalaireInput('5'),
+      strategieApaUpdatePage.setMontantPlafondCotisationsInput('5'),
+      strategieApaUpdatePage.setMontantPlafondSalairePlusInput('5'),
+      strategieApaUpdatePage.setMontantPlafondCotisationsPlusInput('5'),
+      strategieApaUpdatePage.setNbHeureSalairePlafondInput('5'),
+      strategieApaUpdatePage.setTauxSalaireInput('5'),
+      strategieApaUpdatePage.setTauxCotisationsInput('5'),
       strategieApaUpdatePage.aideSelectLastOption(),
+      strategieApaUpdatePage.tiersFinanceurSelectLastOption(),
+      // strategieApaUpdatePage.natureActiviteSelectLastOption(),
+      // strategieApaUpdatePage.natureMontantSelectLastOption(),
     ]);
 
     await strategieApaUpdatePage.save();

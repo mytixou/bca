@@ -3,7 +3,9 @@ package fr.tixou.bca.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.Instant;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -23,33 +25,53 @@ public class SoldePchE implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "annee")
+    @NotNull
+    @Column(name = "date", nullable = false)
+    private Instant date;
+
+    @NotNull
+    @Column(name = "is_actif", nullable = false)
+    private Boolean isActif;
+
+    @NotNull
+    @Column(name = "is_dernier", nullable = false)
+    private Boolean isDernier;
+
+    @NotNull
+    @Column(name = "annee", nullable = false)
     private Integer annee;
 
-    @Column(name = "mois")
+    @NotNull
+    @Column(name = "mois", nullable = false)
     private Integer mois;
 
-    @Column(name = "solde_montant_pch_e", precision = 21, scale = 2)
+    @NotNull
+    @Column(name = "conso_montant_pch_e_cotisations", precision = 21, scale = 2, nullable = false)
+    private BigDecimal consoMontantPchECotisations;
+
+    @NotNull
+    @Column(name = "conso_montant_pch_e_salaire", precision = 21, scale = 2, nullable = false)
+    private BigDecimal consoMontantPchESalaire;
+
+    @NotNull
+    @Column(name = "solde_montant_pch_e", precision = 21, scale = 2, nullable = false)
     private BigDecimal soldeMontantPchE;
 
-    @Column(name = "solde_heure_pch_e", precision = 21, scale = 2)
+    @NotNull
+    @Column(name = "conso_heure_pch_e", precision = 21, scale = 2, nullable = false)
+    private BigDecimal consoHeurePchE;
+
+    @NotNull
+    @Column(name = "solde_heure_pch_e", precision = 21, scale = 2, nullable = false)
     private BigDecimal soldeHeurePchE;
 
     @ManyToOne
-    @JsonIgnoreProperties(
-        value = {
-            "soldeCis",
-            "soldeApas",
-            "soldePches",
-            "soldePchES",
-            "consommationCis",
-            "consommationApas",
-            "consommationPches",
-            "consommationPchES",
-        },
-        allowSetters = true
-    )
-    private Beneficiaire beneficiaire;
+    @JsonIgnoreProperties(value = { "beneficiaire" }, allowSetters = true)
+    private DroitsStrategiePchE droitsStrategiePchE;
+
+    @JsonIgnoreProperties(value = { "soldeCi", "soldeApa", "soldePch", "soldePchE" }, allowSetters = true)
+    @OneToOne(mappedBy = "soldePchE")
+    private Pec pec;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -64,6 +86,45 @@ public class SoldePchE implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Instant getDate() {
+        return this.date;
+    }
+
+    public SoldePchE date(Instant date) {
+        this.setDate(date);
+        return this;
+    }
+
+    public void setDate(Instant date) {
+        this.date = date;
+    }
+
+    public Boolean getIsActif() {
+        return this.isActif;
+    }
+
+    public SoldePchE isActif(Boolean isActif) {
+        this.setIsActif(isActif);
+        return this;
+    }
+
+    public void setIsActif(Boolean isActif) {
+        this.isActif = isActif;
+    }
+
+    public Boolean getIsDernier() {
+        return this.isDernier;
+    }
+
+    public SoldePchE isDernier(Boolean isDernier) {
+        this.setIsDernier(isDernier);
+        return this;
+    }
+
+    public void setIsDernier(Boolean isDernier) {
+        this.isDernier = isDernier;
     }
 
     public Integer getAnnee() {
@@ -92,6 +153,32 @@ public class SoldePchE implements Serializable {
         this.mois = mois;
     }
 
+    public BigDecimal getConsoMontantPchECotisations() {
+        return this.consoMontantPchECotisations;
+    }
+
+    public SoldePchE consoMontantPchECotisations(BigDecimal consoMontantPchECotisations) {
+        this.setConsoMontantPchECotisations(consoMontantPchECotisations);
+        return this;
+    }
+
+    public void setConsoMontantPchECotisations(BigDecimal consoMontantPchECotisations) {
+        this.consoMontantPchECotisations = consoMontantPchECotisations;
+    }
+
+    public BigDecimal getConsoMontantPchESalaire() {
+        return this.consoMontantPchESalaire;
+    }
+
+    public SoldePchE consoMontantPchESalaire(BigDecimal consoMontantPchESalaire) {
+        this.setConsoMontantPchESalaire(consoMontantPchESalaire);
+        return this;
+    }
+
+    public void setConsoMontantPchESalaire(BigDecimal consoMontantPchESalaire) {
+        this.consoMontantPchESalaire = consoMontantPchESalaire;
+    }
+
     public BigDecimal getSoldeMontantPchE() {
         return this.soldeMontantPchE;
     }
@@ -103,6 +190,19 @@ public class SoldePchE implements Serializable {
 
     public void setSoldeMontantPchE(BigDecimal soldeMontantPchE) {
         this.soldeMontantPchE = soldeMontantPchE;
+    }
+
+    public BigDecimal getConsoHeurePchE() {
+        return this.consoHeurePchE;
+    }
+
+    public SoldePchE consoHeurePchE(BigDecimal consoHeurePchE) {
+        this.setConsoHeurePchE(consoHeurePchE);
+        return this;
+    }
+
+    public void setConsoHeurePchE(BigDecimal consoHeurePchE) {
+        this.consoHeurePchE = consoHeurePchE;
     }
 
     public BigDecimal getSoldeHeurePchE() {
@@ -118,16 +218,35 @@ public class SoldePchE implements Serializable {
         this.soldeHeurePchE = soldeHeurePchE;
     }
 
-    public Beneficiaire getBeneficiaire() {
-        return this.beneficiaire;
+    public DroitsStrategiePchE getDroitsStrategiePchE() {
+        return this.droitsStrategiePchE;
     }
 
-    public void setBeneficiaire(Beneficiaire beneficiaire) {
-        this.beneficiaire = beneficiaire;
+    public void setDroitsStrategiePchE(DroitsStrategiePchE droitsStrategiePchE) {
+        this.droitsStrategiePchE = droitsStrategiePchE;
     }
 
-    public SoldePchE beneficiaire(Beneficiaire beneficiaire) {
-        this.setBeneficiaire(beneficiaire);
+    public SoldePchE droitsStrategiePchE(DroitsStrategiePchE droitsStrategiePchE) {
+        this.setDroitsStrategiePchE(droitsStrategiePchE);
+        return this;
+    }
+
+    public Pec getPec() {
+        return this.pec;
+    }
+
+    public void setPec(Pec pec) {
+        if (this.pec != null) {
+            this.pec.setSoldePchE(null);
+        }
+        if (pec != null) {
+            pec.setSoldePchE(this);
+        }
+        this.pec = pec;
+    }
+
+    public SoldePchE pec(Pec pec) {
+        this.setPec(pec);
         return this;
     }
 
@@ -155,9 +274,15 @@ public class SoldePchE implements Serializable {
     public String toString() {
         return "SoldePchE{" +
             "id=" + getId() +
+            ", date='" + getDate() + "'" +
+            ", isActif='" + getIsActif() + "'" +
+            ", isDernier='" + getIsDernier() + "'" +
             ", annee=" + getAnnee() +
             ", mois=" + getMois() +
+            ", consoMontantPchECotisations=" + getConsoMontantPchECotisations() +
+            ", consoMontantPchESalaire=" + getConsoMontantPchESalaire() +
             ", soldeMontantPchE=" + getSoldeMontantPchE() +
+            ", consoHeurePchE=" + getConsoHeurePchE() +
             ", soldeHeurePchE=" + getSoldeHeurePchE() +
             "}";
     }
