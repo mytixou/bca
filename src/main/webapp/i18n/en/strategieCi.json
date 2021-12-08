@@ -19,14 +19,17 @@
       },
       "id": "ID",
       "isActif": "Is Actif",
+      "dateAnnuelleDebutValidite": "Date Annuelle Debut Validite",
       "anne": "Anne",
-      "montantPlafond": "Montant Plafond",
-      "taux": "Taux",
+      "montantPlafondDefaut": "Montant Plafond Defaut",
+      "montantPlafondHandicape": "Montant Plafond Handicape",
+      "montantPlafondDefautPlus": "Montant Plafond Defaut Plus",
+      "montantPlafondHandicapePlus": "Montant Plafond Handicape Plus",
+      "tauxSalaire": "Taux Salaire",
+      "aide": "Aide",
       "tiersFinanceur": "Tiers Financeur",
       "natureActivite": "Nature Activite",
-      "natureMontant": "Nature Montant",
-      "consommationCi": "Consommation Ci",
-      "aide": "Aide"
+      "natureMontant": "Nature Montant"
     }
   }
 }

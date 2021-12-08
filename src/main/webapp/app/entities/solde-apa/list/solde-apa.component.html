@@ -33,11 +33,17 @@
       <thead>
         <tr>
           <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldeApa.date">Date</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldeApa.isActif">Is Actif</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldeApa.isDernier">Is Dernier</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.soldeApa.annee">Annee</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.soldeApa.mois">Mois</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldeApa.consoMontantApaCotisations">Conso Montant Apa Cotisations</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldeApa.consoMontantApaSalaire">Conso Montant Apa Salaire</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.soldeApa.soldeMontantApa">Solde Montant Apa</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldeApa.consoHeureApa">Conso Heure Apa</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.soldeApa.soldeHeureApa">Solde Heure Apa</span></th>
-          <th scope="col"><span jhiTranslate="bcaApp.soldeApa.beneficiaire">Beneficiaire</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldeApa.droitsStrategieApa">Droits Strategie Apa</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -46,13 +52,19 @@
           <td>
             <a [routerLink]="['/solde-apa', soldeApa.id, 'view']">{{ soldeApa.id }}</a>
           </td>
+          <td>{{ soldeApa.date | formatMediumDatetime }}</td>
+          <td>{{ soldeApa.isActif }}</td>
+          <td>{{ soldeApa.isDernier }}</td>
           <td>{{ soldeApa.annee }}</td>
           <td>{{ soldeApa.mois }}</td>
+          <td>{{ soldeApa.consoMontantApaCotisations }}</td>
+          <td>{{ soldeApa.consoMontantApaSalaire }}</td>
           <td>{{ soldeApa.soldeMontantApa }}</td>
+          <td>{{ soldeApa.consoHeureApa }}</td>
           <td>{{ soldeApa.soldeHeureApa }}</td>
           <td>
-            <div *ngIf="soldeApa.beneficiaire">
-              <a [routerLink]="['/beneficiaire', soldeApa.beneficiaire?.id, 'view']">{{ soldeApa.beneficiaire?.id }}</a>
+            <div *ngIf="soldeApa.droitsStrategieApa">
+              <a [routerLink]="['/droits-strategie-apa', soldeApa.droitsStrategieApa?.id, 'view']">{{ soldeApa.droitsStrategieApa?.id }}</a>
             </div>
           </td>
           <td class="text-right">

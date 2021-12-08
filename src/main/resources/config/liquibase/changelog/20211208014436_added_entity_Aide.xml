@@ -15,19 +15,22 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="nom" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_aide__nom" />
+            </column>
+            <column name="priorite" type="integer">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_aide__priorite" />
             </column>
             <column name="is_actif" type="boolean">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="date_lancement" type="date">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="anne_lancement" type="integer">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="mois_lancement" type="integer">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="date_arret" type="date">
                 <constraints nullable="true" />
@@ -36,6 +39,9 @@
                 <constraints nullable="true" />
             </column>
             <column name="dernier_mois" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="aide_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -60,6 +66,7 @@
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="nom" type="string"/>
+            <column name="priorite" type="numeric"/>
             <column name="is_actif" type="boolean"/>
             <column name="date_lancement" type="date"/>
             <column name="anne_lancement" type="numeric"/>

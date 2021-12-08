@@ -1,0 +1,280 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-strategie-cmg-assmat-heading"
+        data-cy="StrategieCmgAssmatCreateUpdateHeading"
+        jhiTranslate="bcaApp.strategieCmgAssmat.home.createOrEditLabel"
+      >
+        Create or edit a Strategie Cmg Assmat
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.strategieCmgAssmat.anne" for="field_anne">Anne</label>
+          <input type="number" class="form-control" name="anne" id="field_anne" data-cy="anne" formControlName="anne" />
+          <div *ngIf="editForm.get('anne')!.invalid && (editForm.get('anne')!.dirty || editForm.get('anne')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('anne')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('anne')?.errors?.number" jhiTranslate="entity.validation.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.strategieCmgAssmat.mois" for="field_mois">Mois</label>
+          <input type="number" class="form-control" name="mois" id="field_mois" data-cy="mois" formControlName="mois" />
+          <div *ngIf="editForm.get('mois')!.invalid && (editForm.get('mois')!.dirty || editForm.get('mois')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('mois')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('mois')?.errors?.number" jhiTranslate="entity.validation.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.strategieCmgAssmat.nbHeureSeuilPlafond" for="field_nbHeureSeuilPlafond"
+            >Nb Heure Seuil Plafond</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="nbHeureSeuilPlafond"
+            id="field_nbHeureSeuilPlafond"
+            data-cy="nbHeureSeuilPlafond"
+            formControlName="nbHeureSeuilPlafond"
+          />
+          <div
+            *ngIf="
+              editForm.get('nbHeureSeuilPlafond')!.invalid &&
+              (editForm.get('nbHeureSeuilPlafond')!.dirty || editForm.get('nbHeureSeuilPlafond')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('nbHeureSeuilPlafond')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('nbHeureSeuilPlafond')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.strategieCmgAssmat.tauxSalaire" for="field_tauxSalaire"
+            >Taux Salaire</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="tauxSalaire"
+            id="field_tauxSalaire"
+            data-cy="tauxSalaire"
+            formControlName="tauxSalaire"
+          />
+          <div *ngIf="editForm.get('tauxSalaire')!.invalid && (editForm.get('tauxSalaire')!.dirty || editForm.get('tauxSalaire')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('tauxSalaire')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('tauxSalaire')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.strategieCmgAssmat.tauxCotisations" for="field_tauxCotisations"
+            >Taux Cotisations</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="tauxCotisations"
+            id="field_tauxCotisations"
+            data-cy="tauxCotisations"
+            formControlName="tauxCotisations"
+          />
+          <div
+            *ngIf="
+              editForm.get('tauxCotisations')!.invalid &&
+              (editForm.get('tauxCotisations')!.dirty || editForm.get('tauxCotisations')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('tauxCotisations')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('tauxCotisations')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.strategieCmgAssmat.isActif" for="field_isActif">Is Actif</label>
+          <input type="checkbox" class="form-check" name="isActif" id="field_isActif" data-cy="isActif" formControlName="isActif" />
+          <div *ngIf="editForm.get('isActif')!.invalid && (editForm.get('isActif')!.dirty || editForm.get('isActif')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('isActif')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.strategieCmgAssmat.dateCreated" for="field_dateCreated"
+            >Date Created</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_dateCreated"
+              data-cy="dateCreated"
+              type="datetime-local"
+              class="form-control"
+              name="dateCreated"
+              formControlName="dateCreated"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div *ngIf="editForm.get('dateCreated')!.invalid && (editForm.get('dateCreated')!.dirty || editForm.get('dateCreated')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('dateCreated')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('dateCreated')?.errors?.ZonedDateTimelocal"
+              jhiTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.strategieCmgAssmat.isUpdated" for="field_isUpdated">Is Updated</label>
+          <input type="checkbox" class="form-check" name="isUpdated" id="field_isUpdated" data-cy="isUpdated" formControlName="isUpdated" />
+          <div *ngIf="editForm.get('isUpdated')!.invalid && (editForm.get('isUpdated')!.dirty || editForm.get('isUpdated')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('isUpdated')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.strategieCmgAssmat.dateModified" for="field_dateModified"
+            >Date Modified</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_dateModified"
+              data-cy="dateModified"
+              type="datetime-local"
+              class="form-control"
+              name="dateModified"
+              formControlName="dateModified"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.strategieCmgAssmat.aide" for="field_aide">Aide</label>
+          <select class="form-control" id="field_aide" data-cy="aide" name="aide" formControlName="aide">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="aideOption.id === editForm.get('aide')!.value?.id ? editForm.get('aide')!.value : aideOption"
+              *ngFor="let aideOption of aidesSharedCollection; trackBy: trackAideById"
+            >
+              {{ aideOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.strategieCmgAssmat.tiersFinanceur" for="field_tiersFinanceur"
+            >Tiers Financeur</label
+          >
+          <select
+            class="form-control"
+            id="field_tiersFinanceur"
+            data-cy="tiersFinanceur"
+            name="tiersFinanceur"
+            formControlName="tiersFinanceur"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                tiersFinanceurOption.id === editForm.get('tiersFinanceur')!.value?.id
+                  ? editForm.get('tiersFinanceur')!.value
+                  : tiersFinanceurOption
+              "
+              *ngFor="let tiersFinanceurOption of tiersFinanceursSharedCollection; trackBy: trackTiersFinanceurById"
+            >
+              {{ tiersFinanceurOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

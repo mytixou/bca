@@ -39,13 +39,10 @@
           <th scope="col"><span jhiTranslate="bcaApp.tiersFinanceur.dateInscription">Date Inscription</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.tiersFinanceur.anneLancement">Anne Lancement</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.tiersFinanceur.moisLancement">Mois Lancement</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.tiersFinanceur.recupHeureActif">Recup Heure Actif</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.tiersFinanceur.dateResiliation">Date Resiliation</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.tiersFinanceur.derniereAnnee">Derniere Annee</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.tiersFinanceur.dernierMois">Dernier Mois</span></th>
-          <th scope="col"><span jhiTranslate="bcaApp.tiersFinanceur.strategie">Strategie</span></th>
-          <th scope="col"><span jhiTranslate="bcaApp.tiersFinanceur.strategie">Strategie</span></th>
-          <th scope="col"><span jhiTranslate="bcaApp.tiersFinanceur.strategie">Strategie</span></th>
-          <th scope="col"><span jhiTranslate="bcaApp.tiersFinanceur.strategie">Strategie</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -60,29 +57,10 @@
           <td>{{ tiersFinanceur.dateInscription | formatMediumDate }}</td>
           <td>{{ tiersFinanceur.anneLancement }}</td>
           <td>{{ tiersFinanceur.moisLancement }}</td>
+          <td>{{ tiersFinanceur.recupHeureActif }}</td>
           <td>{{ tiersFinanceur.dateResiliation | formatMediumDate }}</td>
           <td>{{ tiersFinanceur.derniereAnnee }}</td>
           <td>{{ tiersFinanceur.dernierMois }}</td>
-          <td>
-            <div *ngIf="tiersFinanceur.strategie">
-              <a [routerLink]="['/strategie-ci', tiersFinanceur.strategie?.id, 'view']">{{ tiersFinanceur.strategie?.id }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="tiersFinanceur.strategie">
-              <a [routerLink]="['/strategie-apa', tiersFinanceur.strategie?.id, 'view']">{{ tiersFinanceur.strategie?.id }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="tiersFinanceur.strategie">
-              <a [routerLink]="['/strategie-pch', tiersFinanceur.strategie?.id, 'view']">{{ tiersFinanceur.strategie?.id }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="tiersFinanceur.strategie">
-              <a [routerLink]="['/strategie-pch-e', tiersFinanceur.strategie?.id, 'view']">{{ tiersFinanceur.strategie?.id }}</a>
-            </div>
-          </td>
           <td class="text-right">
             <div class="btn-group">
               <button

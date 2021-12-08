@@ -9,6 +9,9 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +51,7 @@ public class SoldePchEResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/solde-pch-es")
-    public ResponseEntity<SoldePchE> createSoldePchE(@RequestBody SoldePchE soldePchE) throws URISyntaxException {
+    public ResponseEntity<SoldePchE> createSoldePchE(@Valid @RequestBody SoldePchE soldePchE) throws URISyntaxException {
         log.debug("REST request to save SoldePchE : {}", soldePchE);
         if (soldePchE.getId() != null) {
             throw new BadRequestAlertException("A new soldePchE cannot already have an ID", ENTITY_NAME, "idexists");
@@ -73,7 +76,7 @@ public class SoldePchEResource {
     @PutMapping("/solde-pch-es/{id}")
     public ResponseEntity<SoldePchE> updateSoldePchE(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody SoldePchE soldePchE
+        @Valid @RequestBody SoldePchE soldePchE
     ) throws URISyntaxException {
         log.debug("REST request to update SoldePchE : {}, {}", id, soldePchE);
         if (soldePchE.getId() == null) {
@@ -108,7 +111,7 @@ public class SoldePchEResource {
     @PatchMapping(value = "/solde-pch-es/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<SoldePchE> partialUpdateSoldePchE(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody SoldePchE soldePchE
+        @NotNull @RequestBody SoldePchE soldePchE
     ) throws URISyntaxException {
         log.debug("REST request to partial update SoldePchE partially : {}, {}", id, soldePchE);
         if (soldePchE.getId() == null) {
@@ -133,10 +136,15 @@ public class SoldePchEResource {
     /**
      * {@code GET  /solde-pch-es} : get all the soldePchES.
      *
+     * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of soldePchES in body.
      */
     @GetMapping("/solde-pch-es")
-    public List<SoldePchE> getAllSoldePchES() {
+    public List<SoldePchE> getAllSoldePchES(@RequestParam(required = false) String filter) {
+        if ("pec-is-null".equals(filter)) {
+            log.debug("REST request to get all SoldePchEs where pec is null");
+            return soldePchEService.findAllWherePecIsNull();
+        }
         log.debug("REST request to get all SoldePchES");
         return soldePchEService.findAll();
     }

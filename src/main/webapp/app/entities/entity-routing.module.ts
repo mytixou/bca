@@ -89,6 +89,67 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'bcaApp.consommationPchE.home.title' },
         loadChildren: () => import('./consommation-pch-e/consommation-pch-e.module').then(m => m.ConsommationPchEModule),
       },
+      {
+        path: 'droits-strategie-ci',
+        data: { pageTitle: 'bcaApp.droitsStrategieCi.home.title' },
+        loadChildren: () => import('./droits-strategie-ci/droits-strategie-ci.module').then(m => m.DroitsStrategieCiModule),
+      },
+      {
+        path: 'droits-strategie-apa',
+        data: { pageTitle: 'bcaApp.droitsStrategieApa.home.title' },
+        loadChildren: () => import('./droits-strategie-apa/droits-strategie-apa.module').then(m => m.DroitsStrategieApaModule),
+      },
+      {
+        path: 'droits-strategie-pch',
+        data: { pageTitle: 'bcaApp.droitsStrategiePch.home.title' },
+        loadChildren: () => import('./droits-strategie-pch/droits-strategie-pch.module').then(m => m.DroitsStrategiePchModule),
+      },
+      {
+        path: 'droits-strategie-pch-e',
+        data: { pageTitle: 'bcaApp.droitsStrategiePchE.home.title' },
+        loadChildren: () => import('./droits-strategie-pch-e/droits-strategie-pch-e.module').then(m => m.DroitsStrategiePchEModule),
+      },
+      {
+        path: 'pec',
+        data: { pageTitle: 'bcaApp.pec.home.title' },
+        loadChildren: () => import('./pec/pec.module').then(m => m.PecModule),
+      },
+      {
+        path: 'produit',
+        data: { pageTitle: 'bcaApp.produit.home.title' },
+        loadChildren: () => import('./produit/produit.module').then(m => m.ProduitModule),
+      },
+      {
+        path: 'droit-aide',
+        data: { pageTitle: 'bcaApp.droitAide.home.title' },
+        loadChildren: () => import('./droit-aide/droit-aide.module').then(m => m.DroitAideModule),
+      },
+      {
+        path: 'enfant',
+        data: { pageTitle: 'bcaApp.enfant.home.title' },
+        loadChildren: () => import('./enfant/enfant.module').then(m => m.EnfantModule),
+      },
+      {
+        path: 'strategie-cmg-assmat',
+        data: { pageTitle: 'bcaApp.strategieCmgAssmat.home.title' },
+        loadChildren: () => import('./strategie-cmg-assmat/strategie-cmg-assmat.module').then(m => m.StrategieCmgAssmatModule),
+      },
+      {
+        path: 'strategie-cmg-ged',
+        data: { pageTitle: 'bcaApp.strategieCmgGed.home.title' },
+        loadChildren: () => import('./strategie-cmg-ged/strategie-cmg-ged.module').then(m => m.StrategieCmgGedModule),
+      },
+      {
+        path: 'tranche-aide-enfant-assmat',
+        data: { pageTitle: 'bcaApp.trancheAideEnfantAssmat.home.title' },
+        loadChildren: () =>
+          import('./tranche-aide-enfant-assmat/tranche-aide-enfant-assmat.module').then(m => m.TrancheAideEnfantAssmatModule),
+      },
+      {
+        path: 'tranche-aide-enfant-ged',
+        data: { pageTitle: 'bcaApp.trancheAideEnfantGed.home.title' },
+        loadChildren: () => import('./tranche-aide-enfant-ged/tranche-aide-enfant-ged.module').then(m => m.TrancheAideEnfantGedModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

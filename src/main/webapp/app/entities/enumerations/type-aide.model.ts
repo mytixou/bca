@@ -6,4 +6,6 @@ export enum TypeAide {
   PCH = 'PCH',
 
   PCHE = 'PCHE',
+
+  PAJE = 'PAJE',
 }

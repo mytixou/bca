@@ -18,10 +18,16 @@
         "title": "Solde Ci"
       },
       "id": "ID",
+      "date": "Date",
+      "isActif": "Is Actif",
+      "isDernier": "Is Dernier",
       "annee": "Annee",
+      "consoMontantCi": "Conso Montant Ci",
+      "consoCiRec": "Conso Ci Rec",
       "soldeMontantCi": "Solde Montant Ci",
       "soldeMontantCiRec": "Solde Montant Ci Rec",
-      "beneficiaire": "Beneficiaire"
+      "droitsStrategieCi": "Droits Strategie Ci",
+      "pec": "Pec"
     }
   }
 }

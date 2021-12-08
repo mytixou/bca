@@ -1,6 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import * as dayjs from 'dayjs';
 
+import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 import { ISoldePch, SoldePch } from '../solde-pch.model';
 
 import { SoldePchService } from './solde-pch.service';
@@ -10,6 +12,7 @@ describe('SoldePch Service', () => {
   let httpMock: HttpTestingController;
   let elemDefault: ISoldePch;
   let expectedResult: ISoldePch | ISoldePch[] | boolean | null;
+  let currentDate: dayjs.Dayjs;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -18,19 +21,31 @@ describe('SoldePch Service', () => {
     expectedResult = null;
     service = TestBed.inject(SoldePchService);
     httpMock = TestBed.inject(HttpTestingController);
+    currentDate = dayjs();
 
     elemDefault = {
       id: 0,
+      date: currentDate,
+      isActif: false,
+      isDernier: false,
       annee: 0,
       mois: 0,
+      consoMontantPchCotisations: 0,
+      consoMontantPchSalaire: 0,
       soldeMontantPch: 0,
+      consoHeurePch: 0,
       soldeHeurePch: 0,
     };
   });
 
   describe('Service methods', () => {
     it('should find an element', () => {
-      const returnedFromService = Object.assign({}, elemDefault);
+      const returnedFromService = Object.assign(
+        {
+          date: currentDate.format(DATE_TIME_FORMAT),
+        },
+        elemDefault
+      );
 
       service.find(123).subscribe(resp => (expectedResult = resp.body));
 
@@ -43,11 +58,17 @@ describe('SoldePch Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 0,
+          date: currentDate.format(DATE_TIME_FORMAT),
         },
         elemDefault
       );
 
-      const expected = Object.assign({}, returnedFromService);
+      const expected = Object.assign(
+        {
+          date: currentDate,
+        },
+        returnedFromService
+      );
 
       service.create(new SoldePch()).subscribe(resp => (expectedResult = resp.body));
 
@@ -60,15 +81,26 @@ describe('SoldePch Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 1,
+          date: currentDate.format(DATE_TIME_FORMAT),
+          isActif: true,
+          isDernier: true,
           annee: 1,
           mois: 1,
+          consoMontantPchCotisations: 1,
+          consoMontantPchSalaire: 1,
           soldeMontantPch: 1,
+          consoHeurePch: 1,
           soldeHeurePch: 1,
         },
         elemDefault
       );
 
-      const expected = Object.assign({}, returnedFromService);
+      const expected = Object.assign(
+        {
+          date: currentDate,
+        },
+        returnedFromService
+      );
 
       service.update(expected).subscribe(resp => (expectedResult = resp.body));
 
@@ -80,14 +112,21 @@ describe('SoldePch Service', () => {
     it('should partial update a SoldePch', () => {
       const patchObject = Object.assign(
         {
-          annee: 1,
+          date: currentDate.format(DATE_TIME_FORMAT),
+          mois: 1,
+          consoHeurePch: 1,
         },
         new SoldePch()
       );
 
       const returnedFromService = Object.assign(patchObject, elemDefault);
 
-      const expected = Object.assign({}, returnedFromService);
+      const expected = Object.assign(
+        {
+          date: currentDate,
+        },
+        returnedFromService
+      );
 
       service.partialUpdate(patchObject).subscribe(resp => (expectedResult = resp.body));
 
@@ -100,15 +139,26 @@ describe('SoldePch Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 1,
+          date: currentDate.format(DATE_TIME_FORMAT),
+          isActif: true,
+          isDernier: true,
           annee: 1,
           mois: 1,
+          consoMontantPchCotisations: 1,
+          consoMontantPchSalaire: 1,
           soldeMontantPch: 1,
+          consoHeurePch: 1,
           soldeHeurePch: 1,
         },
         elemDefault
       );
 
-      const expected = Object.assign({}, returnedFromService);
+      const expected = Object.assign(
+        {
+          date: currentDate,
+        },
+        returnedFromService
+      );
 
       service.query().subscribe(resp => (expectedResult = resp.body));
 
@@ -155,7 +205,7 @@ describe('SoldePch Service', () => {
       });
 
       it('should add only unique SoldePch to an array', () => {
-        const soldePchArray: ISoldePch[] = [{ id: 123 }, { id: 456 }, { id: 76036 }];
+        const soldePchArray: ISoldePch[] = [{ id: 123 }, { id: 456 }, { id: 74793 }];
         const soldePchCollection: ISoldePch[] = [{ id: 123 }];
         expectedResult = service.addSoldePchToCollectionIfMissing(soldePchCollection, ...soldePchArray);
         expect(expectedResult).toHaveLength(3);

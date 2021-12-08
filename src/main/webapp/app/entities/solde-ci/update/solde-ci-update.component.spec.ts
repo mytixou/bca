@@ -9,8 +9,8 @@ import { of, Subject } from 'rxjs';
 
 import { SoldeCiService } from '../service/solde-ci.service';
 import { ISoldeCi, SoldeCi } from '../solde-ci.model';
-import { IBeneficiaire } from 'app/entities/beneficiaire/beneficiaire.model';
-import { BeneficiaireService } from 'app/entities/beneficiaire/service/beneficiaire.service';
+import { IDroitsStrategieCi } from 'app/entities/droits-strategie-ci/droits-strategie-ci.model';
+import { DroitsStrategieCiService } from 'app/entities/droits-strategie-ci/service/droits-strategie-ci.service';
 
 import { SoldeCiUpdateComponent } from './solde-ci-update.component';
 
@@ -19,7 +19,7 @@ describe('SoldeCi Management Update Component', () => {
   let fixture: ComponentFixture<SoldeCiUpdateComponent>;
   let activatedRoute: ActivatedRoute;
   let soldeCiService: SoldeCiService;
-  let beneficiaireService: BeneficiaireService;
+  let droitsStrategieCiService: DroitsStrategieCiService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -33,44 +33,44 @@ describe('SoldeCi Management Update Component', () => {
     fixture = TestBed.createComponent(SoldeCiUpdateComponent);
     activatedRoute = TestBed.inject(ActivatedRoute);
     soldeCiService = TestBed.inject(SoldeCiService);
-    beneficiaireService = TestBed.inject(BeneficiaireService);
+    droitsStrategieCiService = TestBed.inject(DroitsStrategieCiService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should call Beneficiaire query and add missing value', () => {
+    it('Should call DroitsStrategieCi query and add missing value', () => {
       const soldeCi: ISoldeCi = { id: 456 };
-      const beneficiaire: IBeneficiaire = { id: 'b9612db2-4404-4691-8c16-d25481c2a8c6' };
-      soldeCi.beneficiaire = beneficiaire;
+      const droitsStrategieCi: IDroitsStrategieCi = { id: 87744 };
+      soldeCi.droitsStrategieCi = droitsStrategieCi;
 
-      const beneficiaireCollection: IBeneficiaire[] = [{ id: '4a2bd021-210d-4d3e-baff-971c469c37cb' }];
-      jest.spyOn(beneficiaireService, 'query').mockReturnValue(of(new HttpResponse({ body: beneficiaireCollection })));
-      const additionalBeneficiaires = [beneficiaire];
-      const expectedCollection: IBeneficiaire[] = [...additionalBeneficiaires, ...beneficiaireCollection];
-      jest.spyOn(beneficiaireService, 'addBeneficiaireToCollectionIfMissing').mockReturnValue(expectedCollection);
+      const droitsStrategieCiCollection: IDroitsStrategieCi[] = [{ id: 48244 }];
+      jest.spyOn(droitsStrategieCiService, 'query').mockReturnValue(of(new HttpResponse({ body: droitsStrategieCiCollection })));
+      const additionalDroitsStrategieCis = [droitsStrategieCi];
+      const expectedCollection: IDroitsStrategieCi[] = [...additionalDroitsStrategieCis, ...droitsStrategieCiCollection];
+      jest.spyOn(droitsStrategieCiService, 'addDroitsStrategieCiToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ soldeCi });
       comp.ngOnInit();
 
-      expect(beneficiaireService.query).toHaveBeenCalled();
-      expect(beneficiaireService.addBeneficiaireToCollectionIfMissing).toHaveBeenCalledWith(
-        beneficiaireCollection,
-        ...additionalBeneficiaires
+      expect(droitsStrategieCiService.query).toHaveBeenCalled();
+      expect(droitsStrategieCiService.addDroitsStrategieCiToCollectionIfMissing).toHaveBeenCalledWith(
+        droitsStrategieCiCollection,
+        ...additionalDroitsStrategieCis
       );
-      expect(comp.beneficiairesSharedCollection).toEqual(expectedCollection);
+      expect(comp.droitsStrategieCisSharedCollection).toEqual(expectedCollection);
     });
 
     it('Should update editForm', () => {
       const soldeCi: ISoldeCi = { id: 456 };
-      const beneficiaire: IBeneficiaire = { id: '8f036b86-d984-444e-bfb4-8366a5a006e2' };
-      soldeCi.beneficiaire = beneficiaire;
+      const droitsStrategieCi: IDroitsStrategieCi = { id: 9809 };
+      soldeCi.droitsStrategieCi = droitsStrategieCi;
 
       activatedRoute.data = of({ soldeCi });
       comp.ngOnInit();
 
       expect(comp.editForm.value).toEqual(expect.objectContaining(soldeCi));
-      expect(comp.beneficiairesSharedCollection).toContain(beneficiaire);
+      expect(comp.droitsStrategieCisSharedCollection).toContain(droitsStrategieCi);
     });
   });
 
@@ -139,10 +139,10 @@ describe('SoldeCi Management Update Component', () => {
   });
 
   describe('Tracking relationships identifiers', () => {
-    describe('trackBeneficiaireById', () => {
-      it('Should return tracked Beneficiaire primary key', () => {
-        const entity = { id: 'ABC' };
-        const trackResult = comp.trackBeneficiaireById(0, entity);
+    describe('trackDroitsStrategieCiById', () => {
+      it('Should return tracked DroitsStrategieCi primary key', () => {
+        const entity = { id: 123 };
+        const trackResult = comp.trackDroitsStrategieCiById(0, entity);
         expect(trackResult).toEqual(entity.id);
       });
     });

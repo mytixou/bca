@@ -3,7 +3,9 @@ package fr.tixou.bca.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.Instant;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -23,30 +25,45 @@ public class SoldeCi implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "annee")
+    @NotNull
+    @Column(name = "date", nullable = false)
+    private Instant date;
+
+    @NotNull
+    @Column(name = "is_actif", nullable = false)
+    private Boolean isActif;
+
+    @NotNull
+    @Column(name = "is_dernier", nullable = false)
+    private Boolean isDernier;
+
+    @NotNull
+    @Column(name = "annee", nullable = false, unique = true)
     private Integer annee;
 
-    @Column(name = "solde_montant_ci", precision = 21, scale = 2)
+    @NotNull
+    @Column(name = "conso_montant_ci", precision = 21, scale = 2, nullable = false)
+    private BigDecimal consoMontantCi;
+
+    @NotNull
+    @Column(name = "conso_ci_rec", precision = 21, scale = 2, nullable = false)
+    private BigDecimal consoCiRec;
+
+    @NotNull
+    @Column(name = "solde_montant_ci", precision = 21, scale = 2, nullable = false)
     private BigDecimal soldeMontantCi;
 
-    @Column(name = "solde_montant_ci_rec", precision = 21, scale = 2)
+    @NotNull
+    @Column(name = "solde_montant_ci_rec", precision = 21, scale = 2, nullable = false)
     private BigDecimal soldeMontantCiRec;
 
     @ManyToOne
-    @JsonIgnoreProperties(
-        value = {
-            "soldeCis",
-            "soldeApas",
-            "soldePches",
-            "soldePchES",
-            "consommationCis",
-            "consommationApas",
-            "consommationPches",
-            "consommationPchES",
-        },
-        allowSetters = true
-    )
-    private Beneficiaire beneficiaire;
+    @JsonIgnoreProperties(value = { "beneficiaire" }, allowSetters = true)
+    private DroitsStrategieCi droitsStrategieCi;
+
+    @JsonIgnoreProperties(value = { "soldeCi", "soldeApa", "soldePch", "soldePchE" }, allowSetters = true)
+    @OneToOne(mappedBy = "soldeCi")
+    private Pec pec;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -63,6 +80,45 @@ public class SoldeCi implements Serializable {
         this.id = id;
     }
 
+    public Instant getDate() {
+        return this.date;
+    }
+
+    public SoldeCi date(Instant date) {
+        this.setDate(date);
+        return this;
+    }
+
+    public void setDate(Instant date) {
+        this.date = date;
+    }
+
+    public Boolean getIsActif() {
+        return this.isActif;
+    }
+
+    public SoldeCi isActif(Boolean isActif) {
+        this.setIsActif(isActif);
+        return this;
+    }
+
+    public void setIsActif(Boolean isActif) {
+        this.isActif = isActif;
+    }
+
+    public Boolean getIsDernier() {
+        return this.isDernier;
+    }
+
+    public SoldeCi isDernier(Boolean isDernier) {
+        this.setIsDernier(isDernier);
+        return this;
+    }
+
+    public void setIsDernier(Boolean isDernier) {
+        this.isDernier = isDernier;
+    }
+
     public Integer getAnnee() {
         return this.annee;
     }
@@ -74,6 +130,32 @@ public class SoldeCi implements Serializable {
 
     public void setAnnee(Integer annee) {
         this.annee = annee;
+    }
+
+    public BigDecimal getConsoMontantCi() {
+        return this.consoMontantCi;
+    }
+
+    public SoldeCi consoMontantCi(BigDecimal consoMontantCi) {
+        this.setConsoMontantCi(consoMontantCi);
+        return this;
+    }
+
+    public void setConsoMontantCi(BigDecimal consoMontantCi) {
+        this.consoMontantCi = consoMontantCi;
+    }
+
+    public BigDecimal getConsoCiRec() {
+        return this.consoCiRec;
+    }
+
+    public SoldeCi consoCiRec(BigDecimal consoCiRec) {
+        this.setConsoCiRec(consoCiRec);
+        return this;
+    }
+
+    public void setConsoCiRec(BigDecimal consoCiRec) {
+        this.consoCiRec = consoCiRec;
     }
 
     public BigDecimal getSoldeMontantCi() {
@@ -102,16 +184,35 @@ public class SoldeCi implements Serializable {
         this.soldeMontantCiRec = soldeMontantCiRec;
     }
 
-    public Beneficiaire getBeneficiaire() {
-        return this.beneficiaire;
+    public DroitsStrategieCi getDroitsStrategieCi() {
+        return this.droitsStrategieCi;
     }
 
-    public void setBeneficiaire(Beneficiaire beneficiaire) {
-        this.beneficiaire = beneficiaire;
+    public void setDroitsStrategieCi(DroitsStrategieCi droitsStrategieCi) {
+        this.droitsStrategieCi = droitsStrategieCi;
     }
 
-    public SoldeCi beneficiaire(Beneficiaire beneficiaire) {
-        this.setBeneficiaire(beneficiaire);
+    public SoldeCi droitsStrategieCi(DroitsStrategieCi droitsStrategieCi) {
+        this.setDroitsStrategieCi(droitsStrategieCi);
+        return this;
+    }
+
+    public Pec getPec() {
+        return this.pec;
+    }
+
+    public void setPec(Pec pec) {
+        if (this.pec != null) {
+            this.pec.setSoldeCi(null);
+        }
+        if (pec != null) {
+            pec.setSoldeCi(this);
+        }
+        this.pec = pec;
+    }
+
+    public SoldeCi pec(Pec pec) {
+        this.setPec(pec);
         return this;
     }
 
@@ -139,7 +240,12 @@ public class SoldeCi implements Serializable {
     public String toString() {
         return "SoldeCi{" +
             "id=" + getId() +
+            ", date='" + getDate() + "'" +
+            ", isActif='" + getIsActif() + "'" +
+            ", isDernier='" + getIsDernier() + "'" +
             ", annee=" + getAnnee() +
+            ", consoMontantCi=" + getConsoMontantCi() +
+            ", consoCiRec=" + getConsoCiRec() +
             ", soldeMontantCi=" + getSoldeMontantCi() +
             ", soldeMontantCiRec=" + getSoldeMontantCiRec() +
             "}";

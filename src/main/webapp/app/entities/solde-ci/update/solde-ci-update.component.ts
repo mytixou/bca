@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
+import * as dayjs from 'dayjs';
+import { DATE_TIME_FORMAT } from 'app/config/input.constants';
+
 import { ISoldeCi, SoldeCi } from '../solde-ci.model';
 import { SoldeCiService } from '../service/solde-ci.service';
-import { IBeneficiaire } from 'app/entities/beneficiaire/beneficiaire.model';
-import { BeneficiaireService } from 'app/entities/beneficiaire/service/beneficiaire.service';
+import { IDroitsStrategieCi } from 'app/entities/droits-strategie-ci/droits-strategie-ci.model';
+import { DroitsStrategieCiService } from 'app/entities/droits-strategie-ci/service/droits-strategie-ci.service';
 
 @Component({
   selector: 'jhi-solde-ci-update',
@@ -17,25 +20,35 @@ import { BeneficiaireService } from 'app/entities/beneficiaire/service/beneficia
 export class SoldeCiUpdateComponent implements OnInit {
   isSaving = false;
 
-  beneficiairesSharedCollection: IBeneficiaire[] = [];
+  droitsStrategieCisSharedCollection: IDroitsStrategieCi[] = [];
 
   editForm = this.fb.group({
     id: [],
-    annee: [],
-    soldeMontantCi: [],
-    soldeMontantCiRec: [],
-    beneficiaire: [],
+    date: [null, [Validators.required]],
+    isActif: [null, [Validators.required]],
+    isDernier: [null, [Validators.required]],
+    annee: [null, [Validators.required]],
+    consoMontantCi: [null, [Validators.required]],
+    consoCiRec: [null, [Validators.required]],
+    soldeMontantCi: [null, [Validators.required]],
+    soldeMontantCiRec: [null, [Validators.required]],
+    droitsStrategieCi: [],
   });
 
   constructor(
     protected soldeCiService: SoldeCiService,
-    protected beneficiaireService: BeneficiaireService,
+    protected droitsStrategieCiService: DroitsStrategieCiService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ soldeCi }) => {
+      if (soldeCi.id === undefined) {
+        const today = dayjs().startOf('day');
+        soldeCi.date = today;
+      }
+
       this.updateForm(soldeCi);
 
       this.loadRelationshipsOptions();
@@ -56,7 +69,7 @@ export class SoldeCiUpdateComponent implements OnInit {
     }
   }
 
-  trackBeneficiaireById(index: number, item: IBeneficiaire): string {
+  trackDroitsStrategieCiById(index: number, item: IDroitsStrategieCi): number {
     return item.id!;
   }
 
@@ -82,38 +95,51 @@ export class SoldeCiUpdateComponent implements OnInit {
   protected updateForm(soldeCi: ISoldeCi): void {
     this.editForm.patchValue({
       id: soldeCi.id,
+      date: soldeCi.date ? soldeCi.date.format(DATE_TIME_FORMAT) : null,
+      isActif: soldeCi.isActif,
+      isDernier: soldeCi.isDernier,
       annee: soldeCi.annee,
+      consoMontantCi: soldeCi.consoMontantCi,
+      consoCiRec: soldeCi.consoCiRec,
       soldeMontantCi: soldeCi.soldeMontantCi,
       soldeMontantCiRec: soldeCi.soldeMontantCiRec,
-      beneficiaire: soldeCi.beneficiaire,
+      droitsStrategieCi: soldeCi.droitsStrategieCi,
     });
 
-    this.beneficiairesSharedCollection = this.beneficiaireService.addBeneficiaireToCollectionIfMissing(
-      this.beneficiairesSharedCollection,
-      soldeCi.beneficiaire
+    this.droitsStrategieCisSharedCollection = this.droitsStrategieCiService.addDroitsStrategieCiToCollectionIfMissing(
+      this.droitsStrategieCisSharedCollection,
+      soldeCi.droitsStrategieCi
     );
   }
 
   protected loadRelationshipsOptions(): void {
-    this.beneficiaireService
+    this.droitsStrategieCiService
       .query()
-      .pipe(map((res: HttpResponse<IBeneficiaire[]>) => res.body ?? []))
+      .pipe(map((res: HttpResponse<IDroitsStrategieCi[]>) => res.body ?? []))
       .pipe(
-        map((beneficiaires: IBeneficiaire[]) =>
-          this.beneficiaireService.addBeneficiaireToCollectionIfMissing(beneficiaires, this.editForm.get('beneficiaire')!.value)
+        map((droitsStrategieCis: IDroitsStrategieCi[]) =>
+          this.droitsStrategieCiService.addDroitsStrategieCiToCollectionIfMissing(
+            droitsStrategieCis,
+            this.editForm.get('droitsStrategieCi')!.value
+          )
         )
       )
-      .subscribe((beneficiaires: IBeneficiaire[]) => (this.beneficiairesSharedCollection = beneficiaires));
+      .subscribe((droitsStrategieCis: IDroitsStrategieCi[]) => (this.droitsStrategieCisSharedCollection = droitsStrategieCis));
   }
 
   protected createFromForm(): ISoldeCi {
     return {
       ...new SoldeCi(),
       id: this.editForm.get(['id'])!.value,
+      date: this.editForm.get(['date'])!.value ? dayjs(this.editForm.get(['date'])!.value, DATE_TIME_FORMAT) : undefined,
+      isActif: this.editForm.get(['isActif'])!.value,
+      isDernier: this.editForm.get(['isDernier'])!.value,
       annee: this.editForm.get(['annee'])!.value,
+      consoMontantCi: this.editForm.get(['consoMontantCi'])!.value,
+      consoCiRec: this.editForm.get(['consoCiRec'])!.value,
       soldeMontantCi: this.editForm.get(['soldeMontantCi'])!.value,
       soldeMontantCiRec: this.editForm.get(['soldeMontantCiRec'])!.value,
-      beneficiaire: this.editForm.get(['beneficiaire'])!.value,
+      droitsStrategieCi: this.editForm.get(['droitsStrategieCi'])!.value,
     };
   }
 }

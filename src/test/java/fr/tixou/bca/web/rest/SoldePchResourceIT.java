@@ -10,8 +10,11 @@ import fr.tixou.bca.IntegrationTest;
 import fr.tixou.bca.domain.SoldePch;
 import fr.tixou.bca.repository.SoldePchRepository;
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,14 +34,32 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class SoldePchResourceIT {
 
+    private static final Instant DEFAULT_DATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
+    private static final Boolean DEFAULT_IS_ACTIF = false;
+    private static final Boolean UPDATED_IS_ACTIF = true;
+
+    private static final Boolean DEFAULT_IS_DERNIER = false;
+    private static final Boolean UPDATED_IS_DERNIER = true;
+
     private static final Integer DEFAULT_ANNEE = 1;
     private static final Integer UPDATED_ANNEE = 2;
 
     private static final Integer DEFAULT_MOIS = 1;
     private static final Integer UPDATED_MOIS = 2;
 
+    private static final BigDecimal DEFAULT_CONSO_MONTANT_PCH_COTISATIONS = new BigDecimal(1);
+    private static final BigDecimal UPDATED_CONSO_MONTANT_PCH_COTISATIONS = new BigDecimal(2);
+
+    private static final BigDecimal DEFAULT_CONSO_MONTANT_PCH_SALAIRE = new BigDecimal(1);
+    private static final BigDecimal UPDATED_CONSO_MONTANT_PCH_SALAIRE = new BigDecimal(2);
+
     private static final BigDecimal DEFAULT_SOLDE_MONTANT_PCH = new BigDecimal(1);
     private static final BigDecimal UPDATED_SOLDE_MONTANT_PCH = new BigDecimal(2);
+
+    private static final BigDecimal DEFAULT_CONSO_HEURE_PCH = new BigDecimal(1);
+    private static final BigDecimal UPDATED_CONSO_HEURE_PCH = new BigDecimal(2);
 
     private static final BigDecimal DEFAULT_SOLDE_HEURE_PCH = new BigDecimal(1);
     private static final BigDecimal UPDATED_SOLDE_HEURE_PCH = new BigDecimal(2);
@@ -68,9 +89,15 @@ class SoldePchResourceIT {
      */
     public static SoldePch createEntity(EntityManager em) {
         SoldePch soldePch = new SoldePch()
+            .date(DEFAULT_DATE)
+            .isActif(DEFAULT_IS_ACTIF)
+            .isDernier(DEFAULT_IS_DERNIER)
             .annee(DEFAULT_ANNEE)
             .mois(DEFAULT_MOIS)
+            .consoMontantPchCotisations(DEFAULT_CONSO_MONTANT_PCH_COTISATIONS)
+            .consoMontantPchSalaire(DEFAULT_CONSO_MONTANT_PCH_SALAIRE)
             .soldeMontantPch(DEFAULT_SOLDE_MONTANT_PCH)
+            .consoHeurePch(DEFAULT_CONSO_HEURE_PCH)
             .soldeHeurePch(DEFAULT_SOLDE_HEURE_PCH);
         return soldePch;
     }
@@ -83,9 +110,15 @@ class SoldePchResourceIT {
      */
     public static SoldePch createUpdatedEntity(EntityManager em) {
         SoldePch soldePch = new SoldePch()
+            .date(UPDATED_DATE)
+            .isActif(UPDATED_IS_ACTIF)
+            .isDernier(UPDATED_IS_DERNIER)
             .annee(UPDATED_ANNEE)
             .mois(UPDATED_MOIS)
+            .consoMontantPchCotisations(UPDATED_CONSO_MONTANT_PCH_COTISATIONS)
+            .consoMontantPchSalaire(UPDATED_CONSO_MONTANT_PCH_SALAIRE)
             .soldeMontantPch(UPDATED_SOLDE_MONTANT_PCH)
+            .consoHeurePch(UPDATED_CONSO_HEURE_PCH)
             .soldeHeurePch(UPDATED_SOLDE_HEURE_PCH);
         return soldePch;
     }
@@ -108,9 +141,15 @@ class SoldePchResourceIT {
         List<SoldePch> soldePchList = soldePchRepository.findAll();
         assertThat(soldePchList).hasSize(databaseSizeBeforeCreate + 1);
         SoldePch testSoldePch = soldePchList.get(soldePchList.size() - 1);
+        assertThat(testSoldePch.getDate()).isEqualTo(DEFAULT_DATE);
+        assertThat(testSoldePch.getIsActif()).isEqualTo(DEFAULT_IS_ACTIF);
+        assertThat(testSoldePch.getIsDernier()).isEqualTo(DEFAULT_IS_DERNIER);
         assertThat(testSoldePch.getAnnee()).isEqualTo(DEFAULT_ANNEE);
         assertThat(testSoldePch.getMois()).isEqualTo(DEFAULT_MOIS);
+        assertThat(testSoldePch.getConsoMontantPchCotisations()).isEqualByComparingTo(DEFAULT_CONSO_MONTANT_PCH_COTISATIONS);
+        assertThat(testSoldePch.getConsoMontantPchSalaire()).isEqualByComparingTo(DEFAULT_CONSO_MONTANT_PCH_SALAIRE);
         assertThat(testSoldePch.getSoldeMontantPch()).isEqualByComparingTo(DEFAULT_SOLDE_MONTANT_PCH);
+        assertThat(testSoldePch.getConsoHeurePch()).isEqualByComparingTo(DEFAULT_CONSO_HEURE_PCH);
         assertThat(testSoldePch.getSoldeHeurePch()).isEqualByComparingTo(DEFAULT_SOLDE_HEURE_PCH);
     }
 
@@ -134,6 +173,176 @@ class SoldePchResourceIT {
 
     @Test
     @Transactional
+    void checkDateIsRequired() throws Exception {
+        int databaseSizeBeforeTest = soldePchRepository.findAll().size();
+        // set the field null
+        soldePch.setDate(null);
+
+        // Create the SoldePch, which fails.
+
+        restSoldePchMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(soldePch)))
+            .andExpect(status().isBadRequest());
+
+        List<SoldePch> soldePchList = soldePchRepository.findAll();
+        assertThat(soldePchList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkIsActifIsRequired() throws Exception {
+        int databaseSizeBeforeTest = soldePchRepository.findAll().size();
+        // set the field null
+        soldePch.setIsActif(null);
+
+        // Create the SoldePch, which fails.
+
+        restSoldePchMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(soldePch)))
+            .andExpect(status().isBadRequest());
+
+        List<SoldePch> soldePchList = soldePchRepository.findAll();
+        assertThat(soldePchList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkIsDernierIsRequired() throws Exception {
+        int databaseSizeBeforeTest = soldePchRepository.findAll().size();
+        // set the field null
+        soldePch.setIsDernier(null);
+
+        // Create the SoldePch, which fails.
+
+        restSoldePchMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(soldePch)))
+            .andExpect(status().isBadRequest());
+
+        List<SoldePch> soldePchList = soldePchRepository.findAll();
+        assertThat(soldePchList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkAnneeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = soldePchRepository.findAll().size();
+        // set the field null
+        soldePch.setAnnee(null);
+
+        // Create the SoldePch, which fails.
+
+        restSoldePchMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(soldePch)))
+            .andExpect(status().isBadRequest());
+
+        List<SoldePch> soldePchList = soldePchRepository.findAll();
+        assertThat(soldePchList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkMoisIsRequired() throws Exception {
+        int databaseSizeBeforeTest = soldePchRepository.findAll().size();
+        // set the field null
+        soldePch.setMois(null);
+
+        // Create the SoldePch, which fails.
+
+        restSoldePchMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(soldePch)))
+            .andExpect(status().isBadRequest());
+
+        List<SoldePch> soldePchList = soldePchRepository.findAll();
+        assertThat(soldePchList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkConsoMontantPchCotisationsIsRequired() throws Exception {
+        int databaseSizeBeforeTest = soldePchRepository.findAll().size();
+        // set the field null
+        soldePch.setConsoMontantPchCotisations(null);
+
+        // Create the SoldePch, which fails.
+
+        restSoldePchMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(soldePch)))
+            .andExpect(status().isBadRequest());
+
+        List<SoldePch> soldePchList = soldePchRepository.findAll();
+        assertThat(soldePchList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkConsoMontantPchSalaireIsRequired() throws Exception {
+        int databaseSizeBeforeTest = soldePchRepository.findAll().size();
+        // set the field null
+        soldePch.setConsoMontantPchSalaire(null);
+
+        // Create the SoldePch, which fails.
+
+        restSoldePchMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(soldePch)))
+            .andExpect(status().isBadRequest());
+
+        List<SoldePch> soldePchList = soldePchRepository.findAll();
+        assertThat(soldePchList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkSoldeMontantPchIsRequired() throws Exception {
+        int databaseSizeBeforeTest = soldePchRepository.findAll().size();
+        // set the field null
+        soldePch.setSoldeMontantPch(null);
+
+        // Create the SoldePch, which fails.
+
+        restSoldePchMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(soldePch)))
+            .andExpect(status().isBadRequest());
+
+        List<SoldePch> soldePchList = soldePchRepository.findAll();
+        assertThat(soldePchList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkConsoHeurePchIsRequired() throws Exception {
+        int databaseSizeBeforeTest = soldePchRepository.findAll().size();
+        // set the field null
+        soldePch.setConsoHeurePch(null);
+
+        // Create the SoldePch, which fails.
+
+        restSoldePchMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(soldePch)))
+            .andExpect(status().isBadRequest());
+
+        List<SoldePch> soldePchList = soldePchRepository.findAll();
+        assertThat(soldePchList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkSoldeHeurePchIsRequired() throws Exception {
+        int databaseSizeBeforeTest = soldePchRepository.findAll().size();
+        // set the field null
+        soldePch.setSoldeHeurePch(null);
+
+        // Create the SoldePch, which fails.
+
+        restSoldePchMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(soldePch)))
+            .andExpect(status().isBadRequest());
+
+        List<SoldePch> soldePchList = soldePchRepository.findAll();
+        assertThat(soldePchList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllSoldePches() throws Exception {
         // Initialize the database
         soldePchRepository.saveAndFlush(soldePch);
@@ -144,9 +353,15 @@ class SoldePchResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(soldePch.getId().intValue())))
+            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
+            .andExpect(jsonPath("$.[*].isActif").value(hasItem(DEFAULT_IS_ACTIF.booleanValue())))
+            .andExpect(jsonPath("$.[*].isDernier").value(hasItem(DEFAULT_IS_DERNIER.booleanValue())))
             .andExpect(jsonPath("$.[*].annee").value(hasItem(DEFAULT_ANNEE)))
             .andExpect(jsonPath("$.[*].mois").value(hasItem(DEFAULT_MOIS)))
+            .andExpect(jsonPath("$.[*].consoMontantPchCotisations").value(hasItem(sameNumber(DEFAULT_CONSO_MONTANT_PCH_COTISATIONS))))
+            .andExpect(jsonPath("$.[*].consoMontantPchSalaire").value(hasItem(sameNumber(DEFAULT_CONSO_MONTANT_PCH_SALAIRE))))
             .andExpect(jsonPath("$.[*].soldeMontantPch").value(hasItem(sameNumber(DEFAULT_SOLDE_MONTANT_PCH))))
+            .andExpect(jsonPath("$.[*].consoHeurePch").value(hasItem(sameNumber(DEFAULT_CONSO_HEURE_PCH))))
             .andExpect(jsonPath("$.[*].soldeHeurePch").value(hasItem(sameNumber(DEFAULT_SOLDE_HEURE_PCH))));
     }
 
@@ -162,9 +377,15 @@ class SoldePchResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(soldePch.getId().intValue()))
+            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
+            .andExpect(jsonPath("$.isActif").value(DEFAULT_IS_ACTIF.booleanValue()))
+            .andExpect(jsonPath("$.isDernier").value(DEFAULT_IS_DERNIER.booleanValue()))
             .andExpect(jsonPath("$.annee").value(DEFAULT_ANNEE))
             .andExpect(jsonPath("$.mois").value(DEFAULT_MOIS))
+            .andExpect(jsonPath("$.consoMontantPchCotisations").value(sameNumber(DEFAULT_CONSO_MONTANT_PCH_COTISATIONS)))
+            .andExpect(jsonPath("$.consoMontantPchSalaire").value(sameNumber(DEFAULT_CONSO_MONTANT_PCH_SALAIRE)))
             .andExpect(jsonPath("$.soldeMontantPch").value(sameNumber(DEFAULT_SOLDE_MONTANT_PCH)))
+            .andExpect(jsonPath("$.consoHeurePch").value(sameNumber(DEFAULT_CONSO_HEURE_PCH)))
             .andExpect(jsonPath("$.soldeHeurePch").value(sameNumber(DEFAULT_SOLDE_HEURE_PCH)));
     }
 
@@ -188,9 +409,15 @@ class SoldePchResourceIT {
         // Disconnect from session so that the updates on updatedSoldePch are not directly saved in db
         em.detach(updatedSoldePch);
         updatedSoldePch
+            .date(UPDATED_DATE)
+            .isActif(UPDATED_IS_ACTIF)
+            .isDernier(UPDATED_IS_DERNIER)
             .annee(UPDATED_ANNEE)
             .mois(UPDATED_MOIS)
+            .consoMontantPchCotisations(UPDATED_CONSO_MONTANT_PCH_COTISATIONS)
+            .consoMontantPchSalaire(UPDATED_CONSO_MONTANT_PCH_SALAIRE)
             .soldeMontantPch(UPDATED_SOLDE_MONTANT_PCH)
+            .consoHeurePch(UPDATED_CONSO_HEURE_PCH)
             .soldeHeurePch(UPDATED_SOLDE_HEURE_PCH);
 
         restSoldePchMockMvc
@@ -205,9 +432,15 @@ class SoldePchResourceIT {
         List<SoldePch> soldePchList = soldePchRepository.findAll();
         assertThat(soldePchList).hasSize(databaseSizeBeforeUpdate);
         SoldePch testSoldePch = soldePchList.get(soldePchList.size() - 1);
+        assertThat(testSoldePch.getDate()).isEqualTo(UPDATED_DATE);
+        assertThat(testSoldePch.getIsActif()).isEqualTo(UPDATED_IS_ACTIF);
+        assertThat(testSoldePch.getIsDernier()).isEqualTo(UPDATED_IS_DERNIER);
         assertThat(testSoldePch.getAnnee()).isEqualTo(UPDATED_ANNEE);
         assertThat(testSoldePch.getMois()).isEqualTo(UPDATED_MOIS);
+        assertThat(testSoldePch.getConsoMontantPchCotisations()).isEqualTo(UPDATED_CONSO_MONTANT_PCH_COTISATIONS);
+        assertThat(testSoldePch.getConsoMontantPchSalaire()).isEqualTo(UPDATED_CONSO_MONTANT_PCH_SALAIRE);
         assertThat(testSoldePch.getSoldeMontantPch()).isEqualTo(UPDATED_SOLDE_MONTANT_PCH);
+        assertThat(testSoldePch.getConsoHeurePch()).isEqualTo(UPDATED_CONSO_HEURE_PCH);
         assertThat(testSoldePch.getSoldeHeurePch()).isEqualTo(UPDATED_SOLDE_HEURE_PCH);
     }
 
@@ -279,7 +512,11 @@ class SoldePchResourceIT {
         SoldePch partialUpdatedSoldePch = new SoldePch();
         partialUpdatedSoldePch.setId(soldePch.getId());
 
-        partialUpdatedSoldePch.mois(UPDATED_MOIS);
+        partialUpdatedSoldePch
+            .isActif(UPDATED_IS_ACTIF)
+            .consoMontantPchSalaire(UPDATED_CONSO_MONTANT_PCH_SALAIRE)
+            .soldeMontantPch(UPDATED_SOLDE_MONTANT_PCH)
+            .consoHeurePch(UPDATED_CONSO_HEURE_PCH);
 
         restSoldePchMockMvc
             .perform(
@@ -293,9 +530,15 @@ class SoldePchResourceIT {
         List<SoldePch> soldePchList = soldePchRepository.findAll();
         assertThat(soldePchList).hasSize(databaseSizeBeforeUpdate);
         SoldePch testSoldePch = soldePchList.get(soldePchList.size() - 1);
+        assertThat(testSoldePch.getDate()).isEqualTo(DEFAULT_DATE);
+        assertThat(testSoldePch.getIsActif()).isEqualTo(UPDATED_IS_ACTIF);
+        assertThat(testSoldePch.getIsDernier()).isEqualTo(DEFAULT_IS_DERNIER);
         assertThat(testSoldePch.getAnnee()).isEqualTo(DEFAULT_ANNEE);
-        assertThat(testSoldePch.getMois()).isEqualTo(UPDATED_MOIS);
-        assertThat(testSoldePch.getSoldeMontantPch()).isEqualByComparingTo(DEFAULT_SOLDE_MONTANT_PCH);
+        assertThat(testSoldePch.getMois()).isEqualTo(DEFAULT_MOIS);
+        assertThat(testSoldePch.getConsoMontantPchCotisations()).isEqualByComparingTo(DEFAULT_CONSO_MONTANT_PCH_COTISATIONS);
+        assertThat(testSoldePch.getConsoMontantPchSalaire()).isEqualByComparingTo(UPDATED_CONSO_MONTANT_PCH_SALAIRE);
+        assertThat(testSoldePch.getSoldeMontantPch()).isEqualByComparingTo(UPDATED_SOLDE_MONTANT_PCH);
+        assertThat(testSoldePch.getConsoHeurePch()).isEqualByComparingTo(UPDATED_CONSO_HEURE_PCH);
         assertThat(testSoldePch.getSoldeHeurePch()).isEqualByComparingTo(DEFAULT_SOLDE_HEURE_PCH);
     }
 
@@ -312,9 +555,15 @@ class SoldePchResourceIT {
         partialUpdatedSoldePch.setId(soldePch.getId());
 
         partialUpdatedSoldePch
+            .date(UPDATED_DATE)
+            .isActif(UPDATED_IS_ACTIF)
+            .isDernier(UPDATED_IS_DERNIER)
             .annee(UPDATED_ANNEE)
             .mois(UPDATED_MOIS)
+            .consoMontantPchCotisations(UPDATED_CONSO_MONTANT_PCH_COTISATIONS)
+            .consoMontantPchSalaire(UPDATED_CONSO_MONTANT_PCH_SALAIRE)
             .soldeMontantPch(UPDATED_SOLDE_MONTANT_PCH)
+            .consoHeurePch(UPDATED_CONSO_HEURE_PCH)
             .soldeHeurePch(UPDATED_SOLDE_HEURE_PCH);
 
         restSoldePchMockMvc
@@ -329,9 +578,15 @@ class SoldePchResourceIT {
         List<SoldePch> soldePchList = soldePchRepository.findAll();
         assertThat(soldePchList).hasSize(databaseSizeBeforeUpdate);
         SoldePch testSoldePch = soldePchList.get(soldePchList.size() - 1);
+        assertThat(testSoldePch.getDate()).isEqualTo(UPDATED_DATE);
+        assertThat(testSoldePch.getIsActif()).isEqualTo(UPDATED_IS_ACTIF);
+        assertThat(testSoldePch.getIsDernier()).isEqualTo(UPDATED_IS_DERNIER);
         assertThat(testSoldePch.getAnnee()).isEqualTo(UPDATED_ANNEE);
         assertThat(testSoldePch.getMois()).isEqualTo(UPDATED_MOIS);
+        assertThat(testSoldePch.getConsoMontantPchCotisations()).isEqualByComparingTo(UPDATED_CONSO_MONTANT_PCH_COTISATIONS);
+        assertThat(testSoldePch.getConsoMontantPchSalaire()).isEqualByComparingTo(UPDATED_CONSO_MONTANT_PCH_SALAIRE);
         assertThat(testSoldePch.getSoldeMontantPch()).isEqualByComparingTo(UPDATED_SOLDE_MONTANT_PCH);
+        assertThat(testSoldePch.getConsoHeurePch()).isEqualByComparingTo(UPDATED_CONSO_HEURE_PCH);
         assertThat(testSoldePch.getSoldeHeurePch()).isEqualByComparingTo(UPDATED_SOLDE_HEURE_PCH);
     }
 

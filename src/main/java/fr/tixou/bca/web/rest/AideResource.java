@@ -9,6 +9,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +50,7 @@ public class AideResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/aides")
-    public ResponseEntity<Aide> createAide(@RequestBody Aide aide) throws URISyntaxException {
+    public ResponseEntity<Aide> createAide(@Valid @RequestBody Aide aide) throws URISyntaxException {
         log.debug("REST request to save Aide : {}", aide);
         if (aide.getId() != null) {
             throw new BadRequestAlertException("A new aide cannot already have an ID", ENTITY_NAME, "idexists");
@@ -71,7 +73,7 @@ public class AideResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/aides/{id}")
-    public ResponseEntity<Aide> updateAide(@PathVariable(value = "id", required = false) final Long id, @RequestBody Aide aide)
+    public ResponseEntity<Aide> updateAide(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Aide aide)
         throws URISyntaxException {
         log.debug("REST request to update Aide : {}, {}", id, aide);
         if (aide.getId() == null) {
@@ -104,8 +106,10 @@ public class AideResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/aides/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<Aide> partialUpdateAide(@PathVariable(value = "id", required = false) final Long id, @RequestBody Aide aide)
-        throws URISyntaxException {
+    public ResponseEntity<Aide> partialUpdateAide(
+        @PathVariable(value = "id", required = false) final Long id,
+        @NotNull @RequestBody Aide aide
+    ) throws URISyntaxException {
         log.debug("REST request to partial update Aide partially : {}, {}", id, aide);
         if (aide.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");

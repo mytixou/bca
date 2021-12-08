@@ -1,0 +1,33 @@
+{
+  "bcaApp": {
+    "droitsStrategiePchE": {
+      "home": {
+        "title": "Droits Strategie Pch ES",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Droits Strategie Pch E",
+        "createOrEditLabel": "Create or edit a Droits Strategie Pch E",
+        "notFound": "No Droits Strategie Pch ES found"
+      },
+      "created": "A new Droits Strategie Pch E is created with identifier {{ param }}",
+      "updated": "A Droits Strategie Pch E is updated with identifier {{ param }}",
+      "deleted": "A Droits Strategie Pch E is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Droits Strategie Pch E {{ id }}?"
+      },
+      "detail": {
+        "title": "Droits Strategie Pch E"
+      },
+      "id": "ID",
+      "isActif": "Is Actif",
+      "anne": "Anne",
+      "mois": "Mois",
+      "montantPlafond": "Montant Plafond",
+      "montantPlafondPlus": "Montant Plafond Plus",
+      "nbHeurePlafond": "Nb Heure Plafond",
+      "tauxCotisations": "Taux Cotisations",
+      "dateOuverture": "Date Ouverture",
+      "dateFermeture": "Date Fermeture",
+      "beneficiaire": "Beneficiaire"
+    }
+  }
+}

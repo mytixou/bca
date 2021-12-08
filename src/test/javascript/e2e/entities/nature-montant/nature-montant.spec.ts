@@ -49,10 +49,6 @@ describe('NatureMontant e2e test', () => {
       natureMontantUpdatePage.setCodeInput('code'),
       natureMontantUpdatePage.setLibelleInput('libelle'),
       natureMontantUpdatePage.setDescriptionInput('description'),
-      natureMontantUpdatePage.strategieSelectLastOption(),
-      natureMontantUpdatePage.strategieSelectLastOption(),
-      natureMontantUpdatePage.strategieSelectLastOption(),
-      natureMontantUpdatePage.strategieSelectLastOption(),
     ]);
 
     await natureMontantUpdatePage.save();

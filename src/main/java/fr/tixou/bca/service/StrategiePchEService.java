@@ -3,6 +3,8 @@ package fr.tixou.bca.service;
 import fr.tixou.bca.domain.StrategiePchE;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Service Interface for managing {@link StrategiePchE}.
@@ -30,6 +32,14 @@ public interface StrategiePchEService {
      * @return the list of entities.
      */
     List<StrategiePchE> findAll();
+
+    /**
+     * Get all the strategiePchES with eager load of many-to-many relationships.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    Page<StrategiePchE> findAllWithEagerRelationships(Pageable pageable);
 
     /**
      * Get the "id" strategiePchE.

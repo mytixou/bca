@@ -72,6 +72,7 @@ class AideGatlingTest extends Simulation {
             .headers(headers_http_authenticated)
             .body(StringBody("""{
                 "nom":"CI"
+                , "priorite":"0"
                 , "isActif":null
                 , "dateLancement":"2020-01-01T00:00:00.000Z"
                 , "anneLancement":"0"

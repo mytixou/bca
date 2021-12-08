@@ -44,6 +44,7 @@ describe('Aide e2e test', () => {
 
     await promise.all([
       aideUpdatePage.nomSelectLastOption(),
+      aideUpdatePage.setPrioriteInput('5'),
       aideUpdatePage.getIsActifInput().click(),
       aideUpdatePage.setDateLancementInput('2000-12-31'),
       aideUpdatePage.setAnneLancementInput('5'),
@@ -51,6 +52,7 @@ describe('Aide e2e test', () => {
       aideUpdatePage.setDateArretInput('2000-12-31'),
       aideUpdatePage.setDerniereAnneeInput('5'),
       aideUpdatePage.setDernierMoisInput('5'),
+      aideUpdatePage.aideSelectLastOption(),
     ]);
 
     await aideUpdatePage.save();

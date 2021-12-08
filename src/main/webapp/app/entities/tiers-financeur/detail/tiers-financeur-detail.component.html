@@ -38,6 +38,10 @@
         <dd>
           <span>{{ tiersFinanceur.moisLancement }}</span>
         </dd>
+        <dt><span jhiTranslate="bcaApp.tiersFinanceur.recupHeureActif">Recup Heure Actif</span></dt>
+        <dd>
+          <span>{{ tiersFinanceur.recupHeureActif }}</span>
+        </dd>
         <dt><span jhiTranslate="bcaApp.tiersFinanceur.dateResiliation">Date Resiliation</span></dt>
         <dd>
           <span>{{ tiersFinanceur.dateResiliation | formatMediumDate }}</span>
@@ -49,30 +53,6 @@
         <dt><span jhiTranslate="bcaApp.tiersFinanceur.dernierMois">Dernier Mois</span></dt>
         <dd>
           <span>{{ tiersFinanceur.dernierMois }}</span>
-        </dd>
-        <dt><span jhiTranslate="bcaApp.tiersFinanceur.strategie">Strategie</span></dt>
-        <dd>
-          <div *ngIf="tiersFinanceur.strategie">
-            <a [routerLink]="['/strategie-ci', tiersFinanceur.strategie?.id, 'view']">{{ tiersFinanceur.strategie?.id }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="bcaApp.tiersFinanceur.strategie">Strategie</span></dt>
-        <dd>
-          <div *ngIf="tiersFinanceur.strategie">
-            <a [routerLink]="['/strategie-apa', tiersFinanceur.strategie?.id, 'view']">{{ tiersFinanceur.strategie?.id }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="bcaApp.tiersFinanceur.strategie">Strategie</span></dt>
-        <dd>
-          <div *ngIf="tiersFinanceur.strategie">
-            <a [routerLink]="['/strategie-pch', tiersFinanceur.strategie?.id, 'view']">{{ tiersFinanceur.strategie?.id }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="bcaApp.tiersFinanceur.strategie">Strategie</span></dt>
-        <dd>
-          <div *ngIf="tiersFinanceur.strategie">
-            <a [routerLink]="['/strategie-pch-e', tiersFinanceur.strategie?.id, 'view']">{{ tiersFinanceur.strategie?.id }}</a>
-          </div>
         </dd>
       </dl>
 

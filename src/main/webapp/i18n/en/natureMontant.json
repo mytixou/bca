@@ -21,10 +21,10 @@
       "code": "Code",
       "libelle": "Libelle",
       "description": "Description",
-      "strategie": "Strategie",
-      "strategie": "Strategie",
-      "strategie": "Strategie",
-      "strategie": "Strategie"
+      "strategieCi": "Strategie Ci",
+      "strategieApa": "Strategie Apa",
+      "strategiePch": "Strategie Pch",
+      "strategiePchE": "Strategie Pch E"
     }
   }
 }

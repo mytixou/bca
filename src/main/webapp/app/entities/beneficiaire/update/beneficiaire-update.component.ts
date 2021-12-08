@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -16,10 +16,12 @@ export class BeneficiaireUpdateComponent implements OnInit {
   isSaving = false;
 
   editForm = this.fb.group({
-    id: [],
-    externeId: [],
-    isActif: [],
-    dateInscription: [],
+    id: [null, [Validators.required]],
+    externeId: [null, [Validators.required]],
+    isActif: [null, [Validators.required]],
+    dateDesactivation: [],
+    isInscrit: [null, [Validators.required]],
+    dateInscription: [null, [Validators.required]],
     dateResiliation: [],
   });
 
@@ -69,6 +71,8 @@ export class BeneficiaireUpdateComponent implements OnInit {
       id: beneficiaire.id,
       externeId: beneficiaire.externeId,
       isActif: beneficiaire.isActif,
+      dateDesactivation: beneficiaire.dateDesactivation,
+      isInscrit: beneficiaire.isInscrit,
       dateInscription: beneficiaire.dateInscription,
       dateResiliation: beneficiaire.dateResiliation,
     });
@@ -80,6 +84,8 @@ export class BeneficiaireUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       externeId: this.editForm.get(['externeId'])!.value,
       isActif: this.editForm.get(['isActif'])!.value,
+      dateDesactivation: this.editForm.get(['dateDesactivation'])!.value,
+      isInscrit: this.editForm.get(['isInscrit'])!.value,
       dateInscription: this.editForm.get(['dateInscription'])!.value,
       dateResiliation: this.editForm.get(['dateResiliation'])!.value,
     };

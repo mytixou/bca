@@ -47,10 +47,17 @@ describe('StrategieCi e2e test', () => {
 
     await promise.all([
       strategieCiUpdatePage.getIsActifInput().click(),
+      strategieCiUpdatePage.setDateAnnuelleDebutValiditeInput('2000-12-31'),
       strategieCiUpdatePage.setAnneInput('5'),
-      strategieCiUpdatePage.setMontantPlafondInput('5'),
-      strategieCiUpdatePage.setTauxInput('5'),
+      strategieCiUpdatePage.setMontantPlafondDefautInput('5'),
+      strategieCiUpdatePage.setMontantPlafondHandicapeInput('5'),
+      strategieCiUpdatePage.setMontantPlafondDefautPlusInput('5'),
+      strategieCiUpdatePage.setMontantPlafondHandicapePlusInput('5'),
+      strategieCiUpdatePage.setTauxSalaireInput('5'),
       strategieCiUpdatePage.aideSelectLastOption(),
+      strategieCiUpdatePage.tiersFinanceurSelectLastOption(),
+      // strategieCiUpdatePage.natureActiviteSelectLastOption(),
+      // strategieCiUpdatePage.natureMontantSelectLastOption(),
     ]);
 
     await strategieCiUpdatePage.save();

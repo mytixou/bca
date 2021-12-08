@@ -1,0 +1,108 @@
+<div>
+  <h2 id="page-heading" data-cy="StrategieCmgAssmatHeading">
+    <span jhiTranslate="bcaApp.strategieCmgAssmat.home.title">Strategie Cmg Assmats</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="bcaApp.strategieCmgAssmat.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-strategie-cmg-assmat"
+        [routerLink]="['/strategie-cmg-assmat/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="bcaApp.strategieCmgAssmat.home.createLabel"> Create a new Strategie Cmg Assmat </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="strategieCmgAssmats?.length === 0">
+    <span jhiTranslate="bcaApp.strategieCmgAssmat.home.notFound">No strategieCmgAssmats found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="strategieCmgAssmats && strategieCmgAssmats.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieCmgAssmat.anne">Anne</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieCmgAssmat.mois">Mois</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieCmgAssmat.nbHeureSeuilPlafond">Nb Heure Seuil Plafond</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieCmgAssmat.tauxSalaire">Taux Salaire</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieCmgAssmat.tauxCotisations">Taux Cotisations</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieCmgAssmat.isActif">Is Actif</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieCmgAssmat.dateCreated">Date Created</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieCmgAssmat.isUpdated">Is Updated</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieCmgAssmat.dateModified">Date Modified</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieCmgAssmat.aide">Aide</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieCmgAssmat.tiersFinanceur">Tiers Financeur</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let strategieCmgAssmat of strategieCmgAssmats; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/strategie-cmg-assmat', strategieCmgAssmat.id, 'view']">{{ strategieCmgAssmat.id }}</a>
+          </td>
+          <td>{{ strategieCmgAssmat.anne }}</td>
+          <td>{{ strategieCmgAssmat.mois }}</td>
+          <td>{{ strategieCmgAssmat.nbHeureSeuilPlafond }}</td>
+          <td>{{ strategieCmgAssmat.tauxSalaire }}</td>
+          <td>{{ strategieCmgAssmat.tauxCotisations }}</td>
+          <td>{{ strategieCmgAssmat.isActif }}</td>
+          <td>{{ strategieCmgAssmat.dateCreated | formatMediumDatetime }}</td>
+          <td>{{ strategieCmgAssmat.isUpdated }}</td>
+          <td>{{ strategieCmgAssmat.dateModified | formatMediumDatetime }}</td>
+          <td>
+            <div *ngIf="strategieCmgAssmat.aide">
+              <a [routerLink]="['/aide', strategieCmgAssmat.aide?.id, 'view']">{{ strategieCmgAssmat.aide?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="strategieCmgAssmat.tiersFinanceur">
+              <a [routerLink]="['/tiers-financeur', strategieCmgAssmat.tiersFinanceur?.id, 'view']">{{
+                strategieCmgAssmat.tiersFinanceur?.id
+              }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/strategie-cmg-assmat', strategieCmgAssmat.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/strategie-cmg-assmat', strategieCmgAssmat.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(strategieCmgAssmat)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

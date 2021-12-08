@@ -1,6 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import * as dayjs from 'dayjs';
 
+import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 import { ISoldeCi, SoldeCi } from '../solde-ci.model';
 
 import { SoldeCiService } from './solde-ci.service';
@@ -10,6 +12,7 @@ describe('SoldeCi Service', () => {
   let httpMock: HttpTestingController;
   let elemDefault: ISoldeCi;
   let expectedResult: ISoldeCi | ISoldeCi[] | boolean | null;
+  let currentDate: dayjs.Dayjs;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -18,10 +21,16 @@ describe('SoldeCi Service', () => {
     expectedResult = null;
     service = TestBed.inject(SoldeCiService);
     httpMock = TestBed.inject(HttpTestingController);
+    currentDate = dayjs();
 
     elemDefault = {
       id: 0,
+      date: currentDate,
+      isActif: false,
+      isDernier: false,
       annee: 0,
+      consoMontantCi: 0,
+      consoCiRec: 0,
       soldeMontantCi: 0,
       soldeMontantCiRec: 0,
     };
@@ -29,7 +38,12 @@ describe('SoldeCi Service', () => {
 
   describe('Service methods', () => {
     it('should find an element', () => {
-      const returnedFromService = Object.assign({}, elemDefault);
+      const returnedFromService = Object.assign(
+        {
+          date: currentDate.format(DATE_TIME_FORMAT),
+        },
+        elemDefault
+      );
 
       service.find(123).subscribe(resp => (expectedResult = resp.body));
 
@@ -42,11 +56,17 @@ describe('SoldeCi Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 0,
+          date: currentDate.format(DATE_TIME_FORMAT),
         },
         elemDefault
       );
 
-      const expected = Object.assign({}, returnedFromService);
+      const expected = Object.assign(
+        {
+          date: currentDate,
+        },
+        returnedFromService
+      );
 
       service.create(new SoldeCi()).subscribe(resp => (expectedResult = resp.body));
 
@@ -59,14 +79,24 @@ describe('SoldeCi Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 1,
+          date: currentDate.format(DATE_TIME_FORMAT),
+          isActif: true,
+          isDernier: true,
           annee: 1,
+          consoMontantCi: 1,
+          consoCiRec: 1,
           soldeMontantCi: 1,
           soldeMontantCiRec: 1,
         },
         elemDefault
       );
 
-      const expected = Object.assign({}, returnedFromService);
+      const expected = Object.assign(
+        {
+          date: currentDate,
+        },
+        returnedFromService
+      );
 
       service.update(expected).subscribe(resp => (expectedResult = resp.body));
 
@@ -78,6 +108,8 @@ describe('SoldeCi Service', () => {
     it('should partial update a SoldeCi', () => {
       const patchObject = Object.assign(
         {
+          date: currentDate.format(DATE_TIME_FORMAT),
+          isActif: true,
           annee: 1,
           soldeMontantCi: 1,
         },
@@ -86,7 +118,12 @@ describe('SoldeCi Service', () => {
 
       const returnedFromService = Object.assign(patchObject, elemDefault);
 
-      const expected = Object.assign({}, returnedFromService);
+      const expected = Object.assign(
+        {
+          date: currentDate,
+        },
+        returnedFromService
+      );
 
       service.partialUpdate(patchObject).subscribe(resp => (expectedResult = resp.body));
 
@@ -99,14 +136,24 @@ describe('SoldeCi Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 1,
+          date: currentDate.format(DATE_TIME_FORMAT),
+          isActif: true,
+          isDernier: true,
           annee: 1,
+          consoMontantCi: 1,
+          consoCiRec: 1,
           soldeMontantCi: 1,
           soldeMontantCiRec: 1,
         },
         elemDefault
       );
 
-      const expected = Object.assign({}, returnedFromService);
+      const expected = Object.assign(
+        {
+          date: currentDate,
+        },
+        returnedFromService
+      );
 
       service.query().subscribe(resp => (expectedResult = resp.body));
 
@@ -153,7 +200,7 @@ describe('SoldeCi Service', () => {
       });
 
       it('should add only unique SoldeCi to an array', () => {
-        const soldeCiArray: ISoldeCi[] = [{ id: 123 }, { id: 456 }, { id: 80707 }];
+        const soldeCiArray: ISoldeCi[] = [{ id: 123 }, { id: 456 }, { id: 36221 }];
         const soldeCiCollection: ISoldeCi[] = [{ id: 123 }];
         expectedResult = service.addSoldeCiToCollectionIfMissing(soldeCiCollection, ...soldeCiArray);
         expect(expectedResult).toHaveLength(3);

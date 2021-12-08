@@ -19,6 +19,7 @@
       },
       "id": "ID",
       "nom": "Nom",
+      "priorite": "Priorite",
       "isActif": "Is Actif",
       "dateLancement": "Date Lancement",
       "anneLancement": "Anne Lancement",
@@ -26,10 +27,7 @@
       "dateArret": "Date Arret",
       "derniereAnnee": "Derniere Annee",
       "dernierMois": "Dernier Mois",
-      "strategieCi": "Strategie Ci",
-      "strategieApa": "Strategie Apa",
-      "strategiePch": "Strategie Pch",
-      "strategiePchE": "Strategie Pch E"
+      "aide": "Aide"
     }
   }
 }

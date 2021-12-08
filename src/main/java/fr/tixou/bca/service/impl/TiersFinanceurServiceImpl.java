@@ -56,6 +56,9 @@ public class TiersFinanceurServiceImpl implements TiersFinanceurService {
                 if (tiersFinanceur.getMoisLancement() != null) {
                     existingTiersFinanceur.setMoisLancement(tiersFinanceur.getMoisLancement());
                 }
+                if (tiersFinanceur.getRecupHeureActif() != null) {
+                    existingTiersFinanceur.setRecupHeureActif(tiersFinanceur.getRecupHeureActif());
+                }
                 if (tiersFinanceur.getDateResiliation() != null) {
                     existingTiersFinanceur.setDateResiliation(tiersFinanceur.getDateResiliation());
                 }

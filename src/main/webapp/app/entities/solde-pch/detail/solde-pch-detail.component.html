@@ -14,6 +14,18 @@
         <dd>
           <span>{{ soldePch.id }}</span>
         </dd>
+        <dt><span jhiTranslate="bcaApp.soldePch.date">Date</span></dt>
+        <dd>
+          <span>{{ soldePch.date | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.soldePch.isActif">Is Actif</span></dt>
+        <dd>
+          <span>{{ soldePch.isActif }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.soldePch.isDernier">Is Dernier</span></dt>
+        <dd>
+          <span>{{ soldePch.isDernier }}</span>
+        </dd>
         <dt><span jhiTranslate="bcaApp.soldePch.annee">Annee</span></dt>
         <dd>
           <span>{{ soldePch.annee }}</span>
@@ -22,18 +34,30 @@
         <dd>
           <span>{{ soldePch.mois }}</span>
         </dd>
+        <dt><span jhiTranslate="bcaApp.soldePch.consoMontantPchCotisations">Conso Montant Pch Cotisations</span></dt>
+        <dd>
+          <span>{{ soldePch.consoMontantPchCotisations }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.soldePch.consoMontantPchSalaire">Conso Montant Pch Salaire</span></dt>
+        <dd>
+          <span>{{ soldePch.consoMontantPchSalaire }}</span>
+        </dd>
         <dt><span jhiTranslate="bcaApp.soldePch.soldeMontantPch">Solde Montant Pch</span></dt>
         <dd>
           <span>{{ soldePch.soldeMontantPch }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.soldePch.consoHeurePch">Conso Heure Pch</span></dt>
+        <dd>
+          <span>{{ soldePch.consoHeurePch }}</span>
         </dd>
         <dt><span jhiTranslate="bcaApp.soldePch.soldeHeurePch">Solde Heure Pch</span></dt>
         <dd>
           <span>{{ soldePch.soldeHeurePch }}</span>
         </dd>
-        <dt><span jhiTranslate="bcaApp.soldePch.beneficiaire">Beneficiaire</span></dt>
+        <dt><span jhiTranslate="bcaApp.soldePch.droitsStrategiePch">Droits Strategie Pch</span></dt>
         <dd>
-          <div *ngIf="soldePch.beneficiaire">
-            <a [routerLink]="['/beneficiaire', soldePch.beneficiaire?.id, 'view']">{{ soldePch.beneficiaire?.id }}</a>
+          <div *ngIf="soldePch.droitsStrategiePch">
+            <a [routerLink]="['/droits-strategie-pch', soldePch.droitsStrategiePch?.id, 'view']">{{ soldePch.droitsStrategiePch?.id }}</a>
           </div>
         </dd>
       </dl>

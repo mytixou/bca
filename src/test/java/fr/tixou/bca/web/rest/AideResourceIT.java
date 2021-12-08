@@ -35,6 +35,9 @@ class AideResourceIT {
     private static final TypeAide DEFAULT_NOM = TypeAide.CI;
     private static final TypeAide UPDATED_NOM = TypeAide.APA;
 
+    private static final Integer DEFAULT_PRIORITE = 1;
+    private static final Integer UPDATED_PRIORITE = 2;
+
     private static final Boolean DEFAULT_IS_ACTIF = false;
     private static final Boolean UPDATED_IS_ACTIF = true;
 
@@ -82,6 +85,7 @@ class AideResourceIT {
     public static Aide createEntity(EntityManager em) {
         Aide aide = new Aide()
             .nom(DEFAULT_NOM)
+            .priorite(DEFAULT_PRIORITE)
             .isActif(DEFAULT_IS_ACTIF)
             .dateLancement(DEFAULT_DATE_LANCEMENT)
             .anneLancement(DEFAULT_ANNE_LANCEMENT)
@@ -101,6 +105,7 @@ class AideResourceIT {
     public static Aide createUpdatedEntity(EntityManager em) {
         Aide aide = new Aide()
             .nom(UPDATED_NOM)
+            .priorite(UPDATED_PRIORITE)
             .isActif(UPDATED_IS_ACTIF)
             .dateLancement(UPDATED_DATE_LANCEMENT)
             .anneLancement(UPDATED_ANNE_LANCEMENT)
@@ -130,6 +135,7 @@ class AideResourceIT {
         assertThat(aideList).hasSize(databaseSizeBeforeCreate + 1);
         Aide testAide = aideList.get(aideList.size() - 1);
         assertThat(testAide.getNom()).isEqualTo(DEFAULT_NOM);
+        assertThat(testAide.getPriorite()).isEqualTo(DEFAULT_PRIORITE);
         assertThat(testAide.getIsActif()).isEqualTo(DEFAULT_IS_ACTIF);
         assertThat(testAide.getDateLancement()).isEqualTo(DEFAULT_DATE_LANCEMENT);
         assertThat(testAide.getAnneLancement()).isEqualTo(DEFAULT_ANNE_LANCEMENT);
@@ -159,6 +165,108 @@ class AideResourceIT {
 
     @Test
     @Transactional
+    void checkNomIsRequired() throws Exception {
+        int databaseSizeBeforeTest = aideRepository.findAll().size();
+        // set the field null
+        aide.setNom(null);
+
+        // Create the Aide, which fails.
+
+        restAideMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(aide)))
+            .andExpect(status().isBadRequest());
+
+        List<Aide> aideList = aideRepository.findAll();
+        assertThat(aideList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkPrioriteIsRequired() throws Exception {
+        int databaseSizeBeforeTest = aideRepository.findAll().size();
+        // set the field null
+        aide.setPriorite(null);
+
+        // Create the Aide, which fails.
+
+        restAideMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(aide)))
+            .andExpect(status().isBadRequest());
+
+        List<Aide> aideList = aideRepository.findAll();
+        assertThat(aideList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkIsActifIsRequired() throws Exception {
+        int databaseSizeBeforeTest = aideRepository.findAll().size();
+        // set the field null
+        aide.setIsActif(null);
+
+        // Create the Aide, which fails.
+
+        restAideMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(aide)))
+            .andExpect(status().isBadRequest());
+
+        List<Aide> aideList = aideRepository.findAll();
+        assertThat(aideList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkDateLancementIsRequired() throws Exception {
+        int databaseSizeBeforeTest = aideRepository.findAll().size();
+        // set the field null
+        aide.setDateLancement(null);
+
+        // Create the Aide, which fails.
+
+        restAideMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(aide)))
+            .andExpect(status().isBadRequest());
+
+        List<Aide> aideList = aideRepository.findAll();
+        assertThat(aideList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkAnneLancementIsRequired() throws Exception {
+        int databaseSizeBeforeTest = aideRepository.findAll().size();
+        // set the field null
+        aide.setAnneLancement(null);
+
+        // Create the Aide, which fails.
+
+        restAideMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(aide)))
+            .andExpect(status().isBadRequest());
+
+        List<Aide> aideList = aideRepository.findAll();
+        assertThat(aideList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkMoisLancementIsRequired() throws Exception {
+        int databaseSizeBeforeTest = aideRepository.findAll().size();
+        // set the field null
+        aide.setMoisLancement(null);
+
+        // Create the Aide, which fails.
+
+        restAideMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(aide)))
+            .andExpect(status().isBadRequest());
+
+        List<Aide> aideList = aideRepository.findAll();
+        assertThat(aideList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllAides() throws Exception {
         // Initialize the database
         aideRepository.saveAndFlush(aide);
@@ -170,6 +278,7 @@ class AideResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(aide.getId().intValue())))
             .andExpect(jsonPath("$.[*].nom").value(hasItem(DEFAULT_NOM.toString())))
+            .andExpect(jsonPath("$.[*].priorite").value(hasItem(DEFAULT_PRIORITE)))
             .andExpect(jsonPath("$.[*].isActif").value(hasItem(DEFAULT_IS_ACTIF.booleanValue())))
             .andExpect(jsonPath("$.[*].dateLancement").value(hasItem(DEFAULT_DATE_LANCEMENT.toString())))
             .andExpect(jsonPath("$.[*].anneLancement").value(hasItem(DEFAULT_ANNE_LANCEMENT)))
@@ -192,6 +301,7 @@ class AideResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(aide.getId().intValue()))
             .andExpect(jsonPath("$.nom").value(DEFAULT_NOM.toString()))
+            .andExpect(jsonPath("$.priorite").value(DEFAULT_PRIORITE))
             .andExpect(jsonPath("$.isActif").value(DEFAULT_IS_ACTIF.booleanValue()))
             .andExpect(jsonPath("$.dateLancement").value(DEFAULT_DATE_LANCEMENT.toString()))
             .andExpect(jsonPath("$.anneLancement").value(DEFAULT_ANNE_LANCEMENT))
@@ -222,6 +332,7 @@ class AideResourceIT {
         em.detach(updatedAide);
         updatedAide
             .nom(UPDATED_NOM)
+            .priorite(UPDATED_PRIORITE)
             .isActif(UPDATED_IS_ACTIF)
             .dateLancement(UPDATED_DATE_LANCEMENT)
             .anneLancement(UPDATED_ANNE_LANCEMENT)
@@ -243,6 +354,7 @@ class AideResourceIT {
         assertThat(aideList).hasSize(databaseSizeBeforeUpdate);
         Aide testAide = aideList.get(aideList.size() - 1);
         assertThat(testAide.getNom()).isEqualTo(UPDATED_NOM);
+        assertThat(testAide.getPriorite()).isEqualTo(UPDATED_PRIORITE);
         assertThat(testAide.getIsActif()).isEqualTo(UPDATED_IS_ACTIF);
         assertThat(testAide.getDateLancement()).isEqualTo(UPDATED_DATE_LANCEMENT);
         assertThat(testAide.getAnneLancement()).isEqualTo(UPDATED_ANNE_LANCEMENT);
@@ -320,7 +432,7 @@ class AideResourceIT {
         Aide partialUpdatedAide = new Aide();
         partialUpdatedAide.setId(aide.getId());
 
-        partialUpdatedAide.derniereAnnee(UPDATED_DERNIERE_ANNEE);
+        partialUpdatedAide.dateArret(UPDATED_DATE_ARRET).dernierMois(UPDATED_DERNIER_MOIS);
 
         restAideMockMvc
             .perform(
@@ -335,13 +447,14 @@ class AideResourceIT {
         assertThat(aideList).hasSize(databaseSizeBeforeUpdate);
         Aide testAide = aideList.get(aideList.size() - 1);
         assertThat(testAide.getNom()).isEqualTo(DEFAULT_NOM);
+        assertThat(testAide.getPriorite()).isEqualTo(DEFAULT_PRIORITE);
         assertThat(testAide.getIsActif()).isEqualTo(DEFAULT_IS_ACTIF);
         assertThat(testAide.getDateLancement()).isEqualTo(DEFAULT_DATE_LANCEMENT);
         assertThat(testAide.getAnneLancement()).isEqualTo(DEFAULT_ANNE_LANCEMENT);
         assertThat(testAide.getMoisLancement()).isEqualTo(DEFAULT_MOIS_LANCEMENT);
-        assertThat(testAide.getDateArret()).isEqualTo(DEFAULT_DATE_ARRET);
-        assertThat(testAide.getDerniereAnnee()).isEqualTo(UPDATED_DERNIERE_ANNEE);
-        assertThat(testAide.getDernierMois()).isEqualTo(DEFAULT_DERNIER_MOIS);
+        assertThat(testAide.getDateArret()).isEqualTo(UPDATED_DATE_ARRET);
+        assertThat(testAide.getDerniereAnnee()).isEqualTo(DEFAULT_DERNIERE_ANNEE);
+        assertThat(testAide.getDernierMois()).isEqualTo(UPDATED_DERNIER_MOIS);
     }
 
     @Test
@@ -358,6 +471,7 @@ class AideResourceIT {
 
         partialUpdatedAide
             .nom(UPDATED_NOM)
+            .priorite(UPDATED_PRIORITE)
             .isActif(UPDATED_IS_ACTIF)
             .dateLancement(UPDATED_DATE_LANCEMENT)
             .anneLancement(UPDATED_ANNE_LANCEMENT)
@@ -379,6 +493,7 @@ class AideResourceIT {
         assertThat(aideList).hasSize(databaseSizeBeforeUpdate);
         Aide testAide = aideList.get(aideList.size() - 1);
         assertThat(testAide.getNom()).isEqualTo(UPDATED_NOM);
+        assertThat(testAide.getPriorite()).isEqualTo(UPDATED_PRIORITE);
         assertThat(testAide.getIsActif()).isEqualTo(UPDATED_IS_ACTIF);
         assertThat(testAide.getDateLancement()).isEqualTo(UPDATED_DATE_LANCEMENT);
         assertThat(testAide.getAnneLancement()).isEqualTo(UPDATED_ANNE_LANCEMENT);

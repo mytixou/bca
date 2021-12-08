@@ -31,6 +31,7 @@ describe('TiersFinanceur Service', () => {
       dateInscription: currentDate,
       anneLancement: 0,
       moisLancement: 0,
+      recupHeureActif: false,
       dateResiliation: currentDate,
       derniereAnnee: 0,
       dernierMois: 0,
@@ -89,6 +90,7 @@ describe('TiersFinanceur Service', () => {
           dateInscription: currentDate.format(DATE_FORMAT),
           anneLancement: 1,
           moisLancement: 1,
+          recupHeureActif: true,
           dateResiliation: currentDate.format(DATE_FORMAT),
           derniereAnnee: 1,
           dernierMois: 1,
@@ -116,8 +118,8 @@ describe('TiersFinanceur Service', () => {
         {
           isActif: true,
           anneLancement: 1,
+          dateResiliation: currentDate.format(DATE_FORMAT),
           derniereAnnee: 1,
-          dernierMois: 1,
         },
         new TiersFinanceur()
       );
@@ -149,6 +151,7 @@ describe('TiersFinanceur Service', () => {
           dateInscription: currentDate.format(DATE_FORMAT),
           anneLancement: 1,
           moisLancement: 1,
+          recupHeureActif: true,
           dateResiliation: currentDate.format(DATE_FORMAT),
           derniereAnnee: 1,
           dernierMois: 1,
@@ -209,7 +212,7 @@ describe('TiersFinanceur Service', () => {
       });
 
       it('should add only unique TiersFinanceur to an array', () => {
-        const tiersFinanceurArray: ITiersFinanceur[] = [{ id: 123 }, { id: 456 }, { id: 37923 }];
+        const tiersFinanceurArray: ITiersFinanceur[] = [{ id: 123 }, { id: 456 }, { id: 7931 }];
         const tiersFinanceurCollection: ITiersFinanceur[] = [{ id: 123 }];
         expectedResult = service.addTiersFinanceurToCollectionIfMissing(tiersFinanceurCollection, ...tiersFinanceurArray);
         expect(expectedResult).toHaveLength(3);

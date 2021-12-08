@@ -49,10 +49,6 @@ describe('NatureActivite e2e test', () => {
       natureActiviteUpdatePage.setCodeInput('code'),
       natureActiviteUpdatePage.setLibelleInput('libelle'),
       natureActiviteUpdatePage.setDescriptionInput('description'),
-      natureActiviteUpdatePage.strategieSelectLastOption(),
-      natureActiviteUpdatePage.strategieSelectLastOption(),
-      natureActiviteUpdatePage.strategieSelectLastOption(),
-      natureActiviteUpdatePage.strategieSelectLastOption(),
     ]);
 
     await natureActiviteUpdatePage.save();

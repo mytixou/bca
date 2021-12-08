@@ -1,0 +1,91 @@
+{
+  "name": "Pec",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "UUID",
+      "fieldValidateRules": ["unique", "required"]
+    },
+    {
+      "fieldName": "idProduit",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "produit",
+      "fieldType": "TypeProduit",
+      "fieldValues": "CESU,CESUP,HOMEP,PAJE,PAJEP",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "isPlus",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateCreated",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "isUpdated",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateModified",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "isActif",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "pecDetails",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "soldeCi",
+      "otherEntityRelationshipName": "pec",
+      "relationshipName": "soldeCi",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "soldeApa",
+      "otherEntityRelationshipName": "pec",
+      "relationshipName": "soldeApa",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "soldePch",
+      "otherEntityRelationshipName": "pec",
+      "relationshipName": "soldePch",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "soldePchE",
+      "otherEntityRelationshipName": "pec",
+      "relationshipName": "soldePchE",
+      "ownerSide": true
+    }
+  ],
+  "entityTableName": "pec",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20211208234559"
+}

@@ -1,0 +1,32 @@
+{
+  "bcaApp": {
+    "trancheAideEnfantGed": {
+      "home": {
+        "title": "Tranche Aide Enfant Geds",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Tranche Aide Enfant Ged",
+        "createOrEditLabel": "Create or edit a Tranche Aide Enfant Ged",
+        "notFound": "No Tranche Aide Enfant Geds found"
+      },
+      "created": "A new Tranche Aide Enfant Ged is created with identifier {{ param }}",
+      "updated": "A Tranche Aide Enfant Ged is updated with identifier {{ param }}",
+      "deleted": "A Tranche Aide Enfant Ged is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Tranche Aide Enfant Ged {{ id }}?"
+      },
+      "detail": {
+        "title": "Tranche Aide Enfant Ged"
+      },
+      "id": "ID",
+      "anne": "Anne",
+      "mois": "Mois",
+      "ageEnfantRevoluSurPeriode": "Age Enfant Revolu Sur Periode",
+      "montantPlafondSalaire": "Montant Plafond Salaire",
+      "isActif": "Is Actif",
+      "dateCreated": "Date Created",
+      "isUpdated": "Is Updated",
+      "dateModified": "Date Modified",
+      "strategieCmgGed": "Strategie Cmg Ged"
+    }
+  }
+}

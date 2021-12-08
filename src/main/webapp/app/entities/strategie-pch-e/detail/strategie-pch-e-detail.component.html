@@ -18,27 +18,71 @@
         <dd>
           <span>{{ strategiePchE.isActif }}</span>
         </dd>
+        <dt><span jhiTranslate="bcaApp.strategiePchE.dateMensuelleDebutValidite">Date Mensuelle Debut Validite</span></dt>
+        <dd>
+          <span>{{ strategiePchE.dateMensuelleDebutValidite | formatMediumDate }}</span>
+        </dd>
         <dt><span jhiTranslate="bcaApp.strategiePchE.anne">Anne</span></dt>
         <dd>
           <span>{{ strategiePchE.anne }}</span>
         </dd>
-        <dt><span jhiTranslate="bcaApp.strategiePchE.montantPlafond">Montant Plafond</span></dt>
+        <dt><span jhiTranslate="bcaApp.strategiePchE.mois">Mois</span></dt>
         <dd>
-          <span>{{ strategiePchE.montantPlafond }}</span>
+          <span>{{ strategiePchE.mois }}</span>
         </dd>
-        <dt><span jhiTranslate="bcaApp.strategiePchE.nbPlafondheure">Nb Plafondheure</span></dt>
+        <dt><span jhiTranslate="bcaApp.strategiePchE.montantPlafondSalaire">Montant Plafond Salaire</span></dt>
         <dd>
-          <span>{{ strategiePchE.nbPlafondheure }}</span>
+          <span>{{ strategiePchE.montantPlafondSalaire }}</span>
         </dd>
-        <dt><span jhiTranslate="bcaApp.strategiePchE.taux">Taux</span></dt>
+        <dt><span jhiTranslate="bcaApp.strategiePchE.montantPlafondCotisations">Montant Plafond Cotisations</span></dt>
         <dd>
-          <span>{{ strategiePchE.taux }}</span>
+          <span>{{ strategiePchE.montantPlafondCotisations }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategiePchE.montantPlafondSalairePlus">Montant Plafond Salaire Plus</span></dt>
+        <dd>
+          <span>{{ strategiePchE.montantPlafondSalairePlus }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategiePchE.montantPlafondCotisationsPlus">Montant Plafond Cotisations Plus</span></dt>
+        <dd>
+          <span>{{ strategiePchE.montantPlafondCotisationsPlus }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategiePchE.nbHeureSalairePlafond">Nb Heure Salaire Plafond</span></dt>
+        <dd>
+          <span>{{ strategiePchE.nbHeureSalairePlafond }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategiePchE.tauxSalaire">Taux Salaire</span></dt>
+        <dd>
+          <span>{{ strategiePchE.tauxSalaire }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategiePchE.tauxCotisations">Taux Cotisations</span></dt>
+        <dd>
+          <span>{{ strategiePchE.tauxCotisations }}</span>
         </dd>
         <dt><span jhiTranslate="bcaApp.strategiePchE.aide">Aide</span></dt>
         <dd>
           <div *ngIf="strategiePchE.aide">
             <a [routerLink]="['/aide', strategiePchE.aide?.id, 'view']">{{ strategiePchE.aide?.id }}</a>
           </div>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategiePchE.tiersFinanceur">Tiers Financeur</span></dt>
+        <dd>
+          <div *ngIf="strategiePchE.tiersFinanceur">
+            <a [routerLink]="['/tiers-financeur', strategiePchE.tiersFinanceur?.id, 'view']">{{ strategiePchE.tiersFinanceur?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategiePchE.natureActivite">Nature Activite</span></dt>
+        <dd>
+          <span *ngFor="let natureActivite of strategiePchE.natureActivites; let last = last">
+            <a [routerLink]="['/nature-activite', natureActivite?.id, 'view']">{{ natureActivite.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategiePchE.natureMontant">Nature Montant</span></dt>
+        <dd>
+          <span *ngFor="let natureMontant of strategiePchE.natureMontants; let last = last">
+            <a [routerLink]="['/nature-montant', natureMontant?.id, 'view']">{{ natureMontant.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
         </dd>
       </dl>
 

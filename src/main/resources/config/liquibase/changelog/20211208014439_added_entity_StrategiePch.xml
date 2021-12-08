@@ -15,25 +15,71 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="is_actif" type="boolean">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
+            </column>
+            <column name="date_mensuelle_debut_validite" type="date">
+                <constraints nullable="false" />
             </column>
             <column name="anne" type="integer">
-                <constraints nullable="true" />
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_strategie_pch__anne" />
             </column>
-            <column name="montant_plafond" type="decimal(21,2)">
-                <constraints nullable="true" />
+            <column name="mois" type="integer">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_strategie_pch__mois" />
             </column>
-            <column name="nb_plafondheure" type="decimal(21,2)">
-                <constraints nullable="true" />
+            <column name="montant_plafond_salaire" type="decimal(21,2)">
+                <constraints nullable="false" />
             </column>
-            <column name="taux" type="decimal(21,2)">
-                <constraints nullable="true" />
+            <column name="montant_plafond_cotisations" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="montant_plafond_salaire_plus" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="montant_plafond_cotisations_plus" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="nb_heure_salaire_plafond" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="taux_salaire" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="taux_cotisations" type="decimal(21,2)">
+                <constraints nullable="false" />
             </column>
             <column name="aide_id" type="bigint">
                 <constraints nullable="true" />
             </column>
+            <column name="tiers_financeur_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
+    </changeSet>
+
+    <changeSet id="20211208014439-1-relations" author="jhipster">
+
+        <createTable tableName="rel_strategie_pch__nature_activite">
+            <column name="nature_activite_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="strategie_pch_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="strategie_pch_id, nature_activite_id" tableName="rel_strategie_pch__nature_activite"/>
+
+        <createTable tableName="rel_strategie_pch__nature_montant">
+            <column name="nature_montant_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="strategie_pch_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="strategie_pch_id, nature_montant_id" tableName="rel_strategie_pch__nature_montant"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
@@ -54,10 +100,16 @@
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="is_actif" type="boolean"/>
+            <column name="date_mensuelle_debut_validite" type="date"/>
             <column name="anne" type="numeric"/>
-            <column name="montant_plafond" type="numeric"/>
-            <column name="nb_plafondheure" type="numeric"/>
-            <column name="taux" type="numeric"/>
+            <column name="mois" type="numeric"/>
+            <column name="montant_plafond_salaire" type="numeric"/>
+            <column name="montant_plafond_cotisations" type="numeric"/>
+            <column name="montant_plafond_salaire_plus" type="numeric"/>
+            <column name="montant_plafond_cotisations_plus" type="numeric"/>
+            <column name="nb_heure_salaire_plafond" type="numeric"/>
+            <column name="taux_salaire" type="numeric"/>
+            <column name="taux_cotisations" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

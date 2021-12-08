@@ -26,30 +26,6 @@
         <dd>
           <span>{{ natureActivite.description }}</span>
         </dd>
-        <dt><span jhiTranslate="bcaApp.natureActivite.strategie">Strategie</span></dt>
-        <dd>
-          <div *ngIf="natureActivite.strategie">
-            <a [routerLink]="['/strategie-ci', natureActivite.strategie?.id, 'view']">{{ natureActivite.strategie?.id }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="bcaApp.natureActivite.strategie">Strategie</span></dt>
-        <dd>
-          <div *ngIf="natureActivite.strategie">
-            <a [routerLink]="['/strategie-apa', natureActivite.strategie?.id, 'view']">{{ natureActivite.strategie?.id }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="bcaApp.natureActivite.strategie">Strategie</span></dt>
-        <dd>
-          <div *ngIf="natureActivite.strategie">
-            <a [routerLink]="['/strategie-pch', natureActivite.strategie?.id, 'view']">{{ natureActivite.strategie?.id }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="bcaApp.natureActivite.strategie">Strategie</span></dt>
-        <dd>
-          <div *ngIf="natureActivite.strategie">
-            <a [routerLink]="['/strategie-pch-e', natureActivite.strategie?.id, 'view']">{{ natureActivite.strategie?.id }}</a>
-          </div>
-        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

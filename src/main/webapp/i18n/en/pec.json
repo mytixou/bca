@@ -1,0 +1,35 @@
+{
+  "bcaApp": {
+    "pec": {
+      "home": {
+        "title": "Pecs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Pec",
+        "createOrEditLabel": "Create or edit a Pec",
+        "notFound": "No Pecs found"
+      },
+      "created": "A new Pec is created with identifier {{ param }}",
+      "updated": "A Pec is updated with identifier {{ param }}",
+      "deleted": "A Pec is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Pec {{ id }}?"
+      },
+      "detail": {
+        "title": "Pec"
+      },
+      "id": "Id",
+      "idProduit": "Id Produit",
+      "produit": "Produit",
+      "isPlus": "Is Plus",
+      "dateCreated": "Date Created",
+      "isUpdated": "Is Updated",
+      "dateModified": "Date Modified",
+      "isActif": "Is Actif",
+      "pecDetails": "Pec Details",
+      "soldeCi": "Solde Ci",
+      "soldeApa": "Solde Apa",
+      "soldePch": "Solde Pch",
+      "soldePchE": "Solde Pch E"
+    }
+  }
+}

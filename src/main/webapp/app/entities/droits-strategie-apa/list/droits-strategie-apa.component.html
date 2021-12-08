@@ -1,0 +1,100 @@
+<div>
+  <h2 id="page-heading" data-cy="DroitsStrategieApaHeading">
+    <span jhiTranslate="bcaApp.droitsStrategieApa.home.title">Droits Strategie Apas</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="bcaApp.droitsStrategieApa.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-droits-strategie-apa"
+        [routerLink]="['/droits-strategie-apa/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="bcaApp.droitsStrategieApa.home.createLabel"> Create a new Droits Strategie Apa </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="droitsStrategieApas?.length === 0">
+    <span jhiTranslate="bcaApp.droitsStrategieApa.home.notFound">No droitsStrategieApas found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="droitsStrategieApas && droitsStrategieApas.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.droitsStrategieApa.isActif">Is Actif</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.droitsStrategieApa.anne">Anne</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.droitsStrategieApa.mois">Mois</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.droitsStrategieApa.montantPlafond">Montant Plafond</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.droitsStrategieApa.montantPlafondPlus">Montant Plafond Plus</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.droitsStrategieApa.nbHeurePlafond">Nb Heure Plafond</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.droitsStrategieApa.tauxCotisations">Taux Cotisations</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.droitsStrategieApa.dateOuverture">Date Ouverture</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.droitsStrategieApa.dateFermeture">Date Fermeture</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.droitsStrategieApa.beneficiaire">Beneficiaire</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let droitsStrategieApa of droitsStrategieApas; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/droits-strategie-apa', droitsStrategieApa.id, 'view']">{{ droitsStrategieApa.id }}</a>
+          </td>
+          <td>{{ droitsStrategieApa.isActif }}</td>
+          <td>{{ droitsStrategieApa.anne }}</td>
+          <td>{{ droitsStrategieApa.mois }}</td>
+          <td>{{ droitsStrategieApa.montantPlafond }}</td>
+          <td>{{ droitsStrategieApa.montantPlafondPlus }}</td>
+          <td>{{ droitsStrategieApa.nbHeurePlafond }}</td>
+          <td>{{ droitsStrategieApa.tauxCotisations }}</td>
+          <td>{{ droitsStrategieApa.dateOuverture | formatMediumDate }}</td>
+          <td>{{ droitsStrategieApa.dateFermeture | formatMediumDate }}</td>
+          <td>
+            <div *ngIf="droitsStrategieApa.beneficiaire">
+              <a [routerLink]="['/beneficiaire', droitsStrategieApa.beneficiaire?.id, 'view']">{{ droitsStrategieApa.beneficiaire?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/droits-strategie-apa', droitsStrategieApa.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/droits-strategie-apa', droitsStrategieApa.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(droitsStrategieApa)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

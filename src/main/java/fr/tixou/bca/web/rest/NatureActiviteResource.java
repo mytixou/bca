@@ -9,6 +9,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +50,8 @@ public class NatureActiviteResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/nature-activites")
-    public ResponseEntity<NatureActivite> createNatureActivite(@RequestBody NatureActivite natureActivite) throws URISyntaxException {
+    public ResponseEntity<NatureActivite> createNatureActivite(@Valid @RequestBody NatureActivite natureActivite)
+        throws URISyntaxException {
         log.debug("REST request to save NatureActivite : {}", natureActivite);
         if (natureActivite.getId() != null) {
             throw new BadRequestAlertException("A new natureActivite cannot already have an ID", ENTITY_NAME, "idexists");
@@ -73,7 +76,7 @@ public class NatureActiviteResource {
     @PutMapping("/nature-activites/{id}")
     public ResponseEntity<NatureActivite> updateNatureActivite(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody NatureActivite natureActivite
+        @Valid @RequestBody NatureActivite natureActivite
     ) throws URISyntaxException {
         log.debug("REST request to update NatureActivite : {}, {}", id, natureActivite);
         if (natureActivite.getId() == null) {
@@ -108,7 +111,7 @@ public class NatureActiviteResource {
     @PatchMapping(value = "/nature-activites/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<NatureActivite> partialUpdateNatureActivite(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody NatureActivite natureActivite
+        @NotNull @RequestBody NatureActivite natureActivite
     ) throws URISyntaxException {
         log.debug("REST request to partial update NatureActivite partially : {}, {}", id, natureActivite);
         if (natureActivite.getId() == null) {

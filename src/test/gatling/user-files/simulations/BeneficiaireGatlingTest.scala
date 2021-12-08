@@ -71,9 +71,10 @@ class BeneficiaireGatlingTest extends Simulation {
             .post("/api/beneficiaires")
             .headers(headers_http_authenticated)
             .body(StringBody("""{
-                "id":"SAMPLE_TEXT"
-                , "externeId":"SAMPLE_TEXT"
+                "externeId":null
                 , "isActif":null
+                , "dateDesactivation":"2020-01-01T00:00:00.000Z"
+                , "isInscrit":null
                 , "dateInscription":"2020-01-01T00:00:00.000Z"
                 , "dateResiliation":"2020-01-01T00:00:00.000Z"
                 }""")).asJson

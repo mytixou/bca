@@ -20,6 +20,11 @@
         <div class="form-group">
           <label class="form-control-label" jhiTranslate="bcaApp.natureActivite.code" for="field_code">Code</label>
           <input type="text" class="form-control" name="code" id="field_code" data-cy="code" formControlName="code" />
+          <div *ngIf="editForm.get('code')!.invalid && (editForm.get('code')!.dirty || editForm.get('code')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('code')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
@@ -37,66 +42,6 @@
             data-cy="description"
             formControlName="description"
           />
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="bcaApp.natureActivite.strategie" for="field_strategie">Strategie</label>
-          <select class="form-control" id="field_strategie" data-cy="strategie" name="strategie" formControlName="strategie">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
-                strategieCiOption.id === editForm.get('strategie')!.value?.id ? editForm.get('strategie')!.value : strategieCiOption
-              "
-              *ngFor="let strategieCiOption of strategieCisSharedCollection; trackBy: trackStrategieCiById"
-            >
-              {{ strategieCiOption.id }}
-            </option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="bcaApp.natureActivite.strategie" for="field_strategie">Strategie</label>
-          <select class="form-control" id="field_strategie" data-cy="strategie" name="strategie" formControlName="strategie">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
-                strategieApaOption.id === editForm.get('strategie')!.value?.id ? editForm.get('strategie')!.value : strategieApaOption
-              "
-              *ngFor="let strategieApaOption of strategieApasSharedCollection; trackBy: trackStrategieApaById"
-            >
-              {{ strategieApaOption.id }}
-            </option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="bcaApp.natureActivite.strategie" for="field_strategie">Strategie</label>
-          <select class="form-control" id="field_strategie" data-cy="strategie" name="strategie" formControlName="strategie">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
-                strategiePchOption.id === editForm.get('strategie')!.value?.id ? editForm.get('strategie')!.value : strategiePchOption
-              "
-              *ngFor="let strategiePchOption of strategiePchesSharedCollection; trackBy: trackStrategiePchById"
-            >
-              {{ strategiePchOption.id }}
-            </option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="bcaApp.natureActivite.strategie" for="field_strategie">Strategie</label>
-          <select class="form-control" id="field_strategie" data-cy="strategie" name="strategie" formControlName="strategie">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
-                strategiePchEOption.id === editForm.get('strategie')!.value?.id ? editForm.get('strategie')!.value : strategiePchEOption
-              "
-              *ngFor="let strategiePchEOption of strategiePchESSharedCollection; trackBy: trackStrategiePchEById"
-            >
-              {{ strategiePchEOption.id }}
-            </option>
-          </select>
         </div>
       </div>
 

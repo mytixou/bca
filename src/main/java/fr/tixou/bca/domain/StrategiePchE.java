@@ -3,9 +3,11 @@ package fr.tixou.bca.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -25,44 +27,76 @@ public class StrategiePchE implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "is_actif")
+    @NotNull
+    @Column(name = "is_actif", nullable = false)
     private Boolean isActif;
 
-    @Column(name = "anne")
+    @NotNull
+    @Column(name = "date_mensuelle_debut_validite", nullable = false)
+    private LocalDate dateMensuelleDebutValidite;
+
+    @NotNull
+    @Column(name = "anne", nullable = false, unique = true)
     private Integer anne;
 
-    @Column(name = "montant_plafond", precision = 21, scale = 2)
-    private BigDecimal montantPlafond;
+    @NotNull
+    @Column(name = "mois", nullable = false, unique = true)
+    private Integer mois;
 
-    @Column(name = "nb_plafondheure", precision = 21, scale = 2)
-    private BigDecimal nbPlafondheure;
+    @NotNull
+    @Column(name = "montant_plafond_salaire", precision = 21, scale = 2, nullable = false)
+    private BigDecimal montantPlafondSalaire;
 
-    @Column(name = "taux", precision = 21, scale = 2)
-    private BigDecimal taux;
+    @NotNull
+    @Column(name = "montant_plafond_cotisations", precision = 21, scale = 2, nullable = false)
+    private BigDecimal montantPlafondCotisations;
 
-    @OneToMany(mappedBy = "strategie")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "strategie", "strategie", "strategie", "strategie" }, allowSetters = true)
-    private Set<TiersFinanceur> tiersFinanceurs = new HashSet<>();
+    @NotNull
+    @Column(name = "montant_plafond_salaire_plus", precision = 21, scale = 2, nullable = false)
+    private BigDecimal montantPlafondSalairePlus;
 
-    @OneToMany(mappedBy = "strategie")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "strategie", "strategie", "strategie", "strategie" }, allowSetters = true)
-    private Set<NatureActivite> natureActivites = new HashSet<>();
+    @NotNull
+    @Column(name = "montant_plafond_cotisations_plus", precision = 21, scale = 2, nullable = false)
+    private BigDecimal montantPlafondCotisationsPlus;
 
-    @OneToMany(mappedBy = "strategie")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "strategie", "strategie", "strategie", "strategie" }, allowSetters = true)
-    private Set<NatureMontant> natureMontants = new HashSet<>();
+    @NotNull
+    @Column(name = "nb_heure_salaire_plafond", precision = 21, scale = 2, nullable = false)
+    private BigDecimal nbHeureSalairePlafond;
 
-    @OneToMany(mappedBy = "strategiePchE")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "beneficiaire", "strategiePchE" }, allowSetters = true)
-    private Set<ConsommationPchE> consommationPchES = new HashSet<>();
+    @NotNull
+    @Column(name = "taux_salaire", precision = 21, scale = 2, nullable = false)
+    private BigDecimal tauxSalaire;
+
+    @NotNull
+    @Column(name = "taux_cotisations", precision = 21, scale = 2, nullable = false)
+    private BigDecimal tauxCotisations;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "strategieCis", "strategieApas", "strategiePches", "strategiePchES" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "aide" }, allowSetters = true)
     private Aide aide;
+
+    @ManyToOne
+    private TiersFinanceur tiersFinanceur;
+
+    @ManyToMany
+    @JoinTable(
+        name = "rel_strategie_pch_e__nature_activite",
+        joinColumns = @JoinColumn(name = "strategie_pch_e_id"),
+        inverseJoinColumns = @JoinColumn(name = "nature_activite_id")
+    )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "strategieCis", "strategieApas", "strategiePches", "strategiePchES" }, allowSetters = true)
+    private Set<NatureActivite> natureActivites = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+        name = "rel_strategie_pch_e__nature_montant",
+        joinColumns = @JoinColumn(name = "strategie_pch_e_id"),
+        inverseJoinColumns = @JoinColumn(name = "nature_montant_id")
+    )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "strategieCis", "strategieApas", "strategiePches", "strategiePchES" }, allowSetters = true)
+    private Set<NatureMontant> natureMontants = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -92,6 +126,19 @@ public class StrategiePchE implements Serializable {
         this.isActif = isActif;
     }
 
+    public LocalDate getDateMensuelleDebutValidite() {
+        return this.dateMensuelleDebutValidite;
+    }
+
+    public StrategiePchE dateMensuelleDebutValidite(LocalDate dateMensuelleDebutValidite) {
+        this.setDateMensuelleDebutValidite(dateMensuelleDebutValidite);
+        return this;
+    }
+
+    public void setDateMensuelleDebutValidite(LocalDate dateMensuelleDebutValidite) {
+        this.dateMensuelleDebutValidite = dateMensuelleDebutValidite;
+    }
+
     public Integer getAnne() {
         return this.anne;
     }
@@ -105,167 +152,108 @@ public class StrategiePchE implements Serializable {
         this.anne = anne;
     }
 
-    public BigDecimal getMontantPlafond() {
-        return this.montantPlafond;
+    public Integer getMois() {
+        return this.mois;
     }
 
-    public StrategiePchE montantPlafond(BigDecimal montantPlafond) {
-        this.setMontantPlafond(montantPlafond);
+    public StrategiePchE mois(Integer mois) {
+        this.setMois(mois);
         return this;
     }
 
-    public void setMontantPlafond(BigDecimal montantPlafond) {
-        this.montantPlafond = montantPlafond;
+    public void setMois(Integer mois) {
+        this.mois = mois;
     }
 
-    public BigDecimal getNbPlafondheure() {
-        return this.nbPlafondheure;
+    public BigDecimal getMontantPlafondSalaire() {
+        return this.montantPlafondSalaire;
     }
 
-    public StrategiePchE nbPlafondheure(BigDecimal nbPlafondheure) {
-        this.setNbPlafondheure(nbPlafondheure);
+    public StrategiePchE montantPlafondSalaire(BigDecimal montantPlafondSalaire) {
+        this.setMontantPlafondSalaire(montantPlafondSalaire);
         return this;
     }
 
-    public void setNbPlafondheure(BigDecimal nbPlafondheure) {
-        this.nbPlafondheure = nbPlafondheure;
+    public void setMontantPlafondSalaire(BigDecimal montantPlafondSalaire) {
+        this.montantPlafondSalaire = montantPlafondSalaire;
     }
 
-    public BigDecimal getTaux() {
-        return this.taux;
+    public BigDecimal getMontantPlafondCotisations() {
+        return this.montantPlafondCotisations;
     }
 
-    public StrategiePchE taux(BigDecimal taux) {
-        this.setTaux(taux);
+    public StrategiePchE montantPlafondCotisations(BigDecimal montantPlafondCotisations) {
+        this.setMontantPlafondCotisations(montantPlafondCotisations);
         return this;
     }
 
-    public void setTaux(BigDecimal taux) {
-        this.taux = taux;
+    public void setMontantPlafondCotisations(BigDecimal montantPlafondCotisations) {
+        this.montantPlafondCotisations = montantPlafondCotisations;
     }
 
-    public Set<TiersFinanceur> getTiersFinanceurs() {
-        return this.tiersFinanceurs;
+    public BigDecimal getMontantPlafondSalairePlus() {
+        return this.montantPlafondSalairePlus;
     }
 
-    public void setTiersFinanceurs(Set<TiersFinanceur> tiersFinanceurs) {
-        if (this.tiersFinanceurs != null) {
-            this.tiersFinanceurs.forEach(i -> i.setStrategie(null));
-        }
-        if (tiersFinanceurs != null) {
-            tiersFinanceurs.forEach(i -> i.setStrategie(this));
-        }
-        this.tiersFinanceurs = tiersFinanceurs;
-    }
-
-    public StrategiePchE tiersFinanceurs(Set<TiersFinanceur> tiersFinanceurs) {
-        this.setTiersFinanceurs(tiersFinanceurs);
+    public StrategiePchE montantPlafondSalairePlus(BigDecimal montantPlafondSalairePlus) {
+        this.setMontantPlafondSalairePlus(montantPlafondSalairePlus);
         return this;
     }
 
-    public StrategiePchE addTiersFinanceur(TiersFinanceur tiersFinanceur) {
-        this.tiersFinanceurs.add(tiersFinanceur);
-        tiersFinanceur.setStrategie(this);
+    public void setMontantPlafondSalairePlus(BigDecimal montantPlafondSalairePlus) {
+        this.montantPlafondSalairePlus = montantPlafondSalairePlus;
+    }
+
+    public BigDecimal getMontantPlafondCotisationsPlus() {
+        return this.montantPlafondCotisationsPlus;
+    }
+
+    public StrategiePchE montantPlafondCotisationsPlus(BigDecimal montantPlafondCotisationsPlus) {
+        this.setMontantPlafondCotisationsPlus(montantPlafondCotisationsPlus);
         return this;
     }
 
-    public StrategiePchE removeTiersFinanceur(TiersFinanceur tiersFinanceur) {
-        this.tiersFinanceurs.remove(tiersFinanceur);
-        tiersFinanceur.setStrategie(null);
+    public void setMontantPlafondCotisationsPlus(BigDecimal montantPlafondCotisationsPlus) {
+        this.montantPlafondCotisationsPlus = montantPlafondCotisationsPlus;
+    }
+
+    public BigDecimal getNbHeureSalairePlafond() {
+        return this.nbHeureSalairePlafond;
+    }
+
+    public StrategiePchE nbHeureSalairePlafond(BigDecimal nbHeureSalairePlafond) {
+        this.setNbHeureSalairePlafond(nbHeureSalairePlafond);
         return this;
     }
 
-    public Set<NatureActivite> getNatureActivites() {
-        return this.natureActivites;
+    public void setNbHeureSalairePlafond(BigDecimal nbHeureSalairePlafond) {
+        this.nbHeureSalairePlafond = nbHeureSalairePlafond;
     }
 
-    public void setNatureActivites(Set<NatureActivite> natureActivites) {
-        if (this.natureActivites != null) {
-            this.natureActivites.forEach(i -> i.setStrategie(null));
-        }
-        if (natureActivites != null) {
-            natureActivites.forEach(i -> i.setStrategie(this));
-        }
-        this.natureActivites = natureActivites;
+    public BigDecimal getTauxSalaire() {
+        return this.tauxSalaire;
     }
 
-    public StrategiePchE natureActivites(Set<NatureActivite> natureActivites) {
-        this.setNatureActivites(natureActivites);
+    public StrategiePchE tauxSalaire(BigDecimal tauxSalaire) {
+        this.setTauxSalaire(tauxSalaire);
         return this;
     }
 
-    public StrategiePchE addNatureActivite(NatureActivite natureActivite) {
-        this.natureActivites.add(natureActivite);
-        natureActivite.setStrategie(this);
+    public void setTauxSalaire(BigDecimal tauxSalaire) {
+        this.tauxSalaire = tauxSalaire;
+    }
+
+    public BigDecimal getTauxCotisations() {
+        return this.tauxCotisations;
+    }
+
+    public StrategiePchE tauxCotisations(BigDecimal tauxCotisations) {
+        this.setTauxCotisations(tauxCotisations);
         return this;
     }
 
-    public StrategiePchE removeNatureActivite(NatureActivite natureActivite) {
-        this.natureActivites.remove(natureActivite);
-        natureActivite.setStrategie(null);
-        return this;
-    }
-
-    public Set<NatureMontant> getNatureMontants() {
-        return this.natureMontants;
-    }
-
-    public void setNatureMontants(Set<NatureMontant> natureMontants) {
-        if (this.natureMontants != null) {
-            this.natureMontants.forEach(i -> i.setStrategie(null));
-        }
-        if (natureMontants != null) {
-            natureMontants.forEach(i -> i.setStrategie(this));
-        }
-        this.natureMontants = natureMontants;
-    }
-
-    public StrategiePchE natureMontants(Set<NatureMontant> natureMontants) {
-        this.setNatureMontants(natureMontants);
-        return this;
-    }
-
-    public StrategiePchE addNatureMontant(NatureMontant natureMontant) {
-        this.natureMontants.add(natureMontant);
-        natureMontant.setStrategie(this);
-        return this;
-    }
-
-    public StrategiePchE removeNatureMontant(NatureMontant natureMontant) {
-        this.natureMontants.remove(natureMontant);
-        natureMontant.setStrategie(null);
-        return this;
-    }
-
-    public Set<ConsommationPchE> getConsommationPchES() {
-        return this.consommationPchES;
-    }
-
-    public void setConsommationPchES(Set<ConsommationPchE> consommationPchES) {
-        if (this.consommationPchES != null) {
-            this.consommationPchES.forEach(i -> i.setStrategiePchE(null));
-        }
-        if (consommationPchES != null) {
-            consommationPchES.forEach(i -> i.setStrategiePchE(this));
-        }
-        this.consommationPchES = consommationPchES;
-    }
-
-    public StrategiePchE consommationPchES(Set<ConsommationPchE> consommationPchES) {
-        this.setConsommationPchES(consommationPchES);
-        return this;
-    }
-
-    public StrategiePchE addConsommationPchE(ConsommationPchE consommationPchE) {
-        this.consommationPchES.add(consommationPchE);
-        consommationPchE.setStrategiePchE(this);
-        return this;
-    }
-
-    public StrategiePchE removeConsommationPchE(ConsommationPchE consommationPchE) {
-        this.consommationPchES.remove(consommationPchE);
-        consommationPchE.setStrategiePchE(null);
-        return this;
+    public void setTauxCotisations(BigDecimal tauxCotisations) {
+        this.tauxCotisations = tauxCotisations;
     }
 
     public Aide getAide() {
@@ -278,6 +266,69 @@ public class StrategiePchE implements Serializable {
 
     public StrategiePchE aide(Aide aide) {
         this.setAide(aide);
+        return this;
+    }
+
+    public TiersFinanceur getTiersFinanceur() {
+        return this.tiersFinanceur;
+    }
+
+    public void setTiersFinanceur(TiersFinanceur tiersFinanceur) {
+        this.tiersFinanceur = tiersFinanceur;
+    }
+
+    public StrategiePchE tiersFinanceur(TiersFinanceur tiersFinanceur) {
+        this.setTiersFinanceur(tiersFinanceur);
+        return this;
+    }
+
+    public Set<NatureActivite> getNatureActivites() {
+        return this.natureActivites;
+    }
+
+    public void setNatureActivites(Set<NatureActivite> natureActivites) {
+        this.natureActivites = natureActivites;
+    }
+
+    public StrategiePchE natureActivites(Set<NatureActivite> natureActivites) {
+        this.setNatureActivites(natureActivites);
+        return this;
+    }
+
+    public StrategiePchE addNatureActivite(NatureActivite natureActivite) {
+        this.natureActivites.add(natureActivite);
+        natureActivite.getStrategiePchES().add(this);
+        return this;
+    }
+
+    public StrategiePchE removeNatureActivite(NatureActivite natureActivite) {
+        this.natureActivites.remove(natureActivite);
+        natureActivite.getStrategiePchES().remove(this);
+        return this;
+    }
+
+    public Set<NatureMontant> getNatureMontants() {
+        return this.natureMontants;
+    }
+
+    public void setNatureMontants(Set<NatureMontant> natureMontants) {
+        this.natureMontants = natureMontants;
+    }
+
+    public StrategiePchE natureMontants(Set<NatureMontant> natureMontants) {
+        this.setNatureMontants(natureMontants);
+        return this;
+    }
+
+    public StrategiePchE addNatureMontant(NatureMontant natureMontant) {
+        this.natureMontants.add(natureMontant);
+        natureMontant.getStrategiePchES().add(this);
+        return this;
+    }
+
+    public StrategiePchE removeNatureMontant(NatureMontant natureMontant) {
+        this.natureMontants.remove(natureMontant);
+        natureMontant.getStrategiePchES().remove(this);
         return this;
     }
 
@@ -306,10 +357,16 @@ public class StrategiePchE implements Serializable {
         return "StrategiePchE{" +
             "id=" + getId() +
             ", isActif='" + getIsActif() + "'" +
+            ", dateMensuelleDebutValidite='" + getDateMensuelleDebutValidite() + "'" +
             ", anne=" + getAnne() +
-            ", montantPlafond=" + getMontantPlafond() +
-            ", nbPlafondheure=" + getNbPlafondheure() +
-            ", taux=" + getTaux() +
+            ", mois=" + getMois() +
+            ", montantPlafondSalaire=" + getMontantPlafondSalaire() +
+            ", montantPlafondCotisations=" + getMontantPlafondCotisations() +
+            ", montantPlafondSalairePlus=" + getMontantPlafondSalairePlus() +
+            ", montantPlafondCotisationsPlus=" + getMontantPlafondCotisationsPlus() +
+            ", nbHeureSalairePlafond=" + getNbHeureSalairePlafond() +
+            ", tauxSalaire=" + getTauxSalaire() +
+            ", tauxCotisations=" + getTauxCotisations() +
             "}";
     }
 }

@@ -1,0 +1,35 @@
+{
+  "bcaApp": {
+    "strategieCmgAssmat": {
+      "home": {
+        "title": "Strategie Cmg Assmats",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Strategie Cmg Assmat",
+        "createOrEditLabel": "Create or edit a Strategie Cmg Assmat",
+        "notFound": "No Strategie Cmg Assmats found"
+      },
+      "created": "A new Strategie Cmg Assmat is created with identifier {{ param }}",
+      "updated": "A Strategie Cmg Assmat is updated with identifier {{ param }}",
+      "deleted": "A Strategie Cmg Assmat is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Strategie Cmg Assmat {{ id }}?"
+      },
+      "detail": {
+        "title": "Strategie Cmg Assmat"
+      },
+      "id": "ID",
+      "anne": "Anne",
+      "mois": "Mois",
+      "nbHeureSeuilPlafond": "Nb Heure Seuil Plafond",
+      "tauxSalaire": "Taux Salaire",
+      "tauxCotisations": "Taux Cotisations",
+      "isActif": "Is Actif",
+      "dateCreated": "Date Created",
+      "isUpdated": "Is Updated",
+      "dateModified": "Date Modified",
+      "trancheAideEnfantAssmat": "Tranche Aide Enfant Assmat",
+      "aide": "Aide",
+      "tiersFinanceur": "Tiers Financeur"
+    }
+  }
+}

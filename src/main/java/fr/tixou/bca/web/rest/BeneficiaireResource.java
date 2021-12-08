@@ -9,6 +9,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +50,7 @@ public class BeneficiaireResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/beneficiaires")
-    public ResponseEntity<Beneficiaire> createBeneficiaire(@RequestBody Beneficiaire beneficiaire) throws URISyntaxException {
+    public ResponseEntity<Beneficiaire> createBeneficiaire(@Valid @RequestBody Beneficiaire beneficiaire) throws URISyntaxException {
         log.debug("REST request to save Beneficiaire : {}", beneficiaire);
         if (beneficiaire.getId() != null) {
             throw new BadRequestAlertException("A new beneficiaire cannot already have an ID", ENTITY_NAME, "idexists");
@@ -56,7 +58,7 @@ public class BeneficiaireResource {
         Beneficiaire result = beneficiaireService.save(beneficiaire);
         return ResponseEntity
             .created(new URI("/api/beneficiaires/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -72,8 +74,8 @@ public class BeneficiaireResource {
      */
     @PutMapping("/beneficiaires/{id}")
     public ResponseEntity<Beneficiaire> updateBeneficiaire(
-        @PathVariable(value = "id", required = false) final String id,
-        @RequestBody Beneficiaire beneficiaire
+        @PathVariable(value = "id", required = false) final Long id,
+        @Valid @RequestBody Beneficiaire beneficiaire
     ) throws URISyntaxException {
         log.debug("REST request to update Beneficiaire : {}, {}", id, beneficiaire);
         if (beneficiaire.getId() == null) {
@@ -90,7 +92,7 @@ public class BeneficiaireResource {
         Beneficiaire result = beneficiaireService.save(beneficiaire);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, beneficiaire.getId()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, beneficiaire.getId().toString()))
             .body(result);
     }
 
@@ -107,8 +109,8 @@ public class BeneficiaireResource {
      */
     @PatchMapping(value = "/beneficiaires/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Beneficiaire> partialUpdateBeneficiaire(
-        @PathVariable(value = "id", required = false) final String id,
-        @RequestBody Beneficiaire beneficiaire
+        @PathVariable(value = "id", required = false) final Long id,
+        @NotNull @RequestBody Beneficiaire beneficiaire
     ) throws URISyntaxException {
         log.debug("REST request to partial update Beneficiaire partially : {}, {}", id, beneficiaire);
         if (beneficiaire.getId() == null) {
@@ -126,7 +128,7 @@ public class BeneficiaireResource {
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, beneficiaire.getId())
+            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, beneficiaire.getId().toString())
         );
     }
 
@@ -148,7 +150,7 @@ public class BeneficiaireResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the beneficiaire, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/beneficiaires/{id}")
-    public ResponseEntity<Beneficiaire> getBeneficiaire(@PathVariable String id) {
+    public ResponseEntity<Beneficiaire> getBeneficiaire(@PathVariable Long id) {
         log.debug("REST request to get Beneficiaire : {}", id);
         Optional<Beneficiaire> beneficiaire = beneficiaireService.findOne(id);
         return ResponseUtil.wrapOrNotFound(beneficiaire);
@@ -161,9 +163,12 @@ public class BeneficiaireResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/beneficiaires/{id}")
-    public ResponseEntity<Void> deleteBeneficiaire(@PathVariable String id) {
+    public ResponseEntity<Void> deleteBeneficiaire(@PathVariable Long id) {
         log.debug("REST request to delete Beneficiaire : {}", id);
         beneficiaireService.delete(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
+        return ResponseEntity
+            .noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .build();
     }
 }

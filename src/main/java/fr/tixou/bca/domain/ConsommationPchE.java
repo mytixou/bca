@@ -34,26 +34,11 @@ public class ConsommationPchE implements Serializable {
     private BigDecimal nbHeures;
 
     @ManyToOne
-    @JsonIgnoreProperties(
-        value = {
-            "soldeCis",
-            "soldeApas",
-            "soldePches",
-            "soldePchES",
-            "consommationCis",
-            "consommationApas",
-            "consommationPches",
-            "consommationPchES",
-        },
-        allowSetters = true
-    )
+    @JsonIgnoreProperties(value = { "enfants" }, allowSetters = true)
     private Beneficiaire beneficiaire;
 
     @ManyToOne
-    @JsonIgnoreProperties(
-        value = { "tiersFinanceurs", "natureActivites", "natureMontants", "consommationPchES", "aide" },
-        allowSetters = true
-    )
+    @JsonIgnoreProperties(value = { "aide", "tiersFinanceur", "natureActivites", "natureMontants" }, allowSetters = true)
     private StrategiePchE strategiePchE;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

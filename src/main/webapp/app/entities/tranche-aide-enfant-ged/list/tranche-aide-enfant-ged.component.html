@@ -1,0 +1,102 @@
+<div>
+  <h2 id="page-heading" data-cy="TrancheAideEnfantGedHeading">
+    <span jhiTranslate="bcaApp.trancheAideEnfantGed.home.title">Tranche Aide Enfant Geds</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="bcaApp.trancheAideEnfantGed.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-tranche-aide-enfant-ged"
+        [routerLink]="['/tranche-aide-enfant-ged/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="bcaApp.trancheAideEnfantGed.home.createLabel"> Create a new Tranche Aide Enfant Ged </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="trancheAideEnfantGeds?.length === 0">
+    <span jhiTranslate="bcaApp.trancheAideEnfantGed.home.notFound">No trancheAideEnfantGeds found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="trancheAideEnfantGeds && trancheAideEnfantGeds.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.trancheAideEnfantGed.anne">Anne</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.trancheAideEnfantGed.mois">Mois</span></th>
+          <th scope="col">
+            <span jhiTranslate="bcaApp.trancheAideEnfantGed.ageEnfantRevoluSurPeriode">Age Enfant Revolu Sur Periode</span>
+          </th>
+          <th scope="col"><span jhiTranslate="bcaApp.trancheAideEnfantGed.montantPlafondSalaire">Montant Plafond Salaire</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.trancheAideEnfantGed.isActif">Is Actif</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.trancheAideEnfantGed.dateCreated">Date Created</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.trancheAideEnfantGed.isUpdated">Is Updated</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.trancheAideEnfantGed.dateModified">Date Modified</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.trancheAideEnfantGed.strategieCmgGed">Strategie Cmg Ged</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let trancheAideEnfantGed of trancheAideEnfantGeds; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/tranche-aide-enfant-ged', trancheAideEnfantGed.id, 'view']">{{ trancheAideEnfantGed.id }}</a>
+          </td>
+          <td>{{ trancheAideEnfantGed.anne }}</td>
+          <td>{{ trancheAideEnfantGed.mois }}</td>
+          <td>{{ trancheAideEnfantGed.ageEnfantRevoluSurPeriode }}</td>
+          <td>{{ trancheAideEnfantGed.montantPlafondSalaire }}</td>
+          <td>{{ trancheAideEnfantGed.isActif }}</td>
+          <td>{{ trancheAideEnfantGed.dateCreated | formatMediumDatetime }}</td>
+          <td>{{ trancheAideEnfantGed.isUpdated }}</td>
+          <td>{{ trancheAideEnfantGed.dateModified | formatMediumDatetime }}</td>
+          <td>
+            <div *ngIf="trancheAideEnfantGed.strategieCmgGed">
+              <a [routerLink]="['/strategie-cmg-ged', trancheAideEnfantGed.strategieCmgGed?.id, 'view']">{{
+                trancheAideEnfantGed.strategieCmgGed?.id
+              }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/tranche-aide-enfant-ged', trancheAideEnfantGed.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/tranche-aide-enfant-ged', trancheAideEnfantGed.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(trancheAideEnfantGed)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

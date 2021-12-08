@@ -35,6 +35,8 @@
           <th scope="col"><span jhiTranslate="bcaApp.beneficiaire.id">Id</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.beneficiaire.externeId">Externe Id</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.beneficiaire.isActif">Is Actif</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.beneficiaire.dateDesactivation">Date Desactivation</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.beneficiaire.isInscrit">Is Inscrit</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.beneficiaire.dateInscription">Date Inscription</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.beneficiaire.dateResiliation">Date Resiliation</span></th>
           <th scope="col"></th>
@@ -47,6 +49,8 @@
           </td>
           <td>{{ beneficiaire.externeId }}</td>
           <td>{{ beneficiaire.isActif }}</td>
+          <td>{{ beneficiaire.dateDesactivation | formatMediumDate }}</td>
+          <td>{{ beneficiaire.isInscrit }}</td>
           <td>{{ beneficiaire.dateInscription | formatMediumDate }}</td>
           <td>{{ beneficiaire.dateResiliation | formatMediumDate }}</td>
           <td class="text-right">

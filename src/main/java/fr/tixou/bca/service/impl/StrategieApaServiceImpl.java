@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,17 +43,35 @@ public class StrategieApaServiceImpl implements StrategieApaService {
                 if (strategieApa.getIsActif() != null) {
                     existingStrategieApa.setIsActif(strategieApa.getIsActif());
                 }
+                if (strategieApa.getDateMensuelleDebutValidite() != null) {
+                    existingStrategieApa.setDateMensuelleDebutValidite(strategieApa.getDateMensuelleDebutValidite());
+                }
                 if (strategieApa.getAnne() != null) {
                     existingStrategieApa.setAnne(strategieApa.getAnne());
                 }
-                if (strategieApa.getMontantPlafond() != null) {
-                    existingStrategieApa.setMontantPlafond(strategieApa.getMontantPlafond());
+                if (strategieApa.getMois() != null) {
+                    existingStrategieApa.setMois(strategieApa.getMois());
                 }
-                if (strategieApa.getNbPlafondheure() != null) {
-                    existingStrategieApa.setNbPlafondheure(strategieApa.getNbPlafondheure());
+                if (strategieApa.getMontantPlafondSalaire() != null) {
+                    existingStrategieApa.setMontantPlafondSalaire(strategieApa.getMontantPlafondSalaire());
                 }
-                if (strategieApa.getTaux() != null) {
-                    existingStrategieApa.setTaux(strategieApa.getTaux());
+                if (strategieApa.getMontantPlafondCotisations() != null) {
+                    existingStrategieApa.setMontantPlafondCotisations(strategieApa.getMontantPlafondCotisations());
+                }
+                if (strategieApa.getMontantPlafondSalairePlus() != null) {
+                    existingStrategieApa.setMontantPlafondSalairePlus(strategieApa.getMontantPlafondSalairePlus());
+                }
+                if (strategieApa.getMontantPlafondCotisationsPlus() != null) {
+                    existingStrategieApa.setMontantPlafondCotisationsPlus(strategieApa.getMontantPlafondCotisationsPlus());
+                }
+                if (strategieApa.getNbHeureSalairePlafond() != null) {
+                    existingStrategieApa.setNbHeureSalairePlafond(strategieApa.getNbHeureSalairePlafond());
+                }
+                if (strategieApa.getTauxSalaire() != null) {
+                    existingStrategieApa.setTauxSalaire(strategieApa.getTauxSalaire());
+                }
+                if (strategieApa.getTauxCotisations() != null) {
+                    existingStrategieApa.setTauxCotisations(strategieApa.getTauxCotisations());
                 }
 
                 return existingStrategieApa;
@@ -63,14 +83,18 @@ public class StrategieApaServiceImpl implements StrategieApaService {
     @Transactional(readOnly = true)
     public List<StrategieApa> findAll() {
         log.debug("Request to get all StrategieApas");
-        return strategieApaRepository.findAll();
+        return strategieApaRepository.findAllWithEagerRelationships();
+    }
+
+    public Page<StrategieApa> findAllWithEagerRelationships(Pageable pageable) {
+        return strategieApaRepository.findAllWithEagerRelationships(pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Optional<StrategieApa> findOne(Long id) {
         log.debug("Request to get StrategieApa : {}", id);
-        return strategieApaRepository.findById(id);
+        return strategieApaRepository.findOneWithEagerRelationships(id);
     }
 
     @Override

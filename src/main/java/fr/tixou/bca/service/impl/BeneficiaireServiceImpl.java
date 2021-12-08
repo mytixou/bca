@@ -44,6 +44,12 @@ public class BeneficiaireServiceImpl implements BeneficiaireService {
                 if (beneficiaire.getIsActif() != null) {
                     existingBeneficiaire.setIsActif(beneficiaire.getIsActif());
                 }
+                if (beneficiaire.getDateDesactivation() != null) {
+                    existingBeneficiaire.setDateDesactivation(beneficiaire.getDateDesactivation());
+                }
+                if (beneficiaire.getIsInscrit() != null) {
+                    existingBeneficiaire.setIsInscrit(beneficiaire.getIsInscrit());
+                }
                 if (beneficiaire.getDateInscription() != null) {
                     existingBeneficiaire.setDateInscription(beneficiaire.getDateInscription());
                 }
@@ -65,13 +71,13 @@ public class BeneficiaireServiceImpl implements BeneficiaireService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Beneficiaire> findOne(String id) {
+    public Optional<Beneficiaire> findOne(Long id) {
         log.debug("Request to get Beneficiaire : {}", id);
         return beneficiaireRepository.findById(id);
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(Long id) {
         log.debug("Request to delete Beneficiaire : {}", id);
         beneficiaireRepository.deleteById(id);
     }

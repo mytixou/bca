@@ -5,6 +5,8 @@ import fr.tixou.bca.repository.SoldeCiRepository;
 import fr.tixou.bca.service.SoldeCiService;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -38,8 +40,23 @@ public class SoldeCiServiceImpl implements SoldeCiService {
         return soldeCiRepository
             .findById(soldeCi.getId())
             .map(existingSoldeCi -> {
+                if (soldeCi.getDate() != null) {
+                    existingSoldeCi.setDate(soldeCi.getDate());
+                }
+                if (soldeCi.getIsActif() != null) {
+                    existingSoldeCi.setIsActif(soldeCi.getIsActif());
+                }
+                if (soldeCi.getIsDernier() != null) {
+                    existingSoldeCi.setIsDernier(soldeCi.getIsDernier());
+                }
                 if (soldeCi.getAnnee() != null) {
                     existingSoldeCi.setAnnee(soldeCi.getAnnee());
+                }
+                if (soldeCi.getConsoMontantCi() != null) {
+                    existingSoldeCi.setConsoMontantCi(soldeCi.getConsoMontantCi());
+                }
+                if (soldeCi.getConsoCiRec() != null) {
+                    existingSoldeCi.setConsoCiRec(soldeCi.getConsoCiRec());
                 }
                 if (soldeCi.getSoldeMontantCi() != null) {
                     existingSoldeCi.setSoldeMontantCi(soldeCi.getSoldeMontantCi());
@@ -58,6 +75,19 @@ public class SoldeCiServiceImpl implements SoldeCiService {
     public List<SoldeCi> findAll() {
         log.debug("Request to get all SoldeCis");
         return soldeCiRepository.findAll();
+    }
+
+    /**
+     *  Get all the soldeCis where Pec is {@code null}.
+     *  @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<SoldeCi> findAllWherePecIsNull() {
+        log.debug("Request to get all soldeCis where Pec is null");
+        return StreamSupport
+            .stream(soldeCiRepository.findAll().spliterator(), false)
+            .filter(soldeCi -> soldeCi.getPec() == null)
+            .collect(Collectors.toList());
     }
 
     @Override

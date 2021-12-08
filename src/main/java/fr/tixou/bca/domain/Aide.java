@@ -1,12 +1,10 @@
 package fr.tixou.bca.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import fr.tixou.bca.domain.enumeration.TypeAide;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -26,20 +24,29 @@ public class Aide implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "nom")
+    @Column(name = "nom", nullable = false, unique = true)
     private TypeAide nom;
 
-    @Column(name = "is_actif")
+    @NotNull
+    @Column(name = "priorite", nullable = false, unique = true)
+    private Integer priorite;
+
+    @NotNull
+    @Column(name = "is_actif", nullable = false)
     private Boolean isActif;
 
-    @Column(name = "date_lancement")
+    @NotNull
+    @Column(name = "date_lancement", nullable = false)
     private LocalDate dateLancement;
 
-    @Column(name = "anne_lancement")
+    @NotNull
+    @Column(name = "anne_lancement", nullable = false)
     private Integer anneLancement;
 
-    @Column(name = "mois_lancement")
+    @NotNull
+    @Column(name = "mois_lancement", nullable = false)
     private Integer moisLancement;
 
     @Column(name = "date_arret")
@@ -51,37 +58,8 @@ public class Aide implements Serializable {
     @Column(name = "dernier_mois")
     private Integer dernierMois;
 
-    @OneToMany(mappedBy = "aide")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(
-        value = { "tiersFinanceurs", "natureActivites", "natureMontants", "consommationCis", "aide" },
-        allowSetters = true
-    )
-    private Set<StrategieCi> strategieCis = new HashSet<>();
-
-    @OneToMany(mappedBy = "aide")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(
-        value = { "tiersFinanceurs", "natureActivites", "natureMontants", "consommationApas", "aide" },
-        allowSetters = true
-    )
-    private Set<StrategieApa> strategieApas = new HashSet<>();
-
-    @OneToMany(mappedBy = "aide")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(
-        value = { "tiersFinanceurs", "natureActivites", "natureMontants", "consommationPches", "aide" },
-        allowSetters = true
-    )
-    private Set<StrategiePch> strategiePches = new HashSet<>();
-
-    @OneToMany(mappedBy = "aide")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(
-        value = { "tiersFinanceurs", "natureActivites", "natureMontants", "consommationPchES", "aide" },
-        allowSetters = true
-    )
-    private Set<StrategiePchE> strategiePchES = new HashSet<>();
+    @ManyToOne
+    private TiersFinanceur aide;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -109,6 +87,19 @@ public class Aide implements Serializable {
 
     public void setNom(TypeAide nom) {
         this.nom = nom;
+    }
+
+    public Integer getPriorite() {
+        return this.priorite;
+    }
+
+    public Aide priorite(Integer priorite) {
+        this.setPriorite(priorite);
+        return this;
+    }
+
+    public void setPriorite(Integer priorite) {
+        this.priorite = priorite;
     }
 
     public Boolean getIsActif() {
@@ -202,127 +193,16 @@ public class Aide implements Serializable {
         this.dernierMois = dernierMois;
     }
 
-    public Set<StrategieCi> getStrategieCis() {
-        return this.strategieCis;
+    public TiersFinanceur getAide() {
+        return this.aide;
     }
 
-    public void setStrategieCis(Set<StrategieCi> strategieCis) {
-        if (this.strategieCis != null) {
-            this.strategieCis.forEach(i -> i.setAide(null));
-        }
-        if (strategieCis != null) {
-            strategieCis.forEach(i -> i.setAide(this));
-        }
-        this.strategieCis = strategieCis;
+    public void setAide(TiersFinanceur tiersFinanceur) {
+        this.aide = tiersFinanceur;
     }
 
-    public Aide strategieCis(Set<StrategieCi> strategieCis) {
-        this.setStrategieCis(strategieCis);
-        return this;
-    }
-
-    public Aide addStrategieCi(StrategieCi strategieCi) {
-        this.strategieCis.add(strategieCi);
-        strategieCi.setAide(this);
-        return this;
-    }
-
-    public Aide removeStrategieCi(StrategieCi strategieCi) {
-        this.strategieCis.remove(strategieCi);
-        strategieCi.setAide(null);
-        return this;
-    }
-
-    public Set<StrategieApa> getStrategieApas() {
-        return this.strategieApas;
-    }
-
-    public void setStrategieApas(Set<StrategieApa> strategieApas) {
-        if (this.strategieApas != null) {
-            this.strategieApas.forEach(i -> i.setAide(null));
-        }
-        if (strategieApas != null) {
-            strategieApas.forEach(i -> i.setAide(this));
-        }
-        this.strategieApas = strategieApas;
-    }
-
-    public Aide strategieApas(Set<StrategieApa> strategieApas) {
-        this.setStrategieApas(strategieApas);
-        return this;
-    }
-
-    public Aide addStrategieApa(StrategieApa strategieApa) {
-        this.strategieApas.add(strategieApa);
-        strategieApa.setAide(this);
-        return this;
-    }
-
-    public Aide removeStrategieApa(StrategieApa strategieApa) {
-        this.strategieApas.remove(strategieApa);
-        strategieApa.setAide(null);
-        return this;
-    }
-
-    public Set<StrategiePch> getStrategiePches() {
-        return this.strategiePches;
-    }
-
-    public void setStrategiePches(Set<StrategiePch> strategiePches) {
-        if (this.strategiePches != null) {
-            this.strategiePches.forEach(i -> i.setAide(null));
-        }
-        if (strategiePches != null) {
-            strategiePches.forEach(i -> i.setAide(this));
-        }
-        this.strategiePches = strategiePches;
-    }
-
-    public Aide strategiePches(Set<StrategiePch> strategiePches) {
-        this.setStrategiePches(strategiePches);
-        return this;
-    }
-
-    public Aide addStrategiePch(StrategiePch strategiePch) {
-        this.strategiePches.add(strategiePch);
-        strategiePch.setAide(this);
-        return this;
-    }
-
-    public Aide removeStrategiePch(StrategiePch strategiePch) {
-        this.strategiePches.remove(strategiePch);
-        strategiePch.setAide(null);
-        return this;
-    }
-
-    public Set<StrategiePchE> getStrategiePchES() {
-        return this.strategiePchES;
-    }
-
-    public void setStrategiePchES(Set<StrategiePchE> strategiePchES) {
-        if (this.strategiePchES != null) {
-            this.strategiePchES.forEach(i -> i.setAide(null));
-        }
-        if (strategiePchES != null) {
-            strategiePchES.forEach(i -> i.setAide(this));
-        }
-        this.strategiePchES = strategiePchES;
-    }
-
-    public Aide strategiePchES(Set<StrategiePchE> strategiePchES) {
-        this.setStrategiePchES(strategiePchES);
-        return this;
-    }
-
-    public Aide addStrategiePchE(StrategiePchE strategiePchE) {
-        this.strategiePchES.add(strategiePchE);
-        strategiePchE.setAide(this);
-        return this;
-    }
-
-    public Aide removeStrategiePchE(StrategiePchE strategiePchE) {
-        this.strategiePchES.remove(strategiePchE);
-        strategiePchE.setAide(null);
+    public Aide aide(TiersFinanceur tiersFinanceur) {
+        this.setAide(tiersFinanceur);
         return this;
     }
 
@@ -351,6 +231,7 @@ public class Aide implements Serializable {
         return "Aide{" +
             "id=" + getId() +
             ", nom='" + getNom() + "'" +
+            ", priorite=" + getPriorite() +
             ", isActif='" + getIsActif() + "'" +
             ", dateLancement='" + getDateLancement() + "'" +
             ", anneLancement=" + getAnneLancement() +

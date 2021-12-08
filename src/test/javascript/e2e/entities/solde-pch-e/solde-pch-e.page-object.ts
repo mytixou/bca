@@ -30,12 +30,18 @@ export class SoldePchEUpdatePage {
   cancelButton = element(by.id('cancel-save'));
 
   idInput = element(by.id('field_id'));
+  dateInput = element(by.id('field_date'));
+  isActifInput = element(by.id('field_isActif'));
+  isDernierInput = element(by.id('field_isDernier'));
   anneeInput = element(by.id('field_annee'));
   moisInput = element(by.id('field_mois'));
+  consoMontantPchECotisationsInput = element(by.id('field_consoMontantPchECotisations'));
+  consoMontantPchESalaireInput = element(by.id('field_consoMontantPchESalaire'));
   soldeMontantPchEInput = element(by.id('field_soldeMontantPchE'));
+  consoHeurePchEInput = element(by.id('field_consoHeurePchE'));
   soldeHeurePchEInput = element(by.id('field_soldeHeurePchE'));
 
-  beneficiaireSelect = element(by.id('field_beneficiaire'));
+  droitsStrategiePchESelect = element(by.id('field_droitsStrategiePchE'));
 
   async getPageTitle(): Promise<string> {
     return this.pageTitle.getAttribute('jhiTranslate');
@@ -47,6 +53,22 @@ export class SoldePchEUpdatePage {
 
   async getIdInput(): Promise<string> {
     return await this.idInput.getAttribute('value');
+  }
+
+  async setDateInput(date: string): Promise<void> {
+    await this.dateInput.sendKeys(date);
+  }
+
+  async getDateInput(): Promise<string> {
+    return await this.dateInput.getAttribute('value');
+  }
+
+  getIsActifInput(): ElementFinder {
+    return this.isActifInput;
+  }
+
+  getIsDernierInput(): ElementFinder {
+    return this.isDernierInput;
   }
 
   async setAnneeInput(annee: string): Promise<void> {
@@ -65,12 +87,36 @@ export class SoldePchEUpdatePage {
     return await this.moisInput.getAttribute('value');
   }
 
+  async setConsoMontantPchECotisationsInput(consoMontantPchECotisations: string): Promise<void> {
+    await this.consoMontantPchECotisationsInput.sendKeys(consoMontantPchECotisations);
+  }
+
+  async getConsoMontantPchECotisationsInput(): Promise<string> {
+    return await this.consoMontantPchECotisationsInput.getAttribute('value');
+  }
+
+  async setConsoMontantPchESalaireInput(consoMontantPchESalaire: string): Promise<void> {
+    await this.consoMontantPchESalaireInput.sendKeys(consoMontantPchESalaire);
+  }
+
+  async getConsoMontantPchESalaireInput(): Promise<string> {
+    return await this.consoMontantPchESalaireInput.getAttribute('value');
+  }
+
   async setSoldeMontantPchEInput(soldeMontantPchE: string): Promise<void> {
     await this.soldeMontantPchEInput.sendKeys(soldeMontantPchE);
   }
 
   async getSoldeMontantPchEInput(): Promise<string> {
     return await this.soldeMontantPchEInput.getAttribute('value');
+  }
+
+  async setConsoHeurePchEInput(consoHeurePchE: string): Promise<void> {
+    await this.consoHeurePchEInput.sendKeys(consoHeurePchE);
+  }
+
+  async getConsoHeurePchEInput(): Promise<string> {
+    return await this.consoHeurePchEInput.getAttribute('value');
   }
 
   async setSoldeHeurePchEInput(soldeHeurePchE: string): Promise<void> {
@@ -81,20 +127,20 @@ export class SoldePchEUpdatePage {
     return await this.soldeHeurePchEInput.getAttribute('value');
   }
 
-  async beneficiaireSelectLastOption(): Promise<void> {
-    await this.beneficiaireSelect.all(by.tagName('option')).last().click();
+  async droitsStrategiePchESelectLastOption(): Promise<void> {
+    await this.droitsStrategiePchESelect.all(by.tagName('option')).last().click();
   }
 
-  async beneficiaireSelectOption(option: string): Promise<void> {
-    await this.beneficiaireSelect.sendKeys(option);
+  async droitsStrategiePchESelectOption(option: string): Promise<void> {
+    await this.droitsStrategiePchESelect.sendKeys(option);
   }
 
-  getBeneficiaireSelect(): ElementFinder {
-    return this.beneficiaireSelect;
+  getDroitsStrategiePchESelect(): ElementFinder {
+    return this.droitsStrategiePchESelect;
   }
 
-  async getBeneficiaireSelectedOption(): Promise<string> {
-    return await this.beneficiaireSelect.element(by.css('option:checked')).getText();
+  async getDroitsStrategiePchESelectedOption(): Promise<string> {
+    return await this.droitsStrategiePchESelect.element(by.css('option:checked')).getText();
   }
 
   async save(): Promise<void> {

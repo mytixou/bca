@@ -20,44 +20,328 @@
         <div class="form-group">
           <label class="form-control-label" jhiTranslate="bcaApp.strategiePch.isActif" for="field_isActif">Is Actif</label>
           <input type="checkbox" class="form-check" name="isActif" id="field_isActif" data-cy="isActif" formControlName="isActif" />
+          <div *ngIf="editForm.get('isActif')!.invalid && (editForm.get('isActif')!.dirty || editForm.get('isActif')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('isActif')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label
+            class="form-control-label"
+            jhiTranslate="bcaApp.strategiePch.dateMensuelleDebutValidite"
+            for="field_dateMensuelleDebutValidite"
+            >Date Mensuelle Debut Validite</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateMensuelleDebutValidite"
+              data-cy="dateMensuelleDebutValidite"
+              type="text"
+              class="form-control"
+              name="dateMensuelleDebutValidite"
+              ngbDatepicker
+              #dateMensuelleDebutValiditeDp="ngbDatepicker"
+              formControlName="dateMensuelleDebutValidite"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="dateMensuelleDebutValiditeDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+          <div
+            *ngIf="
+              editForm.get('dateMensuelleDebutValidite')!.invalid &&
+              (editForm.get('dateMensuelleDebutValidite')!.dirty || editForm.get('dateMensuelleDebutValidite')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('dateMensuelleDebutValidite')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
           <label class="form-control-label" jhiTranslate="bcaApp.strategiePch.anne" for="field_anne">Anne</label>
           <input type="number" class="form-control" name="anne" id="field_anne" data-cy="anne" formControlName="anne" />
+          <div *ngIf="editForm.get('anne')!.invalid && (editForm.get('anne')!.dirty || editForm.get('anne')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('anne')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('anne')?.errors?.number" jhiTranslate="entity.validation.number">
+              This field should be a number.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" jhiTranslate="bcaApp.strategiePch.montantPlafond" for="field_montantPlafond"
-            >Montant Plafond</label
+          <label class="form-control-label" jhiTranslate="bcaApp.strategiePch.mois" for="field_mois">Mois</label>
+          <input type="number" class="form-control" name="mois" id="field_mois" data-cy="mois" formControlName="mois" />
+          <div *ngIf="editForm.get('mois')!.invalid && (editForm.get('mois')!.dirty || editForm.get('mois')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('mois')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('mois')?.errors?.number" jhiTranslate="entity.validation.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.strategiePch.montantPlafondSalaire" for="field_montantPlafondSalaire"
+            >Montant Plafond Salaire</label
           >
           <input
             type="number"
             class="form-control"
-            name="montantPlafond"
-            id="field_montantPlafond"
-            data-cy="montantPlafond"
-            formControlName="montantPlafond"
+            name="montantPlafondSalaire"
+            id="field_montantPlafondSalaire"
+            data-cy="montantPlafondSalaire"
+            formControlName="montantPlafondSalaire"
           />
+          <div
+            *ngIf="
+              editForm.get('montantPlafondSalaire')!.invalid &&
+              (editForm.get('montantPlafondSalaire')!.dirty || editForm.get('montantPlafondSalaire')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('montantPlafondSalaire')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('montantPlafondSalaire')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" jhiTranslate="bcaApp.strategiePch.nbPlafondheure" for="field_nbPlafondheure"
-            >Nb Plafondheure</label
+          <label
+            class="form-control-label"
+            jhiTranslate="bcaApp.strategiePch.montantPlafondCotisations"
+            for="field_montantPlafondCotisations"
+            >Montant Plafond Cotisations</label
           >
           <input
             type="number"
             class="form-control"
-            name="nbPlafondheure"
-            id="field_nbPlafondheure"
-            data-cy="nbPlafondheure"
-            formControlName="nbPlafondheure"
+            name="montantPlafondCotisations"
+            id="field_montantPlafondCotisations"
+            data-cy="montantPlafondCotisations"
+            formControlName="montantPlafondCotisations"
           />
+          <div
+            *ngIf="
+              editForm.get('montantPlafondCotisations')!.invalid &&
+              (editForm.get('montantPlafondCotisations')!.dirty || editForm.get('montantPlafondCotisations')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('montantPlafondCotisations')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('montantPlafondCotisations')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" jhiTranslate="bcaApp.strategiePch.taux" for="field_taux">Taux</label>
-          <input type="number" class="form-control" name="taux" id="field_taux" data-cy="taux" formControlName="taux" />
+          <label
+            class="form-control-label"
+            jhiTranslate="bcaApp.strategiePch.montantPlafondSalairePlus"
+            for="field_montantPlafondSalairePlus"
+            >Montant Plafond Salaire Plus</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="montantPlafondSalairePlus"
+            id="field_montantPlafondSalairePlus"
+            data-cy="montantPlafondSalairePlus"
+            formControlName="montantPlafondSalairePlus"
+          />
+          <div
+            *ngIf="
+              editForm.get('montantPlafondSalairePlus')!.invalid &&
+              (editForm.get('montantPlafondSalairePlus')!.dirty || editForm.get('montantPlafondSalairePlus')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('montantPlafondSalairePlus')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('montantPlafondSalairePlus')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label
+            class="form-control-label"
+            jhiTranslate="bcaApp.strategiePch.montantPlafondCotisationsPlus"
+            for="field_montantPlafondCotisationsPlus"
+            >Montant Plafond Cotisations Plus</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="montantPlafondCotisationsPlus"
+            id="field_montantPlafondCotisationsPlus"
+            data-cy="montantPlafondCotisationsPlus"
+            formControlName="montantPlafondCotisationsPlus"
+          />
+          <div
+            *ngIf="
+              editForm.get('montantPlafondCotisationsPlus')!.invalid &&
+              (editForm.get('montantPlafondCotisationsPlus')!.dirty || editForm.get('montantPlafondCotisationsPlus')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('montantPlafondCotisationsPlus')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('montantPlafondCotisationsPlus')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.strategiePch.nbHeureSalairePlafond" for="field_nbHeureSalairePlafond"
+            >Nb Heure Salaire Plafond</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="nbHeureSalairePlafond"
+            id="field_nbHeureSalairePlafond"
+            data-cy="nbHeureSalairePlafond"
+            formControlName="nbHeureSalairePlafond"
+          />
+          <div
+            *ngIf="
+              editForm.get('nbHeureSalairePlafond')!.invalid &&
+              (editForm.get('nbHeureSalairePlafond')!.dirty || editForm.get('nbHeureSalairePlafond')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('nbHeureSalairePlafond')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('nbHeureSalairePlafond')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.strategiePch.tauxSalaire" for="field_tauxSalaire">Taux Salaire</label>
+          <input
+            type="number"
+            class="form-control"
+            name="tauxSalaire"
+            id="field_tauxSalaire"
+            data-cy="tauxSalaire"
+            formControlName="tauxSalaire"
+          />
+          <div *ngIf="editForm.get('tauxSalaire')!.invalid && (editForm.get('tauxSalaire')!.dirty || editForm.get('tauxSalaire')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('tauxSalaire')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('tauxSalaire')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.strategiePch.tauxCotisations" for="field_tauxCotisations"
+            >Taux Cotisations</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="tauxCotisations"
+            id="field_tauxCotisations"
+            data-cy="tauxCotisations"
+            formControlName="tauxCotisations"
+          />
+          <div
+            *ngIf="
+              editForm.get('tauxCotisations')!.invalid &&
+              (editForm.get('tauxCotisations')!.dirty || editForm.get('tauxCotisations')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('tauxCotisations')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('tauxCotisations')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
@@ -69,6 +353,69 @@
               *ngFor="let aideOption of aidesSharedCollection; trackBy: trackAideById"
             >
               {{ aideOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.strategiePch.tiersFinanceur" for="field_tiersFinanceur"
+            >Tiers Financeur</label
+          >
+          <select
+            class="form-control"
+            id="field_tiersFinanceur"
+            data-cy="tiersFinanceur"
+            name="tiersFinanceur"
+            formControlName="tiersFinanceur"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                tiersFinanceurOption.id === editForm.get('tiersFinanceur')!.value?.id
+                  ? editForm.get('tiersFinanceur')!.value
+                  : tiersFinanceurOption
+              "
+              *ngFor="let tiersFinanceurOption of tiersFinanceursSharedCollection; trackBy: trackTiersFinanceurById"
+            >
+              {{ tiersFinanceurOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label jhiTranslate="bcaApp.strategiePch.natureActivite" for="field_natureActivites">Nature Activite</label>
+          <select
+            class="form-control"
+            id="field_natureActivites"
+            data-cy="natureActivite"
+            multiple
+            name="natureActivites"
+            formControlName="natureActivites"
+          >
+            <option
+              [ngValue]="getSelectedNatureActivite(natureActiviteOption, editForm.get('natureActivites')!.value)"
+              *ngFor="let natureActiviteOption of natureActivitesSharedCollection; trackBy: trackNatureActiviteById"
+            >
+              {{ natureActiviteOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label jhiTranslate="bcaApp.strategiePch.natureMontant" for="field_natureMontants">Nature Montant</label>
+          <select
+            class="form-control"
+            id="field_natureMontants"
+            data-cy="natureMontant"
+            multiple
+            name="natureMontants"
+            formControlName="natureMontants"
+          >
+            <option
+              [ngValue]="getSelectedNatureMontant(natureMontantOption, editForm.get('natureMontants')!.value)"
+              *ngFor="let natureMontantOption of natureMontantsSharedCollection; trackBy: trackNatureMontantById"
+            >
+              {{ natureMontantOption.id }}
             </option>
           </select>
         </div>

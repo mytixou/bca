@@ -1,58 +1,190 @@
+//------ Gestion des bénéficiaires et de ses droits
 
 entity Beneficiaire {
-	id String,
-    externeId String,
-    isActif Boolean,
-    dateInscription LocalDate,
+	// identifiant interne BCA
+    id Long unique required,
+	// identifiant externe de l'appelant BCA (allocataire PAJE, employeur HOME+, employeur CESU)
+    externeId UUID unique required,
+    isActif Boolean required,
+    dateDesactivation LocalDate,
+    isInscrit Boolean required,
+    dateInscription LocalDate required,
     dateResiliation LocalDate
+}
+
+entity DroitsStrategieCi {
+    isActif Boolean required,
+    anne Integer unique required,
+    montantPlafondDefaut BigDecimal required,
+    montantPlafondHandicape BigDecimal required,
+    montantPlafondDefautPlus BigDecimal required,
+    montantPlafondHandicapePlus BigDecimal required,
+    tauxSalaire BigDecimal required,
+    dateOuverture LocalDate required,
+    dateFermeture LocalDate
+}
+
+entity DroitsStrategieApa {
+	isActif Boolean required,
+    anne Integer unique required,
+    mois Integer unique required,
+    montantPlafond BigDecimal required,
+    montantPlafondPlus BigDecimal required,
+    nbHeurePlafond BigDecimal required,
+    tauxCotisations BigDecimal required,
+    dateOuverture LocalDate required,
+    dateFermeture LocalDate
+}
+
+entity DroitsStrategiePch {
+	isActif Boolean required,
+    anne Integer unique required,
+    mois Integer unique required,
+    montantPlafond BigDecimal required,
+    montantPlafondPlus BigDecimal required,
+    nbHeurePlafond BigDecimal required,
+    tauxCotisations BigDecimal required,
+    dateOuverture LocalDate required,
+    dateFermeture LocalDate
+}
+
+entity DroitsStrategiePchE {
+	isActif Boolean required,
+    anne Integer unique required,
+    mois Integer unique required,
+    montantPlafond BigDecimal required,
+    montantPlafondPlus BigDecimal required,
+    nbHeurePlafond BigDecimal required,
+    tauxCotisations BigDecimal required,
+    dateOuverture LocalDate required,
+    dateFermeture LocalDate
 }
 
 //------ Gestion des soldes
 
 entity SoldeCi {
-	annee Integer,
-    soldeMontantCi BigDecimal,
-    soldeMontantCiRec BigDecimal
+    date Instant required,
+    isActif Boolean required,
+    isDernier Boolean required,
+	annee Integer unique required,
+    consoMontantCi BigDecimal required,
+    consoCiRec BigDecimal required,
+    soldeMontantCi BigDecimal required,
+    soldeMontantCiRec BigDecimal required
 }
 
 entity SoldeApa {
-	annee Integer,
-    mois Integer,
-    soldeMontantApa BigDecimal,
-    soldeHeureApa BigDecimal
+    date Instant required,
+    isActif Boolean required,
+    isDernier Boolean required,
+	annee Integer required,
+    mois Integer required,
+    consoMontantApaCotisations BigDecimal required,
+    consoMontantApaSalaire BigDecimal required,
+    soldeMontantApa BigDecimal required,
+    consoHeureApa BigDecimal required,
+    soldeHeureApa BigDecimal required
 }
 
 entity SoldePch {
-	annee Integer,
-    mois Integer,
-    soldeMontantPch BigDecimal,
-    soldeHeurePch BigDecimal
+    date Instant required,
+    isActif Boolean required,
+    isDernier Boolean required,
+	annee Integer required,
+    mois Integer required,
+    consoMontantPchCotisations BigDecimal required,
+    consoMontantPchSalaire BigDecimal required,
+    soldeMontantPch BigDecimal required,
+    consoHeurePch BigDecimal required,
+    soldeHeurePch BigDecimal required
 }
 
 entity SoldePchE {
-	annee Integer,
-    mois Integer,
-    soldeMontantPchE BigDecimal,
-    soldeHeurePchE BigDecimal
+    date Instant required,
+    isActif Boolean required,
+    isDernier Boolean required,
+	annee Integer required,
+    mois Integer required,
+    consoMontantPchECotisations BigDecimal required,
+    consoMontantPchESalaire BigDecimal required,
+    soldeMontantPchE BigDecimal required,
+    consoHeurePchE BigDecimal required,
+    soldeHeurePchE BigDecimal required
 }
 
-relationship OneToMany {
-	Beneficiaire to SoldeCi{beneficiaire},
-	Beneficiaire to SoldeApa{beneficiaire},
-	Beneficiaire to SoldePch{beneficiaire},
-	Beneficiaire to SoldePchE{beneficiaire}
+relationship ManyToOne {
+	DroitsStrategieCi{beneficiaire} to Beneficiaire,
+	DroitsStrategieApa{beneficiaire} to Beneficiaire,
+	DroitsStrategiePch{beneficiaire} to Beneficiaire,
+	DroitsStrategiePchE{beneficiaire} to Beneficiaire
 }
+
+
+//	relationship OneToMany {
+//	Beneficiaire to DroitsStrategieCi{beneficiaire},
+//	Beneficiaire to DroitsStrategieApa{beneficiaire},
+//	Beneficiaire to DroitsStrategiePch{beneficiaire},
+//	Beneficiaire to DroitsStrategiePchE{beneficiaire}
+//}
+
+//------ Gestion des prises en charge et des consommations associées
+
+entity Pec {
+	id UUID unique required,
+	// la PEC vue et connue par et dans le produit
+	idProduit String required,
+    produit TypeProduit required,
+	isPlus Boolean required,
+    dateCreated Instant required,
+    isUpdated Boolean required,
+    dateModified Instant,
+    isActif Boolean required,
+    pecDetails TextBlob required
+}
+
+// Application des consommations au bénéficiaire
+// PAS BESOIN : on retrouve la consommation par le solde associé
+
+// Application des consommations pour une stratégie
+// PAS BESOIN : on applique DIRECTEMENT la stratégie au solde
+
+// Application des soldes pour une stratégie
+relationship ManyToOne {
+	SoldeCi{droitsStrategieCi} to DroitsStrategieCi,
+	SoldeApa{droitsStrategieApa} to DroitsStrategieApa,
+	SoldePch{droitsStrategiePch} to DroitsStrategiePch,
+	SoldePchE{droitsStrategiePchE} to DroitsStrategiePchE
+}
+
+// Application du solde de l'aide à la pec CESU associée sur le principe chaque nouveau solde est dû à 1 pec
+relationship OneToOne {
+	Pec to SoldeCi,
+	Pec to SoldeApa,
+	Pec to SoldePch,
+	Pec to SoldePchE
+}
+
+// Relations des droits avec leur aide sous-jacente pour relier avec les aides des tiers financeurs
+// Mais c'est pas obligé !
+//relationship ManyToOne {
+//	DroitsStrategieCi{strategieCi} to StrategieCi,
+//	DroitsStrategieApa{StrategieApa} to StrategieApa,
+//	DroitsStrategiePch{StrategiePch} to StrategiePch,
+//	DroitsStrategiePchE{StrategiePchE} to StrategiePchE
+//}
+
 
 //------ Gestion des aides
 
 entity TiersFinanceur {
-	nom String,
+	nom String unique required,
     // 001 (Ain), 971 (Guadeloupe), FRA (France)
     localisation String,
-    isActif Boolean,
-    dateInscription LocalDate,
-    anneLancement Integer,
-    moisLancement Integer,
+    isActif Boolean required,
+    dateInscription LocalDate required,
+    anneLancement Integer required,
+    moisLancement Integer required,
+    recupHeureActif Boolean required,
     dateResiliation LocalDate
     derniereAnnee Integer,
     dernierMois Integer
@@ -60,136 +192,232 @@ entity TiersFinanceur {
 
 // les différents types d'aide
 enum TypeAide {
-    CI, APA, PCH, PCHE
+    CI, APA, PCH, PCHE, PAJE
+}
+
+// les différents produits consommateurs des aides
+enum TypeProduit {
+    CESU, CESUP, HOMEP, PAJE, PAJEP 
+}
+
+entity Produit {
+	nom TypeProduit unique required,
+    isActif Boolean required,
+    dateLancement LocalDate required,
+    anneLancement Integer required,
+    moisLancement Integer required,
+    dateResiliation LocalDate
+    derniereAnnee Integer,
+    dernierMois Integer
+}
+
+entity DroitAide {
+    isActif Boolean required,
+    anne Integer unique required,
+    dateOuverture LocalDate required,
+    dateFermeture LocalDate
+}
+
+relationship ManyToOne {
+	DroitAide{produit} to Produit,
+	DroitAide{produit} to Aide
 }
 
 entity Aide {
-	nom TypeAide,
-    isActif Boolean,
-    dateLancement LocalDate,
-    anneLancement Integer,
-    moisLancement Integer,
+	nom TypeAide unique required,
+    priorite Integer unique required,
+    isActif Boolean required,
+    dateLancement LocalDate required,
+    anneLancement Integer required,
+    moisLancement Integer required,
     dateArret LocalDate,
     derniereAnnee Integer,
     dernierMois Integer
 }
 
+// Application des aides aux tiers financeurs
+relationship ManyToOne {
+	Aide{aide} to TiersFinanceur
+}
+
 entity StrategieCi {
-    isActif Boolean,
-    anne Integer,
-    montantPlafond BigDecimal,
-    taux BigDecimal
+    isActif Boolean required,
+    dateAnnuelleDebutValidite LocalDate required,
+    anne Integer unique required,
+    montantPlafondDefaut BigDecimal required,
+    montantPlafondHandicape BigDecimal required,
+    montantPlafondDefautPlus BigDecimal required,
+    montantPlafondHandicapePlus BigDecimal required,
+    tauxSalaire BigDecimal required
 }
 
 entity StrategieApa {
-    isActif Boolean,
-    anne Integer,
-    montantPlafond BigDecimal,
-    nbPlafondheure BigDecimal,
-    taux BigDecimal
+	isActif Boolean required,
+    dateMensuelleDebutValidite LocalDate required,
+    anne Integer unique required,
+    mois Integer unique required,
+    montantPlafondSalaire BigDecimal required,
+    montantPlafondCotisations BigDecimal required,
+    montantPlafondSalairePlus BigDecimal required,
+    montantPlafondCotisationsPlus BigDecimal required,
+    nbHeureSalairePlafond BigDecimal required,
+    tauxSalaire BigDecimal required,
+    tauxCotisations BigDecimal required
 }
 
 entity StrategiePch {
-    isActif Boolean,
-    anne Integer,
-    montantPlafond BigDecimal,
-    nbPlafondheure BigDecimal,
-    taux BigDecimal
+	isActif Boolean required,
+    dateMensuelleDebutValidite LocalDate required,
+    anne Integer unique required,
+    mois Integer unique required,
+    montantPlafondSalaire BigDecimal required,
+    montantPlafondCotisations BigDecimal required,
+    montantPlafondSalairePlus BigDecimal required,
+    montantPlafondCotisationsPlus BigDecimal required,
+    nbHeureSalairePlafond BigDecimal required,
+    tauxSalaire BigDecimal required,
+    tauxCotisations BigDecimal required
 }
 
 entity StrategiePchE {
-    isActif Boolean,
-    anne Integer,
-    montantPlafond BigDecimal,
-    nbPlafondheure BigDecimal,
-    taux BigDecimal
+	isActif Boolean required,
+    dateMensuelleDebutValidite LocalDate required,
+    anne Integer unique required,
+    mois Integer unique required,
+    montantPlafondSalaire BigDecimal required,
+    montantPlafondCotisations BigDecimal required,
+    montantPlafondSalairePlus BigDecimal required,
+    montantPlafondCotisationsPlus BigDecimal required,
+    nbHeureSalairePlafond BigDecimal required,
+    tauxSalaire BigDecimal required,
+    tauxCotisations BigDecimal required
 }
 
 // Application des stratégies pour les aides sur l'année ou sur le mois
-relationship OneToMany {
-	Aide to StrategieCi{aide},
-	Aide to StrategieApa{aide},
-	Aide to StrategiePch{aide},
-	Aide to StrategiePchE{aide},
+relationship ManyToOne {
+	StrategieCi{aide} to Aide,
+	StrategieApa{aide} to Aide,
+	StrategiePch{aide} to Aide,
+	StrategiePchE{aide} to Aide
 }
 
 // Application des stratégies par les Tiers financeurs sur l'année ou sur le mois
-relationship OneToMany {
-	StrategieCi to TiersFinanceur{strategie},
-	StrategieApa to TiersFinanceur{strategie},
-	StrategiePch to TiersFinanceur{strategie},
-	StrategiePchE to TiersFinanceur{strategie}
+relationship ManyToOne {
+	StrategieCi{tiersFinanceur} to TiersFinanceur,
+	StrategieApa{tiersFinanceur} to TiersFinanceur,
+	StrategiePch{tiersFinanceur} to TiersFinanceur,
+	StrategiePchE{tiersFinanceur} to TiersFinanceur
 }
 
 entity NatureActivite {
-    code String,
+    code String unique required,
     libelle String,
     description String
 }
 
 entity NatureMontant {
-    code String,
+    code String unique required,
     libelle String,
     description String
 }
 
 // Application de l'éligibilite des natures d'activité éligibles pour les stratégies
-relationship OneToMany {
-	StrategieCi to NatureActivite{strategie},
-	StrategieApa to NatureActivite{strategie},
-	StrategiePch to NatureActivite{strategie},
-	StrategiePchE to NatureActivite{strategie}
+relationship ManyToMany {
+	StrategieCi to NatureActivite,
+	StrategieApa to NatureActivite,
+	StrategiePch to NatureActivite,
+	StrategiePchE to NatureActivite
 }
 
 // Application de l'éligibilite des natures des montants éligibles pour les stratégies
+relationship ManyToMany {
+	StrategieCi to NatureMontant,
+	StrategieApa to NatureMontant,
+	StrategiePch to NatureMontant,
+	StrategiePchE to NatureMontant
+}
+
+/////////////////////////////////////////////////////
+//------ Gestion des aides / Spécifique ASSMAT et GED
+/////////////////////////////////////////////////////
+
+entity Enfant {
+    isActif Boolean required,
+    dateNaissance LocalDate required,
+    dateInscription LocalDate required,
+    dateResiliation LocalDate
+}
+
+// Relation entre enfants et allocataire
 relationship OneToMany {
-	StrategieCi to NatureMontant{strategie},
-	StrategieApa to NatureMontant{strategie},
-	StrategiePch to NatureMontant{strategie},
-	StrategiePchE to NatureMontant{strategie}
+	Beneficiaire{enfant} to Enfant
 }
 
-//------ Gestion des consommations
-
-entity ConsommationCi {
-    date Instant,
-    montantCi BigDecimal,
-    montantRecuperable BigDecimal
+entity StrategieCmgAssmat {
+    anne Integer required,
+    mois Integer required,
+    nbHeureSeuilPlafond BigDecimal required,
+    tauxSalaire BigDecimal required,
+    tauxCotisations BigDecimal required,
+	isActif Boolean required,
+    dateCreated Instant required,
+    isUpdated Boolean required,
+    dateModified Instant
 }
 
-entity ConsommationApa {
-    date Instant,
-    montantCotisations BigDecimal,
-    nbHeures BigDecimal
+entity StrategieCmgGed {
+    anne Integer required,
+    mois Integer required,
+    nbHeureSeuilPlafond BigDecimal required,
+    tauxSalaire BigDecimal required,
+    tauxCotisations BigDecimal required,
+	isActif Boolean required,
+    dateCreated Instant required,
+    isUpdated Boolean required,
+    dateModified Instant
 }
 
-entity ConsommationPch {
-    date Instant,
-    montantCotisations BigDecimal,
-    nbHeures BigDecimal
+// Application des stratégies pour les aides sur l'année ou sur le mois
+relationship ManyToOne {
+	StrategieCmgAssmat{aide} to Aide,
+	StrategieCmgGed{aide} to Aide
 }
 
-entity ConsommationPchE {
-    date Instant,
-    montantCotisations BigDecimal,
-    nbHeures BigDecimal
+// Application des stratégies par les Tiers financeurs sur l'année ou sur le mois
+relationship ManyToOne {
+	StrategieCmgAssmat{tiersFinanceur} to TiersFinanceur,
+	StrategieCmgGed{tiersFinanceur} to TiersFinanceur
 }
 
-// Application des consommations au bénéficiaire
+entity TrancheAideEnfantAssmat {
+    anne Integer unique required,
+    mois Integer unique required,
+    ageEnfantRevoluSurPeriode Integer unique required,
+    montantPlafondSalaire BigDecimal required,
+	isActif Boolean required,
+    dateCreated Instant required,
+    isUpdated Boolean required,
+    dateModified Instant
+}
+
+entity TrancheAideEnfantGed {
+    anne Integer unique required,
+    mois Integer unique required,
+    ageEnfantRevoluSurPeriode Integer unique required,
+    montantPlafondSalaire BigDecimal required,
+	isActif Boolean required,
+    dateCreated Instant required,
+    isUpdated Boolean required,
+    dateModified Instant
+}
+
+// Relation entre strategie CMG Assmat/Ged et les tranches par age de l'enfant
 relationship OneToMany {
-	Beneficiaire to ConsommationCi{beneficiaire},
-	Beneficiaire to ConsommationApa{beneficiaire},
-	Beneficiaire to ConsommationPch{beneficiaire},
-	Beneficiaire to ConsommationPchE{beneficiaire},
+	StrategieCmgAssmat{trancheAideEnfantAssmat} to TrancheAideEnfantAssmat
+	StrategieCmgGed{trancheAideEnfantAssmat} to TrancheAideEnfantGed
 }
 
-// Application des consommations pour une stratégie
-relationship OneToMany {
-	StrategieCi to ConsommationCi{strategieCi},
-	StrategieApa to ConsommationApa{strategieApa},
-	StrategiePch to ConsommationPch{strategiePch},
-	StrategiePchE to ConsommationPchE{strategiePchE},
-}
+
 
 // Set service options to all except few
 service all with serviceImpl

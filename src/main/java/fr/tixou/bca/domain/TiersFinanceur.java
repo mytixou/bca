@@ -1,9 +1,9 @@
 package fr.tixou.bca.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -23,23 +23,32 @@ public class TiersFinanceur implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "nom")
+    @NotNull
+    @Column(name = "nom", nullable = false, unique = true)
     private String nom;
 
     @Column(name = "localisation")
     private String localisation;
 
-    @Column(name = "is_actif")
+    @NotNull
+    @Column(name = "is_actif", nullable = false)
     private Boolean isActif;
 
-    @Column(name = "date_inscription")
+    @NotNull
+    @Column(name = "date_inscription", nullable = false)
     private LocalDate dateInscription;
 
-    @Column(name = "anne_lancement")
+    @NotNull
+    @Column(name = "anne_lancement", nullable = false)
     private Integer anneLancement;
 
-    @Column(name = "mois_lancement")
+    @NotNull
+    @Column(name = "mois_lancement", nullable = false)
     private Integer moisLancement;
+
+    @NotNull
+    @Column(name = "recup_heure_actif", nullable = false)
+    private Boolean recupHeureActif;
 
     @Column(name = "date_resiliation")
     private LocalDate dateResiliation;
@@ -49,46 +58,6 @@ public class TiersFinanceur implements Serializable {
 
     @Column(name = "dernier_mois")
     private Integer dernierMois;
-
-    @ManyToOne
-    @ManyToOne
-    @ManyToOne
-    @ManyToOne
-    @JsonIgnoreProperties(
-        value = { "tiersFinanceurs", "natureActivites", "natureMontants", "consommationCis", "aide" },
-        allowSetters = true
-    )
-    private StrategieCi strategie;
-
-    @ManyToOne
-    @ManyToOne
-    @ManyToOne
-    @ManyToOne
-    @JsonIgnoreProperties(
-        value = { "tiersFinanceurs", "natureActivites", "natureMontants", "consommationApas", "aide" },
-        allowSetters = true
-    )
-    private StrategieApa strategie;
-
-    @ManyToOne
-    @ManyToOne
-    @ManyToOne
-    @ManyToOne
-    @JsonIgnoreProperties(
-        value = { "tiersFinanceurs", "natureActivites", "natureMontants", "consommationPches", "aide" },
-        allowSetters = true
-    )
-    private StrategiePch strategie;
-
-    @ManyToOne
-    @ManyToOne
-    @ManyToOne
-    @ManyToOne
-    @JsonIgnoreProperties(
-        value = { "tiersFinanceurs", "natureActivites", "natureMontants", "consommationPchES", "aide" },
-        allowSetters = true
-    )
-    private StrategiePchE strategie;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -183,6 +152,19 @@ public class TiersFinanceur implements Serializable {
         this.moisLancement = moisLancement;
     }
 
+    public Boolean getRecupHeureActif() {
+        return this.recupHeureActif;
+    }
+
+    public TiersFinanceur recupHeureActif(Boolean recupHeureActif) {
+        this.setRecupHeureActif(recupHeureActif);
+        return this;
+    }
+
+    public void setRecupHeureActif(Boolean recupHeureActif) {
+        this.recupHeureActif = recupHeureActif;
+    }
+
     public LocalDate getDateResiliation() {
         return this.dateResiliation;
     }
@@ -222,58 +204,6 @@ public class TiersFinanceur implements Serializable {
         this.dernierMois = dernierMois;
     }
 
-    public StrategieCi getStrategie() {
-        return this.strategie;
-    }
-
-    public void setStrategie(StrategieCi strategieCi) {
-        this.strategie = strategieCi;
-    }
-
-    public TiersFinanceur strategie(StrategieCi strategieCi) {
-        this.setStrategie(strategieCi);
-        return this;
-    }
-
-    public StrategieApa getStrategie() {
-        return this.strategie;
-    }
-
-    public void setStrategie(StrategieApa strategieApa) {
-        this.strategie = strategieApa;
-    }
-
-    public TiersFinanceur strategie(StrategieApa strategieApa) {
-        this.setStrategie(strategieApa);
-        return this;
-    }
-
-    public StrategiePch getStrategie() {
-        return this.strategie;
-    }
-
-    public void setStrategie(StrategiePch strategiePch) {
-        this.strategie = strategiePch;
-    }
-
-    public TiersFinanceur strategie(StrategiePch strategiePch) {
-        this.setStrategie(strategiePch);
-        return this;
-    }
-
-    public StrategiePchE getStrategie() {
-        return this.strategie;
-    }
-
-    public void setStrategie(StrategiePchE strategiePchE) {
-        this.strategie = strategiePchE;
-    }
-
-    public TiersFinanceur strategie(StrategiePchE strategiePchE) {
-        this.setStrategie(strategiePchE);
-        return this;
-    }
-
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -304,6 +234,7 @@ public class TiersFinanceur implements Serializable {
             ", dateInscription='" + getDateInscription() + "'" +
             ", anneLancement=" + getAnneLancement() +
             ", moisLancement=" + getMoisLancement() +
+            ", recupHeureActif='" + getRecupHeureActif() + "'" +
             ", dateResiliation='" + getDateResiliation() + "'" +
             ", derniereAnnee=" + getDerniereAnnee() +
             ", dernierMois=" + getDernierMois() +

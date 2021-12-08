@@ -34,11 +34,22 @@
         <tr>
           <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.strategieApa.isActif">Is Actif</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieApa.dateMensuelleDebutValidite">Date Mensuelle Debut Validite</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.strategieApa.anne">Anne</span></th>
-          <th scope="col"><span jhiTranslate="bcaApp.strategieApa.montantPlafond">Montant Plafond</span></th>
-          <th scope="col"><span jhiTranslate="bcaApp.strategieApa.nbPlafondheure">Nb Plafondheure</span></th>
-          <th scope="col"><span jhiTranslate="bcaApp.strategieApa.taux">Taux</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieApa.mois">Mois</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieApa.montantPlafondSalaire">Montant Plafond Salaire</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieApa.montantPlafondCotisations">Montant Plafond Cotisations</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieApa.montantPlafondSalairePlus">Montant Plafond Salaire Plus</span></th>
+          <th scope="col">
+            <span jhiTranslate="bcaApp.strategieApa.montantPlafondCotisationsPlus">Montant Plafond Cotisations Plus</span>
+          </th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieApa.nbHeureSalairePlafond">Nb Heure Salaire Plafond</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieApa.tauxSalaire">Taux Salaire</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieApa.tauxCotisations">Taux Cotisations</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.strategieApa.aide">Aide</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieApa.tiersFinanceur">Tiers Financeur</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieApa.natureActivite">Nature Activite</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieApa.natureMontant">Nature Montant</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -48,14 +59,37 @@
             <a [routerLink]="['/strategie-apa', strategieApa.id, 'view']">{{ strategieApa.id }}</a>
           </td>
           <td>{{ strategieApa.isActif }}</td>
+          <td>{{ strategieApa.dateMensuelleDebutValidite | formatMediumDate }}</td>
           <td>{{ strategieApa.anne }}</td>
-          <td>{{ strategieApa.montantPlafond }}</td>
-          <td>{{ strategieApa.nbPlafondheure }}</td>
-          <td>{{ strategieApa.taux }}</td>
+          <td>{{ strategieApa.mois }}</td>
+          <td>{{ strategieApa.montantPlafondSalaire }}</td>
+          <td>{{ strategieApa.montantPlafondCotisations }}</td>
+          <td>{{ strategieApa.montantPlafondSalairePlus }}</td>
+          <td>{{ strategieApa.montantPlafondCotisationsPlus }}</td>
+          <td>{{ strategieApa.nbHeureSalairePlafond }}</td>
+          <td>{{ strategieApa.tauxSalaire }}</td>
+          <td>{{ strategieApa.tauxCotisations }}</td>
           <td>
             <div *ngIf="strategieApa.aide">
               <a [routerLink]="['/aide', strategieApa.aide?.id, 'view']">{{ strategieApa.aide?.id }}</a>
             </div>
+          </td>
+          <td>
+            <div *ngIf="strategieApa.tiersFinanceur">
+              <a [routerLink]="['/tiers-financeur', strategieApa.tiersFinanceur?.id, 'view']">{{ strategieApa.tiersFinanceur?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <span *ngFor="let natureActivite of strategieApa.natureActivites; let last = last">
+              <a class="form-control-static" [routerLink]="['/nature-activite', natureActivite.id, 'view']">{{ natureActivite.id }}</a
+              >{{ last ? '' : ', ' }}
+            </span>
+          </td>
+          <td>
+            <span *ngFor="let natureMontant of strategieApa.natureMontants; let last = last">
+              <a class="form-control-static" [routerLink]="['/nature-montant', natureMontant.id, 'view']">{{ natureMontant.id }}</a
+              >{{ last ? '' : ', ' }}
+            </span>
           </td>
           <td class="text-right">
             <div class="btn-group">

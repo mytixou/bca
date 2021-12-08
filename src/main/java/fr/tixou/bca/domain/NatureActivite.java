@@ -2,7 +2,10 @@ package fr.tixou.bca.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -22,7 +25,8 @@ public class NatureActivite implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "code")
+    @NotNull
+    @Column(name = "code", nullable = false, unique = true)
     private String code;
 
     @Column(name = "libelle")
@@ -31,45 +35,25 @@ public class NatureActivite implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
-    @ManyToOne
-    @ManyToOne
-    @ManyToOne
-    @JsonIgnoreProperties(
-        value = { "tiersFinanceurs", "natureActivites", "natureMontants", "consommationCis", "aide" },
-        allowSetters = true
-    )
-    private StrategieCi strategie;
+    @ManyToMany(mappedBy = "natureActivites")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "aide", "tiersFinanceur", "natureActivites", "natureMontants" }, allowSetters = true)
+    private Set<StrategieCi> strategieCis = new HashSet<>();
 
-    @ManyToOne
-    @ManyToOne
-    @ManyToOne
-    @ManyToOne
-    @JsonIgnoreProperties(
-        value = { "tiersFinanceurs", "natureActivites", "natureMontants", "consommationApas", "aide" },
-        allowSetters = true
-    )
-    private StrategieApa strategie;
+    @ManyToMany(mappedBy = "natureActivites")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "aide", "tiersFinanceur", "natureActivites", "natureMontants" }, allowSetters = true)
+    private Set<StrategieApa> strategieApas = new HashSet<>();
 
-    @ManyToOne
-    @ManyToOne
-    @ManyToOne
-    @ManyToOne
-    @JsonIgnoreProperties(
-        value = { "tiersFinanceurs", "natureActivites", "natureMontants", "consommationPches", "aide" },
-        allowSetters = true
-    )
-    private StrategiePch strategie;
+    @ManyToMany(mappedBy = "natureActivites")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "aide", "tiersFinanceur", "natureActivites", "natureMontants" }, allowSetters = true)
+    private Set<StrategiePch> strategiePches = new HashSet<>();
 
-    @ManyToOne
-    @ManyToOne
-    @ManyToOne
-    @ManyToOne
-    @JsonIgnoreProperties(
-        value = { "tiersFinanceurs", "natureActivites", "natureMontants", "consommationPchES", "aide" },
-        allowSetters = true
-    )
-    private StrategiePchE strategie;
+    @ManyToMany(mappedBy = "natureActivites")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "aide", "tiersFinanceur", "natureActivites", "natureMontants" }, allowSetters = true)
+    private Set<StrategiePchE> strategiePchES = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -125,55 +109,127 @@ public class NatureActivite implements Serializable {
         this.description = description;
     }
 
-    public StrategieCi getStrategie() {
-        return this.strategie;
+    public Set<StrategieCi> getStrategieCis() {
+        return this.strategieCis;
     }
 
-    public void setStrategie(StrategieCi strategieCi) {
-        this.strategie = strategieCi;
+    public void setStrategieCis(Set<StrategieCi> strategieCis) {
+        if (this.strategieCis != null) {
+            this.strategieCis.forEach(i -> i.removeNatureActivite(this));
+        }
+        if (strategieCis != null) {
+            strategieCis.forEach(i -> i.addNatureActivite(this));
+        }
+        this.strategieCis = strategieCis;
     }
 
-    public NatureActivite strategie(StrategieCi strategieCi) {
-        this.setStrategie(strategieCi);
+    public NatureActivite strategieCis(Set<StrategieCi> strategieCis) {
+        this.setStrategieCis(strategieCis);
         return this;
     }
 
-    public StrategieApa getStrategie() {
-        return this.strategie;
-    }
-
-    public void setStrategie(StrategieApa strategieApa) {
-        this.strategie = strategieApa;
-    }
-
-    public NatureActivite strategie(StrategieApa strategieApa) {
-        this.setStrategie(strategieApa);
+    public NatureActivite addStrategieCi(StrategieCi strategieCi) {
+        this.strategieCis.add(strategieCi);
+        strategieCi.getNatureActivites().add(this);
         return this;
     }
 
-    public StrategiePch getStrategie() {
-        return this.strategie;
-    }
-
-    public void setStrategie(StrategiePch strategiePch) {
-        this.strategie = strategiePch;
-    }
-
-    public NatureActivite strategie(StrategiePch strategiePch) {
-        this.setStrategie(strategiePch);
+    public NatureActivite removeStrategieCi(StrategieCi strategieCi) {
+        this.strategieCis.remove(strategieCi);
+        strategieCi.getNatureActivites().remove(this);
         return this;
     }
 
-    public StrategiePchE getStrategie() {
-        return this.strategie;
+    public Set<StrategieApa> getStrategieApas() {
+        return this.strategieApas;
     }
 
-    public void setStrategie(StrategiePchE strategiePchE) {
-        this.strategie = strategiePchE;
+    public void setStrategieApas(Set<StrategieApa> strategieApas) {
+        if (this.strategieApas != null) {
+            this.strategieApas.forEach(i -> i.removeNatureActivite(this));
+        }
+        if (strategieApas != null) {
+            strategieApas.forEach(i -> i.addNatureActivite(this));
+        }
+        this.strategieApas = strategieApas;
     }
 
-    public NatureActivite strategie(StrategiePchE strategiePchE) {
-        this.setStrategie(strategiePchE);
+    public NatureActivite strategieApas(Set<StrategieApa> strategieApas) {
+        this.setStrategieApas(strategieApas);
+        return this;
+    }
+
+    public NatureActivite addStrategieApa(StrategieApa strategieApa) {
+        this.strategieApas.add(strategieApa);
+        strategieApa.getNatureActivites().add(this);
+        return this;
+    }
+
+    public NatureActivite removeStrategieApa(StrategieApa strategieApa) {
+        this.strategieApas.remove(strategieApa);
+        strategieApa.getNatureActivites().remove(this);
+        return this;
+    }
+
+    public Set<StrategiePch> getStrategiePches() {
+        return this.strategiePches;
+    }
+
+    public void setStrategiePches(Set<StrategiePch> strategiePches) {
+        if (this.strategiePches != null) {
+            this.strategiePches.forEach(i -> i.removeNatureActivite(this));
+        }
+        if (strategiePches != null) {
+            strategiePches.forEach(i -> i.addNatureActivite(this));
+        }
+        this.strategiePches = strategiePches;
+    }
+
+    public NatureActivite strategiePches(Set<StrategiePch> strategiePches) {
+        this.setStrategiePches(strategiePches);
+        return this;
+    }
+
+    public NatureActivite addStrategiePch(StrategiePch strategiePch) {
+        this.strategiePches.add(strategiePch);
+        strategiePch.getNatureActivites().add(this);
+        return this;
+    }
+
+    public NatureActivite removeStrategiePch(StrategiePch strategiePch) {
+        this.strategiePches.remove(strategiePch);
+        strategiePch.getNatureActivites().remove(this);
+        return this;
+    }
+
+    public Set<StrategiePchE> getStrategiePchES() {
+        return this.strategiePchES;
+    }
+
+    public void setStrategiePchES(Set<StrategiePchE> strategiePchES) {
+        if (this.strategiePchES != null) {
+            this.strategiePchES.forEach(i -> i.removeNatureActivite(this));
+        }
+        if (strategiePchES != null) {
+            strategiePchES.forEach(i -> i.addNatureActivite(this));
+        }
+        this.strategiePchES = strategiePchES;
+    }
+
+    public NatureActivite strategiePchES(Set<StrategiePchE> strategiePchES) {
+        this.setStrategiePchES(strategiePchES);
+        return this;
+    }
+
+    public NatureActivite addStrategiePchE(StrategiePchE strategiePchE) {
+        this.strategiePchES.add(strategiePchE);
+        strategiePchE.getNatureActivites().add(this);
+        return this;
+    }
+
+    public NatureActivite removeStrategiePchE(StrategiePchE strategiePchE) {
+        this.strategiePchES.remove(strategiePchE);
+        strategiePchE.getNatureActivites().remove(this);
         return this;
     }
 

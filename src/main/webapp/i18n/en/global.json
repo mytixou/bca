@@ -24,6 +24,18 @@
         "consommationApa": "Consommation Apa",
         "consommationPch": "Consommation Pch",
         "consommationPchE": "Consommation Pch E",
+        "droitsStrategieCi": "Droits Strategie Ci",
+        "droitsStrategieApa": "Droits Strategie Apa",
+        "droitsStrategiePch": "Droits Strategie Pch",
+        "droitsStrategiePchE": "Droits Strategie Pch E",
+        "pec": "Pec",
+        "produit": "Produit",
+        "droitAide": "Droit Aide",
+        "enfant": "Enfant",
+        "strategieCmgAssmat": "Strategie Cmg Assmat",
+        "strategieCmgGed": "Strategie Cmg Ged",
+        "trancheAideEnfantAssmat": "Tranche Aide Enfant Assmat",
+        "trancheAideEnfantGed": "Tranche Aide Enfant Ged",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

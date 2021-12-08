@@ -1,0 +1,208 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-produit-heading" data-cy="ProduitCreateUpdateHeading" jhiTranslate="bcaApp.produit.home.createOrEditLabel">
+        Create or edit a Produit
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.produit.nom" for="field_nom">Nom</label>
+          <select class="form-control" name="nom" formControlName="nom" id="field_nom" data-cy="nom">
+            <option [ngValue]="null">{{ 'bcaApp.TypeProduit.null' | translate }}</option>
+            <option *ngFor="let typeProduit of typeProduitValues" [value]="typeProduit">
+              {{ 'bcaApp.TypeProduit.' + typeProduit | translate }}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('nom')!.invalid && (editForm.get('nom')!.dirty || editForm.get('nom')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('nom')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.produit.isActif" for="field_isActif">Is Actif</label>
+          <input type="checkbox" class="form-check" name="isActif" id="field_isActif" data-cy="isActif" formControlName="isActif" />
+          <div *ngIf="editForm.get('isActif')!.invalid && (editForm.get('isActif')!.dirty || editForm.get('isActif')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('isActif')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.produit.dateLancement" for="field_dateLancement">Date Lancement</label>
+          <div class="input-group">
+            <input
+              id="field_dateLancement"
+              data-cy="dateLancement"
+              type="text"
+              class="form-control"
+              name="dateLancement"
+              ngbDatepicker
+              #dateLancementDp="ngbDatepicker"
+              formControlName="dateLancement"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="dateLancementDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+          <div
+            *ngIf="
+              editForm.get('dateLancement')!.invalid && (editForm.get('dateLancement')!.dirty || editForm.get('dateLancement')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('dateLancement')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.produit.anneLancement" for="field_anneLancement">Anne Lancement</label>
+          <input
+            type="number"
+            class="form-control"
+            name="anneLancement"
+            id="field_anneLancement"
+            data-cy="anneLancement"
+            formControlName="anneLancement"
+          />
+          <div
+            *ngIf="
+              editForm.get('anneLancement')!.invalid && (editForm.get('anneLancement')!.dirty || editForm.get('anneLancement')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('anneLancement')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('anneLancement')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.produit.moisLancement" for="field_moisLancement">Mois Lancement</label>
+          <input
+            type="number"
+            class="form-control"
+            name="moisLancement"
+            id="field_moisLancement"
+            data-cy="moisLancement"
+            formControlName="moisLancement"
+          />
+          <div
+            *ngIf="
+              editForm.get('moisLancement')!.invalid && (editForm.get('moisLancement')!.dirty || editForm.get('moisLancement')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('moisLancement')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('moisLancement')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.produit.dateResiliation" for="field_dateResiliation"
+            >Date Resiliation</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateResiliation"
+              data-cy="dateResiliation"
+              type="text"
+              class="form-control"
+              name="dateResiliation"
+              ngbDatepicker
+              #dateResiliationDp="ngbDatepicker"
+              formControlName="dateResiliation"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="dateResiliationDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.produit.derniereAnnee" for="field_derniereAnnee">Derniere Annee</label>
+          <input
+            type="number"
+            class="form-control"
+            name="derniereAnnee"
+            id="field_derniereAnnee"
+            data-cy="derniereAnnee"
+            formControlName="derniereAnnee"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.produit.dernierMois" for="field_dernierMois">Dernier Mois</label>
+          <input
+            type="number"
+            class="form-control"
+            name="dernierMois"
+            id="field_dernierMois"
+            data-cy="dernierMois"
+            formControlName="dernierMois"
+          />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

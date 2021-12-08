@@ -14,20 +14,36 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="date" type="${datetimeType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="is_actif" type="boolean">
+                <constraints nullable="false" />
+            </column>
+            <column name="is_dernier" type="boolean">
+                <constraints nullable="false" />
+            </column>
             <column name="annee" type="integer">
-                <constraints nullable="true" />
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_solde_ci__annee" />
+            </column>
+            <column name="conso_montant_ci" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="conso_ci_rec" type="decimal(21,2)">
+                <constraints nullable="false" />
             </column>
             <column name="solde_montant_ci" type="decimal(21,2)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="solde_montant_ci_rec" type="decimal(21,2)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
-            <column name="beneficiaire_id" type="varchar(255)">
+            <column name="droits_strategie_ci_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
+        <dropDefaultValue tableName="solde_ci" columnName="date" columnDataType="${datetimeType}"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
@@ -47,7 +63,12 @@
                   tableName="solde_ci"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
+            <column name="date" type="date"/>
+            <column name="is_actif" type="boolean"/>
+            <column name="is_dernier" type="boolean"/>
             <column name="annee" type="numeric"/>
+            <column name="conso_montant_ci" type="numeric"/>
+            <column name="conso_ci_rec" type="numeric"/>
             <column name="solde_montant_ci" type="numeric"/>
             <column name="solde_montant_ci_rec" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->

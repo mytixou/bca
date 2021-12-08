@@ -1,0 +1,80 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="strategieCmgAssmat">
+      <h2 data-cy="strategieCmgAssmatDetailsHeading">
+        <span jhiTranslate="bcaApp.strategieCmgAssmat.detail.title">Strategie Cmg Assmat</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ strategieCmgAssmat.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieCmgAssmat.anne">Anne</span></dt>
+        <dd>
+          <span>{{ strategieCmgAssmat.anne }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieCmgAssmat.mois">Mois</span></dt>
+        <dd>
+          <span>{{ strategieCmgAssmat.mois }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieCmgAssmat.nbHeureSeuilPlafond">Nb Heure Seuil Plafond</span></dt>
+        <dd>
+          <span>{{ strategieCmgAssmat.nbHeureSeuilPlafond }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieCmgAssmat.tauxSalaire">Taux Salaire</span></dt>
+        <dd>
+          <span>{{ strategieCmgAssmat.tauxSalaire }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieCmgAssmat.tauxCotisations">Taux Cotisations</span></dt>
+        <dd>
+          <span>{{ strategieCmgAssmat.tauxCotisations }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieCmgAssmat.isActif">Is Actif</span></dt>
+        <dd>
+          <span>{{ strategieCmgAssmat.isActif }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieCmgAssmat.dateCreated">Date Created</span></dt>
+        <dd>
+          <span>{{ strategieCmgAssmat.dateCreated | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieCmgAssmat.isUpdated">Is Updated</span></dt>
+        <dd>
+          <span>{{ strategieCmgAssmat.isUpdated }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieCmgAssmat.dateModified">Date Modified</span></dt>
+        <dd>
+          <span>{{ strategieCmgAssmat.dateModified | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieCmgAssmat.aide">Aide</span></dt>
+        <dd>
+          <div *ngIf="strategieCmgAssmat.aide">
+            <a [routerLink]="['/aide', strategieCmgAssmat.aide?.id, 'view']">{{ strategieCmgAssmat.aide?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieCmgAssmat.tiersFinanceur">Tiers Financeur</span></dt>
+        <dd>
+          <div *ngIf="strategieCmgAssmat.tiersFinanceur">
+            <a [routerLink]="['/tiers-financeur', strategieCmgAssmat.tiersFinanceur?.id, 'view']">{{
+              strategieCmgAssmat.tiersFinanceur?.id
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/strategie-cmg-assmat', strategieCmgAssmat.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

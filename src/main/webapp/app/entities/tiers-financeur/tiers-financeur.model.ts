@@ -1,44 +1,35 @@
 import * as dayjs from 'dayjs';
-import { IStrategieCi } from 'app/entities/strategie-ci/strategie-ci.model';
-import { IStrategieApa } from 'app/entities/strategie-apa/strategie-apa.model';
-import { IStrategiePch } from 'app/entities/strategie-pch/strategie-pch.model';
-import { IStrategiePchE } from 'app/entities/strategie-pch-e/strategie-pch-e.model';
 
 export interface ITiersFinanceur {
   id?: number;
-  nom?: string | null;
+  nom?: string;
   localisation?: string | null;
-  isActif?: boolean | null;
-  dateInscription?: dayjs.Dayjs | null;
-  anneLancement?: number | null;
-  moisLancement?: number | null;
+  isActif?: boolean;
+  dateInscription?: dayjs.Dayjs;
+  anneLancement?: number;
+  moisLancement?: number;
+  recupHeureActif?: boolean;
   dateResiliation?: dayjs.Dayjs | null;
   derniereAnnee?: number | null;
   dernierMois?: number | null;
-  strategie?: IStrategieCi | null;
-  strategie?: IStrategieApa | null;
-  strategie?: IStrategiePch | null;
-  strategie?: IStrategiePchE | null;
 }
 
 export class TiersFinanceur implements ITiersFinanceur {
   constructor(
     public id?: number,
-    public nom?: string | null,
+    public nom?: string,
     public localisation?: string | null,
-    public isActif?: boolean | null,
-    public dateInscription?: dayjs.Dayjs | null,
-    public anneLancement?: number | null,
-    public moisLancement?: number | null,
+    public isActif?: boolean,
+    public dateInscription?: dayjs.Dayjs,
+    public anneLancement?: number,
+    public moisLancement?: number,
+    public recupHeureActif?: boolean,
     public dateResiliation?: dayjs.Dayjs | null,
     public derniereAnnee?: number | null,
-    public dernierMois?: number | null,
-    public strategie?: IStrategieCi | null,
-    public strategie?: IStrategieApa | null,
-    public strategie?: IStrategiePch | null,
-    public strategie?: IStrategiePchE | null
+    public dernierMois?: number | null
   ) {
     this.isActif = this.isActif ?? false;
+    this.recupHeureActif = this.recupHeureActif ?? false;
   }
 }
 

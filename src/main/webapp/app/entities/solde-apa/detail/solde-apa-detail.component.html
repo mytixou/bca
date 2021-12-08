@@ -14,6 +14,18 @@
         <dd>
           <span>{{ soldeApa.id }}</span>
         </dd>
+        <dt><span jhiTranslate="bcaApp.soldeApa.date">Date</span></dt>
+        <dd>
+          <span>{{ soldeApa.date | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.soldeApa.isActif">Is Actif</span></dt>
+        <dd>
+          <span>{{ soldeApa.isActif }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.soldeApa.isDernier">Is Dernier</span></dt>
+        <dd>
+          <span>{{ soldeApa.isDernier }}</span>
+        </dd>
         <dt><span jhiTranslate="bcaApp.soldeApa.annee">Annee</span></dt>
         <dd>
           <span>{{ soldeApa.annee }}</span>
@@ -22,18 +34,30 @@
         <dd>
           <span>{{ soldeApa.mois }}</span>
         </dd>
+        <dt><span jhiTranslate="bcaApp.soldeApa.consoMontantApaCotisations">Conso Montant Apa Cotisations</span></dt>
+        <dd>
+          <span>{{ soldeApa.consoMontantApaCotisations }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.soldeApa.consoMontantApaSalaire">Conso Montant Apa Salaire</span></dt>
+        <dd>
+          <span>{{ soldeApa.consoMontantApaSalaire }}</span>
+        </dd>
         <dt><span jhiTranslate="bcaApp.soldeApa.soldeMontantApa">Solde Montant Apa</span></dt>
         <dd>
           <span>{{ soldeApa.soldeMontantApa }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.soldeApa.consoHeureApa">Conso Heure Apa</span></dt>
+        <dd>
+          <span>{{ soldeApa.consoHeureApa }}</span>
         </dd>
         <dt><span jhiTranslate="bcaApp.soldeApa.soldeHeureApa">Solde Heure Apa</span></dt>
         <dd>
           <span>{{ soldeApa.soldeHeureApa }}</span>
         </dd>
-        <dt><span jhiTranslate="bcaApp.soldeApa.beneficiaire">Beneficiaire</span></dt>
+        <dt><span jhiTranslate="bcaApp.soldeApa.droitsStrategieApa">Droits Strategie Apa</span></dt>
         <dd>
-          <div *ngIf="soldeApa.beneficiaire">
-            <a [routerLink]="['/beneficiaire', soldeApa.beneficiaire?.id, 'view']">{{ soldeApa.beneficiaire?.id }}</a>
+          <div *ngIf="soldeApa.droitsStrategieApa">
+            <a [routerLink]="['/droits-strategie-apa', soldeApa.droitsStrategieApa?.id, 'view']">{{ soldeApa.droitsStrategieApa?.id }}</a>
           </div>
         </dd>
       </dl>

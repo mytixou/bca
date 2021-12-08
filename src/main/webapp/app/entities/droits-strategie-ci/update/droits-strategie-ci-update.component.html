@@ -1,0 +1,318 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-droits-strategie-ci-heading"
+        data-cy="DroitsStrategieCiCreateUpdateHeading"
+        jhiTranslate="bcaApp.droitsStrategieCi.home.createOrEditLabel"
+      >
+        Create or edit a Droits Strategie Ci
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.droitsStrategieCi.isActif" for="field_isActif">Is Actif</label>
+          <input type="checkbox" class="form-check" name="isActif" id="field_isActif" data-cy="isActif" formControlName="isActif" />
+          <div *ngIf="editForm.get('isActif')!.invalid && (editForm.get('isActif')!.dirty || editForm.get('isActif')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('isActif')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.droitsStrategieCi.anne" for="field_anne">Anne</label>
+          <input type="number" class="form-control" name="anne" id="field_anne" data-cy="anne" formControlName="anne" />
+          <div *ngIf="editForm.get('anne')!.invalid && (editForm.get('anne')!.dirty || editForm.get('anne')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('anne')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('anne')?.errors?.number" jhiTranslate="entity.validation.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.droitsStrategieCi.montantPlafondDefaut" for="field_montantPlafondDefaut"
+            >Montant Plafond Defaut</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="montantPlafondDefaut"
+            id="field_montantPlafondDefaut"
+            data-cy="montantPlafondDefaut"
+            formControlName="montantPlafondDefaut"
+          />
+          <div
+            *ngIf="
+              editForm.get('montantPlafondDefaut')!.invalid &&
+              (editForm.get('montantPlafondDefaut')!.dirty || editForm.get('montantPlafondDefaut')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('montantPlafondDefaut')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('montantPlafondDefaut')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label
+            class="form-control-label"
+            jhiTranslate="bcaApp.droitsStrategieCi.montantPlafondHandicape"
+            for="field_montantPlafondHandicape"
+            >Montant Plafond Handicape</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="montantPlafondHandicape"
+            id="field_montantPlafondHandicape"
+            data-cy="montantPlafondHandicape"
+            formControlName="montantPlafondHandicape"
+          />
+          <div
+            *ngIf="
+              editForm.get('montantPlafondHandicape')!.invalid &&
+              (editForm.get('montantPlafondHandicape')!.dirty || editForm.get('montantPlafondHandicape')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('montantPlafondHandicape')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('montantPlafondHandicape')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label
+            class="form-control-label"
+            jhiTranslate="bcaApp.droitsStrategieCi.montantPlafondDefautPlus"
+            for="field_montantPlafondDefautPlus"
+            >Montant Plafond Defaut Plus</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="montantPlafondDefautPlus"
+            id="field_montantPlafondDefautPlus"
+            data-cy="montantPlafondDefautPlus"
+            formControlName="montantPlafondDefautPlus"
+          />
+          <div
+            *ngIf="
+              editForm.get('montantPlafondDefautPlus')!.invalid &&
+              (editForm.get('montantPlafondDefautPlus')!.dirty || editForm.get('montantPlafondDefautPlus')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('montantPlafondDefautPlus')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('montantPlafondDefautPlus')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label
+            class="form-control-label"
+            jhiTranslate="bcaApp.droitsStrategieCi.montantPlafondHandicapePlus"
+            for="field_montantPlafondHandicapePlus"
+            >Montant Plafond Handicape Plus</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="montantPlafondHandicapePlus"
+            id="field_montantPlafondHandicapePlus"
+            data-cy="montantPlafondHandicapePlus"
+            formControlName="montantPlafondHandicapePlus"
+          />
+          <div
+            *ngIf="
+              editForm.get('montantPlafondHandicapePlus')!.invalid &&
+              (editForm.get('montantPlafondHandicapePlus')!.dirty || editForm.get('montantPlafondHandicapePlus')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('montantPlafondHandicapePlus')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('montantPlafondHandicapePlus')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.droitsStrategieCi.tauxSalaire" for="field_tauxSalaire">Taux Salaire</label>
+          <input
+            type="number"
+            class="form-control"
+            name="tauxSalaire"
+            id="field_tauxSalaire"
+            data-cy="tauxSalaire"
+            formControlName="tauxSalaire"
+          />
+          <div *ngIf="editForm.get('tauxSalaire')!.invalid && (editForm.get('tauxSalaire')!.dirty || editForm.get('tauxSalaire')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('tauxSalaire')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('tauxSalaire')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.droitsStrategieCi.dateOuverture" for="field_dateOuverture"
+            >Date Ouverture</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateOuverture"
+              data-cy="dateOuverture"
+              type="text"
+              class="form-control"
+              name="dateOuverture"
+              ngbDatepicker
+              #dateOuvertureDp="ngbDatepicker"
+              formControlName="dateOuverture"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="dateOuvertureDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+          <div
+            *ngIf="
+              editForm.get('dateOuverture')!.invalid && (editForm.get('dateOuverture')!.dirty || editForm.get('dateOuverture')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('dateOuverture')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.droitsStrategieCi.dateFermeture" for="field_dateFermeture"
+            >Date Fermeture</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateFermeture"
+              data-cy="dateFermeture"
+              type="text"
+              class="form-control"
+              name="dateFermeture"
+              ngbDatepicker
+              #dateFermetureDp="ngbDatepicker"
+              formControlName="dateFermeture"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="dateFermetureDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.droitsStrategieCi.beneficiaire" for="field_beneficiaire"
+            >Beneficiaire</label
+          >
+          <select class="form-control" id="field_beneficiaire" data-cy="beneficiaire" name="beneficiaire" formControlName="beneficiaire">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                beneficiaireOption.id === editForm.get('beneficiaire')!.value?.id ? editForm.get('beneficiaire')!.value : beneficiaireOption
+              "
+              *ngFor="let beneficiaireOption of beneficiairesSharedCollection; trackBy: trackBeneficiaireById"
+            >
+              {{ beneficiaireOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

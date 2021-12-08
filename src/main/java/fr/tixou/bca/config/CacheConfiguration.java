@@ -96,6 +96,29 @@ public class CacheConfiguration {
             createCache(cm, fr.tixou.bca.domain.ConsommationApa.class.getName());
             createCache(cm, fr.tixou.bca.domain.ConsommationPch.class.getName());
             createCache(cm, fr.tixou.bca.domain.ConsommationPchE.class.getName());
+            createCache(cm, fr.tixou.bca.domain.Beneficiaire.class.getName() + ".enfants");
+            createCache(cm, fr.tixou.bca.domain.NatureActivite.class.getName() + ".strategieCis");
+            createCache(cm, fr.tixou.bca.domain.NatureActivite.class.getName() + ".strategieApas");
+            createCache(cm, fr.tixou.bca.domain.NatureActivite.class.getName() + ".strategiePches");
+            createCache(cm, fr.tixou.bca.domain.NatureActivite.class.getName() + ".strategiePchES");
+            createCache(cm, fr.tixou.bca.domain.NatureMontant.class.getName() + ".strategieCis");
+            createCache(cm, fr.tixou.bca.domain.NatureMontant.class.getName() + ".strategieApas");
+            createCache(cm, fr.tixou.bca.domain.NatureMontant.class.getName() + ".strategiePches");
+            createCache(cm, fr.tixou.bca.domain.NatureMontant.class.getName() + ".strategiePchES");
+            createCache(cm, fr.tixou.bca.domain.DroitsStrategieCi.class.getName());
+            createCache(cm, fr.tixou.bca.domain.DroitsStrategieApa.class.getName());
+            createCache(cm, fr.tixou.bca.domain.DroitsStrategiePch.class.getName());
+            createCache(cm, fr.tixou.bca.domain.DroitsStrategiePchE.class.getName());
+            createCache(cm, fr.tixou.bca.domain.Pec.class.getName());
+            createCache(cm, fr.tixou.bca.domain.Produit.class.getName());
+            createCache(cm, fr.tixou.bca.domain.DroitAide.class.getName());
+            createCache(cm, fr.tixou.bca.domain.Enfant.class.getName());
+            createCache(cm, fr.tixou.bca.domain.StrategieCmgAssmat.class.getName());
+            createCache(cm, fr.tixou.bca.domain.StrategieCmgAssmat.class.getName() + ".trancheAideEnfantAssmats");
+            createCache(cm, fr.tixou.bca.domain.StrategieCmgGed.class.getName());
+            createCache(cm, fr.tixou.bca.domain.StrategieCmgGed.class.getName() + ".trancheAideEnfantAssmats");
+            createCache(cm, fr.tixou.bca.domain.TrancheAideEnfantAssmat.class.getName());
+            createCache(cm, fr.tixou.bca.domain.TrancheAideEnfantGed.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

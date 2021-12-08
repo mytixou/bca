@@ -13,5 +13,35 @@
                                  constraintName="fk_strategie_ci__aide_id"
                                  referencedColumnNames="id"
                                  referencedTableName="aide"/>
+
+        <addForeignKeyConstraint baseColumnNames="tiers_financeur_id"
+                                 baseTableName="strategie_ci"
+                                 constraintName="fk_strategie_ci__tiers_financeur_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tiers_financeur"/>
+
+        <addForeignKeyConstraint baseColumnNames="strategie_ci_id"
+                                 baseTableName="rel_strategie_ci__nature_activite"
+                                 constraintName="fk_rel_strategie_ci__nature_activite__strategie_ci_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="strategie_ci"/>
+
+        <addForeignKeyConstraint baseColumnNames="nature_activite_id"
+                                 baseTableName="rel_strategie_ci__nature_activite"
+                                 constraintName="fk_rel_strategie_ci__nature_activite__nature_activite_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="nature_activite"/>
+
+        <addForeignKeyConstraint baseColumnNames="strategie_ci_id"
+                                 baseTableName="rel_strategie_ci__nature_montant"
+                                 constraintName="fk_rel_strategie_ci__nature_montant__strategie_ci_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="strategie_ci"/>
+
+        <addForeignKeyConstraint baseColumnNames="nature_montant_id"
+                                 baseTableName="rel_strategie_ci__nature_montant"
+                                 constraintName="fk_rel_strategie_ci__nature_montant__nature_montant_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="nature_montant"/>
     </changeSet>
 </databaseChangeLog>

@@ -14,13 +14,154 @@
         </div>
 
         <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.soldeApa.date" for="field_date">Date</label>
+          <div class="d-flex">
+            <input
+              id="field_date"
+              data-cy="date"
+              type="datetime-local"
+              class="form-control"
+              name="date"
+              formControlName="date"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div *ngIf="editForm.get('date')!.invalid && (editForm.get('date')!.dirty || editForm.get('date')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('date')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('date')?.errors?.ZonedDateTimelocal"
+              jhiTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.soldeApa.isActif" for="field_isActif">Is Actif</label>
+          <input type="checkbox" class="form-check" name="isActif" id="field_isActif" data-cy="isActif" formControlName="isActif" />
+          <div *ngIf="editForm.get('isActif')!.invalid && (editForm.get('isActif')!.dirty || editForm.get('isActif')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('isActif')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.soldeApa.isDernier" for="field_isDernier">Is Dernier</label>
+          <input type="checkbox" class="form-check" name="isDernier" id="field_isDernier" data-cy="isDernier" formControlName="isDernier" />
+          <div *ngIf="editForm.get('isDernier')!.invalid && (editForm.get('isDernier')!.dirty || editForm.get('isDernier')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('isDernier')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
           <label class="form-control-label" jhiTranslate="bcaApp.soldeApa.annee" for="field_annee">Annee</label>
           <input type="number" class="form-control" name="annee" id="field_annee" data-cy="annee" formControlName="annee" />
+          <div *ngIf="editForm.get('annee')!.invalid && (editForm.get('annee')!.dirty || editForm.get('annee')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('annee')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('annee')?.errors?.number" jhiTranslate="entity.validation.number">
+              This field should be a number.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
           <label class="form-control-label" jhiTranslate="bcaApp.soldeApa.mois" for="field_mois">Mois</label>
           <input type="number" class="form-control" name="mois" id="field_mois" data-cy="mois" formControlName="mois" />
+          <div *ngIf="editForm.get('mois')!.invalid && (editForm.get('mois')!.dirty || editForm.get('mois')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('mois')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('mois')?.errors?.number" jhiTranslate="entity.validation.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.soldeApa.consoMontantApaCotisations" for="field_consoMontantApaCotisations"
+            >Conso Montant Apa Cotisations</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="consoMontantApaCotisations"
+            id="field_consoMontantApaCotisations"
+            data-cy="consoMontantApaCotisations"
+            formControlName="consoMontantApaCotisations"
+          />
+          <div
+            *ngIf="
+              editForm.get('consoMontantApaCotisations')!.invalid &&
+              (editForm.get('consoMontantApaCotisations')!.dirty || editForm.get('consoMontantApaCotisations')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('consoMontantApaCotisations')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('consoMontantApaCotisations')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.soldeApa.consoMontantApaSalaire" for="field_consoMontantApaSalaire"
+            >Conso Montant Apa Salaire</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="consoMontantApaSalaire"
+            id="field_consoMontantApaSalaire"
+            data-cy="consoMontantApaSalaire"
+            formControlName="consoMontantApaSalaire"
+          />
+          <div
+            *ngIf="
+              editForm.get('consoMontantApaSalaire')!.invalid &&
+              (editForm.get('consoMontantApaSalaire')!.dirty || editForm.get('consoMontantApaSalaire')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('consoMontantApaSalaire')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('consoMontantApaSalaire')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
@@ -35,6 +176,59 @@
             data-cy="soldeMontantApa"
             formControlName="soldeMontantApa"
           />
+          <div
+            *ngIf="
+              editForm.get('soldeMontantApa')!.invalid &&
+              (editForm.get('soldeMontantApa')!.dirty || editForm.get('soldeMontantApa')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('soldeMontantApa')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('soldeMontantApa')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.soldeApa.consoHeureApa" for="field_consoHeureApa">Conso Heure Apa</label>
+          <input
+            type="number"
+            class="form-control"
+            name="consoHeureApa"
+            id="field_consoHeureApa"
+            data-cy="consoHeureApa"
+            formControlName="consoHeureApa"
+          />
+          <div
+            *ngIf="
+              editForm.get('consoHeureApa')!.invalid && (editForm.get('consoHeureApa')!.dirty || editForm.get('consoHeureApa')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('consoHeureApa')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('consoHeureApa')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
@@ -47,19 +241,49 @@
             data-cy="soldeHeureApa"
             formControlName="soldeHeureApa"
           />
+          <div
+            *ngIf="
+              editForm.get('soldeHeureApa')!.invalid && (editForm.get('soldeHeureApa')!.dirty || editForm.get('soldeHeureApa')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('soldeHeureApa')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('soldeHeureApa')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" jhiTranslate="bcaApp.soldeApa.beneficiaire" for="field_beneficiaire">Beneficiaire</label>
-          <select class="form-control" id="field_beneficiaire" data-cy="beneficiaire" name="beneficiaire" formControlName="beneficiaire">
+          <label class="form-control-label" jhiTranslate="bcaApp.soldeApa.droitsStrategieApa" for="field_droitsStrategieApa"
+            >Droits Strategie Apa</label
+          >
+          <select
+            class="form-control"
+            id="field_droitsStrategieApa"
+            data-cy="droitsStrategieApa"
+            name="droitsStrategieApa"
+            formControlName="droitsStrategieApa"
+          >
             <option [ngValue]="null"></option>
             <option
               [ngValue]="
-                beneficiaireOption.id === editForm.get('beneficiaire')!.value?.id ? editForm.get('beneficiaire')!.value : beneficiaireOption
+                droitsStrategieApaOption.id === editForm.get('droitsStrategieApa')!.value?.id
+                  ? editForm.get('droitsStrategieApa')!.value
+                  : droitsStrategieApaOption
               "
-              *ngFor="let beneficiaireOption of beneficiairesSharedCollection; trackBy: trackBeneficiaireById"
+              *ngFor="let droitsStrategieApaOption of droitsStrategieApasSharedCollection; trackBy: trackDroitsStrategieApaById"
             >
-              {{ beneficiaireOption.id }}
+              {{ droitsStrategieApaOption.id }}
             </option>
           </select>
         </div>

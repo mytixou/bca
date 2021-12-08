@@ -45,10 +45,10 @@ describe('ConsommationPchE Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Beneficiaire query and add missing value', () => {
       const consommationPchE: IConsommationPchE = { id: 456 };
-      const beneficiaire: IBeneficiaire = { id: 'ae219886-392e-4113-b027-9c80c7f68a1f' };
+      const beneficiaire: IBeneficiaire = { id: 63378 };
       consommationPchE.beneficiaire = beneficiaire;
 
-      const beneficiaireCollection: IBeneficiaire[] = [{ id: '925f7bff-8df3-4398-9017-29b7f76924c7' }];
+      const beneficiaireCollection: IBeneficiaire[] = [{ id: 89361 }];
       jest.spyOn(beneficiaireService, 'query').mockReturnValue(of(new HttpResponse({ body: beneficiaireCollection })));
       const additionalBeneficiaires = [beneficiaire];
       const expectedCollection: IBeneficiaire[] = [...additionalBeneficiaires, ...beneficiaireCollection];
@@ -89,7 +89,7 @@ describe('ConsommationPchE Management Update Component', () => {
 
     it('Should update editForm', () => {
       const consommationPchE: IConsommationPchE = { id: 456 };
-      const beneficiaire: IBeneficiaire = { id: '5274c660-e5f8-49ff-b0b5-b61069b204b6' };
+      const beneficiaire: IBeneficiaire = { id: 16892 };
       consommationPchE.beneficiaire = beneficiaire;
       const strategiePchE: IStrategiePchE = { id: 75819 };
       consommationPchE.strategiePchE = strategiePchE;
@@ -170,7 +170,7 @@ describe('ConsommationPchE Management Update Component', () => {
   describe('Tracking relationships identifiers', () => {
     describe('trackBeneficiaireById', () => {
       it('Should return tracked Beneficiaire primary key', () => {
-        const entity = { id: 'ABC' };
+        const entity = { id: 123 };
         const trackResult = comp.trackBeneficiaireById(0, entity);
         expect(trackResult).toEqual(entity.id);
       });

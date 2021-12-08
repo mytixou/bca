@@ -1,0 +1,243 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-tranche-aide-enfant-ged-heading"
+        data-cy="TrancheAideEnfantGedCreateUpdateHeading"
+        jhiTranslate="bcaApp.trancheAideEnfantGed.home.createOrEditLabel"
+      >
+        Create or edit a Tranche Aide Enfant Ged
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.trancheAideEnfantGed.anne" for="field_anne">Anne</label>
+          <input type="number" class="form-control" name="anne" id="field_anne" data-cy="anne" formControlName="anne" />
+          <div *ngIf="editForm.get('anne')!.invalid && (editForm.get('anne')!.dirty || editForm.get('anne')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('anne')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('anne')?.errors?.number" jhiTranslate="entity.validation.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.trancheAideEnfantGed.mois" for="field_mois">Mois</label>
+          <input type="number" class="form-control" name="mois" id="field_mois" data-cy="mois" formControlName="mois" />
+          <div *ngIf="editForm.get('mois')!.invalid && (editForm.get('mois')!.dirty || editForm.get('mois')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('mois')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('mois')?.errors?.number" jhiTranslate="entity.validation.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label
+            class="form-control-label"
+            jhiTranslate="bcaApp.trancheAideEnfantGed.ageEnfantRevoluSurPeriode"
+            for="field_ageEnfantRevoluSurPeriode"
+            >Age Enfant Revolu Sur Periode</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="ageEnfantRevoluSurPeriode"
+            id="field_ageEnfantRevoluSurPeriode"
+            data-cy="ageEnfantRevoluSurPeriode"
+            formControlName="ageEnfantRevoluSurPeriode"
+          />
+          <div
+            *ngIf="
+              editForm.get('ageEnfantRevoluSurPeriode')!.invalid &&
+              (editForm.get('ageEnfantRevoluSurPeriode')!.dirty || editForm.get('ageEnfantRevoluSurPeriode')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('ageEnfantRevoluSurPeriode')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('ageEnfantRevoluSurPeriode')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label
+            class="form-control-label"
+            jhiTranslate="bcaApp.trancheAideEnfantGed.montantPlafondSalaire"
+            for="field_montantPlafondSalaire"
+            >Montant Plafond Salaire</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="montantPlafondSalaire"
+            id="field_montantPlafondSalaire"
+            data-cy="montantPlafondSalaire"
+            formControlName="montantPlafondSalaire"
+          />
+          <div
+            *ngIf="
+              editForm.get('montantPlafondSalaire')!.invalid &&
+              (editForm.get('montantPlafondSalaire')!.dirty || editForm.get('montantPlafondSalaire')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('montantPlafondSalaire')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('montantPlafondSalaire')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.trancheAideEnfantGed.isActif" for="field_isActif">Is Actif</label>
+          <input type="checkbox" class="form-check" name="isActif" id="field_isActif" data-cy="isActif" formControlName="isActif" />
+          <div *ngIf="editForm.get('isActif')!.invalid && (editForm.get('isActif')!.dirty || editForm.get('isActif')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('isActif')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.trancheAideEnfantGed.dateCreated" for="field_dateCreated"
+            >Date Created</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_dateCreated"
+              data-cy="dateCreated"
+              type="datetime-local"
+              class="form-control"
+              name="dateCreated"
+              formControlName="dateCreated"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div *ngIf="editForm.get('dateCreated')!.invalid && (editForm.get('dateCreated')!.dirty || editForm.get('dateCreated')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('dateCreated')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('dateCreated')?.errors?.ZonedDateTimelocal"
+              jhiTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.trancheAideEnfantGed.isUpdated" for="field_isUpdated">Is Updated</label>
+          <input type="checkbox" class="form-check" name="isUpdated" id="field_isUpdated" data-cy="isUpdated" formControlName="isUpdated" />
+          <div *ngIf="editForm.get('isUpdated')!.invalid && (editForm.get('isUpdated')!.dirty || editForm.get('isUpdated')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('isUpdated')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.trancheAideEnfantGed.dateModified" for="field_dateModified"
+            >Date Modified</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_dateModified"
+              data-cy="dateModified"
+              type="datetime-local"
+              class="form-control"
+              name="dateModified"
+              formControlName="dateModified"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.trancheAideEnfantGed.strategieCmgGed" for="field_strategieCmgGed"
+            >Strategie Cmg Ged</label
+          >
+          <select
+            class="form-control"
+            id="field_strategieCmgGed"
+            data-cy="strategieCmgGed"
+            name="strategieCmgGed"
+            formControlName="strategieCmgGed"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                strategieCmgGedOption.id === editForm.get('strategieCmgGed')!.value?.id
+                  ? editForm.get('strategieCmgGed')!.value
+                  : strategieCmgGedOption
+              "
+              *ngFor="let strategieCmgGedOption of strategieCmgGedsSharedCollection; trackBy: trackStrategieCmgGedById"
+            >
+              {{ strategieCmgGedOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

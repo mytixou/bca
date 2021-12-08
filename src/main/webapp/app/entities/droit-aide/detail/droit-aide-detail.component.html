@@ -1,0 +1,56 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="droitAide">
+      <h2 data-cy="droitAideDetailsHeading"><span jhiTranslate="bcaApp.droitAide.detail.title">Droit Aide</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ droitAide.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitAide.isActif">Is Actif</span></dt>
+        <dd>
+          <span>{{ droitAide.isActif }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitAide.anne">Anne</span></dt>
+        <dd>
+          <span>{{ droitAide.anne }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitAide.dateOuverture">Date Ouverture</span></dt>
+        <dd>
+          <span>{{ droitAide.dateOuverture | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitAide.dateFermeture">Date Fermeture</span></dt>
+        <dd>
+          <span>{{ droitAide.dateFermeture | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitAide.produit">Produit</span></dt>
+        <dd>
+          <div *ngIf="droitAide.produit">
+            <a [routerLink]="['/produit', droitAide.produit?.id, 'view']">{{ droitAide.produit?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.droitAide.produit">Produit</span></dt>
+        <dd>
+          <div *ngIf="droitAide.produit">
+            <a [routerLink]="['/aide', droitAide.produit?.id, 'view']">{{ droitAide.produit?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/droit-aide', droitAide.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

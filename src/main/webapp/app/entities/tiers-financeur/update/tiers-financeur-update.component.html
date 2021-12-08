@@ -20,6 +20,11 @@
         <div class="form-group">
           <label class="form-control-label" jhiTranslate="bcaApp.tiersFinanceur.nom" for="field_nom">Nom</label>
           <input type="text" class="form-control" name="nom" id="field_nom" data-cy="nom" formControlName="nom" />
+          <div *ngIf="editForm.get('nom')!.invalid && (editForm.get('nom')!.dirty || editForm.get('nom')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('nom')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
@@ -37,6 +42,15 @@
         <div class="form-group">
           <label class="form-control-label" jhiTranslate="bcaApp.tiersFinanceur.isActif" for="field_isActif">Is Actif</label>
           <input type="checkbox" class="form-check" name="isActif" id="field_isActif" data-cy="isActif" formControlName="isActif" />
+          <div *ngIf="editForm.get('isActif')!.invalid && (editForm.get('isActif')!.dirty || editForm.get('isActif')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('isActif')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
@@ -60,6 +74,20 @@
               </button>
             </span>
           </div>
+          <div
+            *ngIf="
+              editForm.get('dateInscription')!.invalid &&
+              (editForm.get('dateInscription')!.dirty || editForm.get('dateInscription')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('dateInscription')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
@@ -74,6 +102,26 @@
             data-cy="anneLancement"
             formControlName="anneLancement"
           />
+          <div
+            *ngIf="
+              editForm.get('anneLancement')!.invalid && (editForm.get('anneLancement')!.dirty || editForm.get('anneLancement')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('anneLancement')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('anneLancement')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
@@ -88,6 +136,54 @@
             data-cy="moisLancement"
             formControlName="moisLancement"
           />
+          <div
+            *ngIf="
+              editForm.get('moisLancement')!.invalid && (editForm.get('moisLancement')!.dirty || editForm.get('moisLancement')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('moisLancement')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('moisLancement')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.tiersFinanceur.recupHeureActif" for="field_recupHeureActif"
+            >Recup Heure Actif</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="recupHeureActif"
+            id="field_recupHeureActif"
+            data-cy="recupHeureActif"
+            formControlName="recupHeureActif"
+          />
+          <div
+            *ngIf="
+              editForm.get('recupHeureActif')!.invalid &&
+              (editForm.get('recupHeureActif')!.dirty || editForm.get('recupHeureActif')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('recupHeureActif')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
@@ -137,66 +233,6 @@
             data-cy="dernierMois"
             formControlName="dernierMois"
           />
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="bcaApp.tiersFinanceur.strategie" for="field_strategie">Strategie</label>
-          <select class="form-control" id="field_strategie" data-cy="strategie" name="strategie" formControlName="strategie">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
-                strategieCiOption.id === editForm.get('strategie')!.value?.id ? editForm.get('strategie')!.value : strategieCiOption
-              "
-              *ngFor="let strategieCiOption of strategieCisSharedCollection; trackBy: trackStrategieCiById"
-            >
-              {{ strategieCiOption.id }}
-            </option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="bcaApp.tiersFinanceur.strategie" for="field_strategie">Strategie</label>
-          <select class="form-control" id="field_strategie" data-cy="strategie" name="strategie" formControlName="strategie">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
-                strategieApaOption.id === editForm.get('strategie')!.value?.id ? editForm.get('strategie')!.value : strategieApaOption
-              "
-              *ngFor="let strategieApaOption of strategieApasSharedCollection; trackBy: trackStrategieApaById"
-            >
-              {{ strategieApaOption.id }}
-            </option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="bcaApp.tiersFinanceur.strategie" for="field_strategie">Strategie</label>
-          <select class="form-control" id="field_strategie" data-cy="strategie" name="strategie" formControlName="strategie">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
-                strategiePchOption.id === editForm.get('strategie')!.value?.id ? editForm.get('strategie')!.value : strategiePchOption
-              "
-              *ngFor="let strategiePchOption of strategiePchesSharedCollection; trackBy: trackStrategiePchById"
-            >
-              {{ strategiePchOption.id }}
-            </option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="bcaApp.tiersFinanceur.strategie" for="field_strategie">Strategie</label>
-          <select class="form-control" id="field_strategie" data-cy="strategie" name="strategie" formControlName="strategie">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
-                strategiePchEOption.id === editForm.get('strategie')!.value?.id ? editForm.get('strategie')!.value : strategiePchEOption
-              "
-              *ngFor="let strategiePchEOption of strategiePchESSharedCollection; trackBy: trackStrategiePchEById"
-            >
-              {{ strategiePchEOption.id }}
-            </option>
-          </select>
         </div>
       </div>
 

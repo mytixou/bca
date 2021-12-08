@@ -24,13 +24,10 @@
       "dateInscription": "Date Inscription",
       "anneLancement": "Anne Lancement",
       "moisLancement": "Mois Lancement",
+      "recupHeureActif": "Recup Heure Actif",
       "dateResiliation": "Date Resiliation",
       "derniereAnnee": "Derniere Annee",
-      "dernierMois": "Dernier Mois",
-      "strategie": "Strategie",
-      "strategie": "Strategie",
-      "strategie": "Strategie",
-      "strategie": "Strategie"
+      "dernierMois": "Dernier Mois"
     }
   }
 }

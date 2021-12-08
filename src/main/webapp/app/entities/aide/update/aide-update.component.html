@@ -19,11 +19,46 @@
             <option [ngValue]="null">{{ 'bcaApp.TypeAide.null' | translate }}</option>
             <option *ngFor="let typeAide of typeAideValues" [value]="typeAide">{{ 'bcaApp.TypeAide.' + typeAide | translate }}</option>
           </select>
+          <div *ngIf="editForm.get('nom')!.invalid && (editForm.get('nom')!.dirty || editForm.get('nom')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('nom')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.aide.priorite" for="field_priorite">Priorite</label>
+          <input type="number" class="form-control" name="priorite" id="field_priorite" data-cy="priorite" formControlName="priorite" />
+          <div *ngIf="editForm.get('priorite')!.invalid && (editForm.get('priorite')!.dirty || editForm.get('priorite')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('priorite')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('priorite')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
           <label class="form-control-label" jhiTranslate="bcaApp.aide.isActif" for="field_isActif">Is Actif</label>
           <input type="checkbox" class="form-check" name="isActif" id="field_isActif" data-cy="isActif" formControlName="isActif" />
+          <div *ngIf="editForm.get('isActif')!.invalid && (editForm.get('isActif')!.dirty || editForm.get('isActif')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('isActif')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
@@ -45,6 +80,19 @@
               </button>
             </span>
           </div>
+          <div
+            *ngIf="
+              editForm.get('dateLancement')!.invalid && (editForm.get('dateLancement')!.dirty || editForm.get('dateLancement')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('dateLancement')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
@@ -57,6 +105,26 @@
             data-cy="anneLancement"
             formControlName="anneLancement"
           />
+          <div
+            *ngIf="
+              editForm.get('anneLancement')!.invalid && (editForm.get('anneLancement')!.dirty || editForm.get('anneLancement')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('anneLancement')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('anneLancement')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
@@ -69,6 +137,26 @@
             data-cy="moisLancement"
             formControlName="moisLancement"
           />
+          <div
+            *ngIf="
+              editForm.get('moisLancement')!.invalid && (editForm.get('moisLancement')!.dirty || editForm.get('moisLancement')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('moisLancement')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('moisLancement')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
@@ -114,6 +202,19 @@
             data-cy="dernierMois"
             formControlName="dernierMois"
           />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="bcaApp.aide.aide" for="field_aide">Aide</label>
+          <select class="form-control" id="field_aide" data-cy="aide" name="aide" formControlName="aide">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="tiersFinanceurOption.id === editForm.get('aide')!.value?.id ? editForm.get('aide')!.value : tiersFinanceurOption"
+              *ngFor="let tiersFinanceurOption of tiersFinanceursSharedCollection; trackBy: trackTiersFinanceurById"
+            >
+              {{ tiersFinanceurOption.id }}
+            </option>
+          </select>
         </div>
       </div>
 

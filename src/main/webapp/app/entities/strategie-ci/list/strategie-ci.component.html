@@ -34,10 +34,17 @@
         <tr>
           <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.strategieCi.isActif">Is Actif</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieCi.dateAnnuelleDebutValidite">Date Annuelle Debut Validite</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.strategieCi.anne">Anne</span></th>
-          <th scope="col"><span jhiTranslate="bcaApp.strategieCi.montantPlafond">Montant Plafond</span></th>
-          <th scope="col"><span jhiTranslate="bcaApp.strategieCi.taux">Taux</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieCi.montantPlafondDefaut">Montant Plafond Defaut</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieCi.montantPlafondHandicape">Montant Plafond Handicape</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieCi.montantPlafondDefautPlus">Montant Plafond Defaut Plus</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieCi.montantPlafondHandicapePlus">Montant Plafond Handicape Plus</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieCi.tauxSalaire">Taux Salaire</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.strategieCi.aide">Aide</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieCi.tiersFinanceur">Tiers Financeur</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieCi.natureActivite">Nature Activite</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.strategieCi.natureMontant">Nature Montant</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -47,13 +54,34 @@
             <a [routerLink]="['/strategie-ci', strategieCi.id, 'view']">{{ strategieCi.id }}</a>
           </td>
           <td>{{ strategieCi.isActif }}</td>
+          <td>{{ strategieCi.dateAnnuelleDebutValidite | formatMediumDate }}</td>
           <td>{{ strategieCi.anne }}</td>
-          <td>{{ strategieCi.montantPlafond }}</td>
-          <td>{{ strategieCi.taux }}</td>
+          <td>{{ strategieCi.montantPlafondDefaut }}</td>
+          <td>{{ strategieCi.montantPlafondHandicape }}</td>
+          <td>{{ strategieCi.montantPlafondDefautPlus }}</td>
+          <td>{{ strategieCi.montantPlafondHandicapePlus }}</td>
+          <td>{{ strategieCi.tauxSalaire }}</td>
           <td>
             <div *ngIf="strategieCi.aide">
               <a [routerLink]="['/aide', strategieCi.aide?.id, 'view']">{{ strategieCi.aide?.id }}</a>
             </div>
+          </td>
+          <td>
+            <div *ngIf="strategieCi.tiersFinanceur">
+              <a [routerLink]="['/tiers-financeur', strategieCi.tiersFinanceur?.id, 'view']">{{ strategieCi.tiersFinanceur?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <span *ngFor="let natureActivite of strategieCi.natureActivites; let last = last">
+              <a class="form-control-static" [routerLink]="['/nature-activite', natureActivite.id, 'view']">{{ natureActivite.id }}</a
+              >{{ last ? '' : ', ' }}
+            </span>
+          </td>
+          <td>
+            <span *ngFor="let natureMontant of strategieCi.natureMontants; let last = last">
+              <a class="form-control-static" [routerLink]="['/nature-montant', natureMontant.id, 'view']">{{ natureMontant.id }}</a
+              >{{ last ? '' : ', ' }}
+            </span>
           </td>
           <td class="text-right">
             <div class="btn-group">

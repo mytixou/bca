@@ -33,11 +33,17 @@
       <thead>
         <tr>
           <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldePchE.date">Date</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldePchE.isActif">Is Actif</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldePchE.isDernier">Is Dernier</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.soldePchE.annee">Annee</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.soldePchE.mois">Mois</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldePchE.consoMontantPchECotisations">Conso Montant Pch E Cotisations</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldePchE.consoMontantPchESalaire">Conso Montant Pch E Salaire</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.soldePchE.soldeMontantPchE">Solde Montant Pch E</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldePchE.consoHeurePchE">Conso Heure Pch E</span></th>
           <th scope="col"><span jhiTranslate="bcaApp.soldePchE.soldeHeurePchE">Solde Heure Pch E</span></th>
-          <th scope="col"><span jhiTranslate="bcaApp.soldePchE.beneficiaire">Beneficiaire</span></th>
+          <th scope="col"><span jhiTranslate="bcaApp.soldePchE.droitsStrategiePchE">Droits Strategie Pch E</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -46,13 +52,21 @@
           <td>
             <a [routerLink]="['/solde-pch-e', soldePchE.id, 'view']">{{ soldePchE.id }}</a>
           </td>
+          <td>{{ soldePchE.date | formatMediumDatetime }}</td>
+          <td>{{ soldePchE.isActif }}</td>
+          <td>{{ soldePchE.isDernier }}</td>
           <td>{{ soldePchE.annee }}</td>
           <td>{{ soldePchE.mois }}</td>
+          <td>{{ soldePchE.consoMontantPchECotisations }}</td>
+          <td>{{ soldePchE.consoMontantPchESalaire }}</td>
           <td>{{ soldePchE.soldeMontantPchE }}</td>
+          <td>{{ soldePchE.consoHeurePchE }}</td>
           <td>{{ soldePchE.soldeHeurePchE }}</td>
           <td>
-            <div *ngIf="soldePchE.beneficiaire">
-              <a [routerLink]="['/beneficiaire', soldePchE.beneficiaire?.id, 'view']">{{ soldePchE.beneficiaire?.id }}</a>
+            <div *ngIf="soldePchE.droitsStrategiePchE">
+              <a [routerLink]="['/droits-strategie-pch-e', soldePchE.droitsStrategiePchE?.id, 'view']">{{
+                soldePchE.droitsStrategiePchE?.id
+              }}</a>
             </div>
           </td>
           <td class="text-right">

@@ -9,6 +9,9 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +51,7 @@ public class SoldeCiResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/solde-cis")
-    public ResponseEntity<SoldeCi> createSoldeCi(@RequestBody SoldeCi soldeCi) throws URISyntaxException {
+    public ResponseEntity<SoldeCi> createSoldeCi(@Valid @RequestBody SoldeCi soldeCi) throws URISyntaxException {
         log.debug("REST request to save SoldeCi : {}", soldeCi);
         if (soldeCi.getId() != null) {
             throw new BadRequestAlertException("A new soldeCi cannot already have an ID", ENTITY_NAME, "idexists");
@@ -71,8 +74,10 @@ public class SoldeCiResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/solde-cis/{id}")
-    public ResponseEntity<SoldeCi> updateSoldeCi(@PathVariable(value = "id", required = false) final Long id, @RequestBody SoldeCi soldeCi)
-        throws URISyntaxException {
+    public ResponseEntity<SoldeCi> updateSoldeCi(
+        @PathVariable(value = "id", required = false) final Long id,
+        @Valid @RequestBody SoldeCi soldeCi
+    ) throws URISyntaxException {
         log.debug("REST request to update SoldeCi : {}, {}", id, soldeCi);
         if (soldeCi.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -106,7 +111,7 @@ public class SoldeCiResource {
     @PatchMapping(value = "/solde-cis/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<SoldeCi> partialUpdateSoldeCi(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody SoldeCi soldeCi
+        @NotNull @RequestBody SoldeCi soldeCi
     ) throws URISyntaxException {
         log.debug("REST request to partial update SoldeCi partially : {}, {}", id, soldeCi);
         if (soldeCi.getId() == null) {
@@ -131,10 +136,15 @@ public class SoldeCiResource {
     /**
      * {@code GET  /solde-cis} : get all the soldeCis.
      *
+     * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of soldeCis in body.
      */
     @GetMapping("/solde-cis")
-    public List<SoldeCi> getAllSoldeCis() {
+    public List<SoldeCi> getAllSoldeCis(@RequestParam(required = false) String filter) {
+        if ("pec-is-null".equals(filter)) {
+            log.debug("REST request to get all SoldeCis where pec is null");
+            return soldeCiService.findAllWherePecIsNull();
+        }
         log.debug("REST request to get all SoldeCis");
         return soldeCiService.findAll();
     }

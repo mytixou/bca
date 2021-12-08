@@ -18,27 +18,71 @@
         <dd>
           <span>{{ strategieApa.isActif }}</span>
         </dd>
+        <dt><span jhiTranslate="bcaApp.strategieApa.dateMensuelleDebutValidite">Date Mensuelle Debut Validite</span></dt>
+        <dd>
+          <span>{{ strategieApa.dateMensuelleDebutValidite | formatMediumDate }}</span>
+        </dd>
         <dt><span jhiTranslate="bcaApp.strategieApa.anne">Anne</span></dt>
         <dd>
           <span>{{ strategieApa.anne }}</span>
         </dd>
-        <dt><span jhiTranslate="bcaApp.strategieApa.montantPlafond">Montant Plafond</span></dt>
+        <dt><span jhiTranslate="bcaApp.strategieApa.mois">Mois</span></dt>
         <dd>
-          <span>{{ strategieApa.montantPlafond }}</span>
+          <span>{{ strategieApa.mois }}</span>
         </dd>
-        <dt><span jhiTranslate="bcaApp.strategieApa.nbPlafondheure">Nb Plafondheure</span></dt>
+        <dt><span jhiTranslate="bcaApp.strategieApa.montantPlafondSalaire">Montant Plafond Salaire</span></dt>
         <dd>
-          <span>{{ strategieApa.nbPlafondheure }}</span>
+          <span>{{ strategieApa.montantPlafondSalaire }}</span>
         </dd>
-        <dt><span jhiTranslate="bcaApp.strategieApa.taux">Taux</span></dt>
+        <dt><span jhiTranslate="bcaApp.strategieApa.montantPlafondCotisations">Montant Plafond Cotisations</span></dt>
         <dd>
-          <span>{{ strategieApa.taux }}</span>
+          <span>{{ strategieApa.montantPlafondCotisations }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieApa.montantPlafondSalairePlus">Montant Plafond Salaire Plus</span></dt>
+        <dd>
+          <span>{{ strategieApa.montantPlafondSalairePlus }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieApa.montantPlafondCotisationsPlus">Montant Plafond Cotisations Plus</span></dt>
+        <dd>
+          <span>{{ strategieApa.montantPlafondCotisationsPlus }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieApa.nbHeureSalairePlafond">Nb Heure Salaire Plafond</span></dt>
+        <dd>
+          <span>{{ strategieApa.nbHeureSalairePlafond }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieApa.tauxSalaire">Taux Salaire</span></dt>
+        <dd>
+          <span>{{ strategieApa.tauxSalaire }}</span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieApa.tauxCotisations">Taux Cotisations</span></dt>
+        <dd>
+          <span>{{ strategieApa.tauxCotisations }}</span>
         </dd>
         <dt><span jhiTranslate="bcaApp.strategieApa.aide">Aide</span></dt>
         <dd>
           <div *ngIf="strategieApa.aide">
             <a [routerLink]="['/aide', strategieApa.aide?.id, 'view']">{{ strategieApa.aide?.id }}</a>
           </div>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieApa.tiersFinanceur">Tiers Financeur</span></dt>
+        <dd>
+          <div *ngIf="strategieApa.tiersFinanceur">
+            <a [routerLink]="['/tiers-financeur', strategieApa.tiersFinanceur?.id, 'view']">{{ strategieApa.tiersFinanceur?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieApa.natureActivite">Nature Activite</span></dt>
+        <dd>
+          <span *ngFor="let natureActivite of strategieApa.natureActivites; let last = last">
+            <a [routerLink]="['/nature-activite', natureActivite?.id, 'view']">{{ natureActivite.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+        <dt><span jhiTranslate="bcaApp.strategieApa.natureMontant">Nature Montant</span></dt>
+        <dd>
+          <span *ngFor="let natureMontant of strategieApa.natureMontants; let last = last">
+            <a [routerLink]="['/nature-montant', natureMontant?.id, 'view']">{{ natureMontant.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
         </dd>
       </dl>
 

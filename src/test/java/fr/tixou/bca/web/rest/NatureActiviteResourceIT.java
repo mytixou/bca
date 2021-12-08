@@ -124,6 +124,25 @@ class NatureActiviteResourceIT {
 
     @Test
     @Transactional
+    void checkCodeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = natureActiviteRepository.findAll().size();
+        // set the field null
+        natureActivite.setCode(null);
+
+        // Create the NatureActivite, which fails.
+
+        restNatureActiviteMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(natureActivite))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<NatureActivite> natureActiviteList = natureActiviteRepository.findAll();
+        assertThat(natureActiviteList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllNatureActivites() throws Exception {
         // Initialize the database
         natureActiviteRepository.saveAndFlush(natureActivite);

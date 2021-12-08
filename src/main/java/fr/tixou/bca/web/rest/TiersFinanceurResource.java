@@ -9,6 +9,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +50,8 @@ public class TiersFinanceurResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/tiers-financeurs")
-    public ResponseEntity<TiersFinanceur> createTiersFinanceur(@RequestBody TiersFinanceur tiersFinanceur) throws URISyntaxException {
+    public ResponseEntity<TiersFinanceur> createTiersFinanceur(@Valid @RequestBody TiersFinanceur tiersFinanceur)
+        throws URISyntaxException {
         log.debug("REST request to save TiersFinanceur : {}", tiersFinanceur);
         if (tiersFinanceur.getId() != null) {
             throw new BadRequestAlertException("A new tiersFinanceur cannot already have an ID", ENTITY_NAME, "idexists");
@@ -73,7 +76,7 @@ public class TiersFinanceurResource {
     @PutMapping("/tiers-financeurs/{id}")
     public ResponseEntity<TiersFinanceur> updateTiersFinanceur(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody TiersFinanceur tiersFinanceur
+        @Valid @RequestBody TiersFinanceur tiersFinanceur
     ) throws URISyntaxException {
         log.debug("REST request to update TiersFinanceur : {}, {}", id, tiersFinanceur);
         if (tiersFinanceur.getId() == null) {
@@ -108,7 +111,7 @@ public class TiersFinanceurResource {
     @PatchMapping(value = "/tiers-financeurs/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<TiersFinanceur> partialUpdateTiersFinanceur(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody TiersFinanceur tiersFinanceur
+        @NotNull @RequestBody TiersFinanceur tiersFinanceur
     ) throws URISyntaxException {
         log.debug("REST request to partial update TiersFinanceur partially : {}, {}", id, tiersFinanceur);
         if (tiersFinanceur.getId() == null) {

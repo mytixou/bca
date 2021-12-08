@@ -1,4 +1,4 @@
-import { browser, ExpectedConditions as ec, promise } from 'protractor';
+import { browser, ExpectedConditions as ec, protractor, promise } from 'protractor';
 import { NavBarPage, SignInPage } from '../../page-objects/jhi-page-objects';
 
 import { SoldePchEComponentsPage, SoldePchEDeleteDialog, SoldePchEUpdatePage } from './solde-pch-e.page-object';
@@ -43,11 +43,17 @@ describe('SoldePchE e2e test', () => {
     await soldePchEComponentsPage.clickOnCreateButton();
 
     await promise.all([
+      soldePchEUpdatePage.setDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+      soldePchEUpdatePage.getIsActifInput().click(),
+      soldePchEUpdatePage.getIsDernierInput().click(),
       soldePchEUpdatePage.setAnneeInput('5'),
       soldePchEUpdatePage.setMoisInput('5'),
+      soldePchEUpdatePage.setConsoMontantPchECotisationsInput('5'),
+      soldePchEUpdatePage.setConsoMontantPchESalaireInput('5'),
       soldePchEUpdatePage.setSoldeMontantPchEInput('5'),
+      soldePchEUpdatePage.setConsoHeurePchEInput('5'),
       soldePchEUpdatePage.setSoldeHeurePchEInput('5'),
-      soldePchEUpdatePage.beneficiaireSelectLastOption(),
+      soldePchEUpdatePage.droitsStrategiePchESelectLastOption(),
     ]);
 
     await soldePchEUpdatePage.save();

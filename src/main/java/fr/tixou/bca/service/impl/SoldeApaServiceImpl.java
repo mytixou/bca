@@ -5,6 +5,8 @@ import fr.tixou.bca.repository.SoldeApaRepository;
 import fr.tixou.bca.service.SoldeApaService;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -38,14 +40,32 @@ public class SoldeApaServiceImpl implements SoldeApaService {
         return soldeApaRepository
             .findById(soldeApa.getId())
             .map(existingSoldeApa -> {
+                if (soldeApa.getDate() != null) {
+                    existingSoldeApa.setDate(soldeApa.getDate());
+                }
+                if (soldeApa.getIsActif() != null) {
+                    existingSoldeApa.setIsActif(soldeApa.getIsActif());
+                }
+                if (soldeApa.getIsDernier() != null) {
+                    existingSoldeApa.setIsDernier(soldeApa.getIsDernier());
+                }
                 if (soldeApa.getAnnee() != null) {
                     existingSoldeApa.setAnnee(soldeApa.getAnnee());
                 }
                 if (soldeApa.getMois() != null) {
                     existingSoldeApa.setMois(soldeApa.getMois());
                 }
+                if (soldeApa.getConsoMontantApaCotisations() != null) {
+                    existingSoldeApa.setConsoMontantApaCotisations(soldeApa.getConsoMontantApaCotisations());
+                }
+                if (soldeApa.getConsoMontantApaSalaire() != null) {
+                    existingSoldeApa.setConsoMontantApaSalaire(soldeApa.getConsoMontantApaSalaire());
+                }
                 if (soldeApa.getSoldeMontantApa() != null) {
                     existingSoldeApa.setSoldeMontantApa(soldeApa.getSoldeMontantApa());
+                }
+                if (soldeApa.getConsoHeureApa() != null) {
+                    existingSoldeApa.setConsoHeureApa(soldeApa.getConsoHeureApa());
                 }
                 if (soldeApa.getSoldeHeureApa() != null) {
                     existingSoldeApa.setSoldeHeureApa(soldeApa.getSoldeHeureApa());
@@ -61,6 +81,19 @@ public class SoldeApaServiceImpl implements SoldeApaService {
     public List<SoldeApa> findAll() {
         log.debug("Request to get all SoldeApas");
         return soldeApaRepository.findAll();
+    }
+
+    /**
+     *  Get all the soldeApas where Pec is {@code null}.
+     *  @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<SoldeApa> findAllWherePecIsNull() {
+        log.debug("Request to get all soldeApas where Pec is null");
+        return StreamSupport
+            .stream(soldeApaRepository.findAll().spliterator(), false)
+            .filter(soldeApa -> soldeApa.getPec() == null)
+            .collect(Collectors.toList());
     }
 
     @Override

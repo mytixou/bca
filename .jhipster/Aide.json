@@ -4,23 +4,33 @@
     {
       "fieldName": "nom",
       "fieldType": "TypeAide",
-      "fieldValues": "CI,APA,PCH,PCHE"
+      "fieldValues": "CI,APA,PCH,PCHE,PAJE",
+      "fieldValidateRules": ["unique", "required"]
+    },
+    {
+      "fieldName": "priorite",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["unique", "required"]
     },
     {
       "fieldName": "isActif",
-      "fieldType": "Boolean"
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "dateLancement",
-      "fieldType": "LocalDate"
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "anneLancement",
-      "fieldType": "Integer"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "moisLancement",
-      "fieldType": "Integer"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "dateArret",
@@ -37,28 +47,10 @@
   ],
   "relationships": [
     {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "strategieCi",
+      "relationshipType": "many-to-one",
+      "otherEntityName": "tiersFinanceur",
       "otherEntityRelationshipName": "aide",
-      "relationshipName": "strategieCi"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "strategieApa",
-      "otherEntityRelationshipName": "aide",
-      "relationshipName": "strategieApa"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "strategiePch",
-      "otherEntityRelationshipName": "aide",
-      "relationshipName": "strategiePch"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "strategiePchE",
-      "otherEntityRelationshipName": "aide",
-      "relationshipName": "strategiePchE"
+      "relationshipName": "aide"
     }
   ],
   "entityTableName": "aide",

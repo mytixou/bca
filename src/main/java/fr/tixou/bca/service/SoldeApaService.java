@@ -30,6 +30,12 @@ public interface SoldeApaService {
      * @return the list of entities.
      */
     List<SoldeApa> findAll();
+    /**
+     * Get all the SoldeApa where Pec is {@code null}.
+     *
+     * @return the {@link List} of entities.
+     */
+    List<SoldeApa> findAllWherePecIsNull();
 
     /**
      * Get the "id" soldeApa.

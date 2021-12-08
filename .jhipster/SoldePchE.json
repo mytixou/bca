@@ -2,28 +2,69 @@
   "name": "SoldePchE",
   "fields": [
     {
+      "fieldName": "date",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "isActif",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "isDernier",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
       "fieldName": "annee",
-      "fieldType": "Integer"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "mois",
-      "fieldType": "Integer"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "consoMontantPchECotisations",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "consoMontantPchESalaire",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "soldeMontantPchE",
-      "fieldType": "BigDecimal"
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "consoHeurePchE",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "soldeHeurePchE",
-      "fieldType": "BigDecimal"
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
     }
   ],
   "relationships": [
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "beneficiaire",
+      "otherEntityName": "droitsStrategiePchE",
       "otherEntityRelationshipName": "soldePchE",
-      "relationshipName": "beneficiaire"
+      "relationshipName": "droitsStrategiePchE"
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "pec",
+      "otherEntityRelationshipName": "soldePchE",
+      "relationshipName": "pec",
+      "ownerSide": false
     }
   ],
   "entityTableName": "solde_pch_e",

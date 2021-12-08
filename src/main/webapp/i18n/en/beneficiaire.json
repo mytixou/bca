@@ -20,16 +20,11 @@
       "id": "Id",
       "externeId": "Externe Id",
       "isActif": "Is Actif",
+      "dateDesactivation": "Date Desactivation",
+      "isInscrit": "Is Inscrit",
       "dateInscription": "Date Inscription",
       "dateResiliation": "Date Resiliation",
-      "soldeCi": "Solde Ci",
-      "soldeApa": "Solde Apa",
-      "soldePch": "Solde Pch",
-      "soldePchE": "Solde Pch E",
-      "consommationCi": "Consommation Ci",
-      "consommationApa": "Consommation Apa",
-      "consommationPch": "Consommation Pch",
-      "consommationPchE": "Consommation Pch E"
+      "enfant": "Enfant"
     }
   }
 }
