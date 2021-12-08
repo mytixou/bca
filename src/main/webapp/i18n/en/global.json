@@ -7,6 +7,23 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
+        "beneficiaire": "Beneficiaire",
+        "soldeCi": "Solde Ci",
+        "soldeApa": "Solde Apa",
+        "soldePch": "Solde Pch",
+        "soldePchE": "Solde Pch E",
+        "tiersFinanceur": "Tiers Financeur",
+        "aide": "Aide",
+        "strategieCi": "Strategie Ci",
+        "strategieApa": "Strategie Apa",
+        "strategiePch": "Strategie Pch",
+        "strategiePchE": "Strategie Pch E",
+        "natureActivite": "Nature Activite",
+        "natureMontant": "Nature Montant",
+        "consommationCi": "Consommation Ci",
+        "consommationApa": "Consommation Apa",
+        "consommationPch": "Consommation Pch",
+        "consommationPchE": "Consommation Pch E",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

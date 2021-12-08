@@ -15,7 +15,39 @@
     <property name="datetimeType" value="datetime" dbms="oracle, mssql, postgresql, h2"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014430_added_entity_Beneficiaire.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014431_added_entity_SoldeCi.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014432_added_entity_SoldeApa.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014433_added_entity_SoldePch.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014434_added_entity_SoldePchE.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014435_added_entity_TiersFinanceur.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014436_added_entity_Aide.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014437_added_entity_StrategieCi.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014438_added_entity_StrategieApa.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014439_added_entity_StrategiePch.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014440_added_entity_StrategiePchE.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014441_added_entity_NatureActivite.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014442_added_entity_NatureMontant.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014443_added_entity_ConsommationCi.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014444_added_entity_ConsommationApa.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014445_added_entity_ConsommationPch.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014446_added_entity_ConsommationPchE.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20211208014431_added_entity_constraints_SoldeCi.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014432_added_entity_constraints_SoldeApa.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014433_added_entity_constraints_SoldePch.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014434_added_entity_constraints_SoldePchE.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014435_added_entity_constraints_TiersFinanceur.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014437_added_entity_constraints_StrategieCi.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014438_added_entity_constraints_StrategieApa.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014439_added_entity_constraints_StrategiePch.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014440_added_entity_constraints_StrategiePchE.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014441_added_entity_constraints_NatureActivite.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014442_added_entity_constraints_NatureMontant.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014443_added_entity_constraints_ConsommationCi.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014444_added_entity_constraints_ConsommationApa.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014445_added_entity_constraints_ConsommationPch.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20211208014446_added_entity_constraints_ConsommationPchE.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>
