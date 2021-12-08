@@ -42,7 +42,27 @@
     "clientTheme": "none",
     "clientThemeVariant": "",
     "reactive": false,
-    "enableGradleEnterprise": false
+    "enableGradleEnterprise": false,
+    "entities": [
+      "Beneficiaire",
+      "SoldeCi",
+      "SoldeApa",
+      "SoldePch",
+      "SoldePchE",
+      "TiersFinanceur",
+      "Aide",
+      "StrategieCi",
+      "StrategieApa",
+      "StrategiePch",
+      "StrategiePchE",
+      "NatureActivite",
+      "NatureMontant",
+      "ConsommationCi",
+      "ConsommationApa",
+      "ConsommationPch",
+      "ConsommationPchE"
+    ],
+    "lastLiquibaseTimestamp": 1638927886000
   },
   "git-provider": "GitHub",
   "git-company": "mytixou",
